@@ -1,0 +1,290 @@
+\documentclass[a4paper, 12pts]{article}
+
+\usepackage[top=3.5cm, bottom=3.5cm, left=3cm, right=3cm]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{textcomp}
+\usepackage{listings}
+\usepackage{authblk} %author tools
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+
+%\usepackage{hyperref} %pour les liens internet
+
+%\usepackage{graphicx} %pour les images
+\title{%
+ TP4 C++ : Héritage et polymorphisme \\
+ \large Cahier des charges détaillé}
+\author{Edern HAUMONT}
+\author{Théo THIBAULT}
+\affil{B3133}
+\date{\today}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%\begin{titlepage}
+
+\maketitle
+
+%\end{titlepage}
+
+%----------------------------------------------Title end
+
+\section{Introduction}
+	The developped software is a simple geometrical forms editor. It manages segments, convex polygones, rectangles. It also can create new objects by intersections and unions between other objects.
+	Objects can be deleted and moved.\\
+	The software will also have a "save and load" feature to add persistance to the applcation.
+
+\section{Fonctionalities}
+	\subsection{Objects}
+		In all this document coordinates are entire numbers.
+		An object has a name which is its unique identifier. It is only composed of letters and numbers\\
+		Here is a a list of the objects that the application manages :
+		\subsubsection{Segments}
+			A segment is defined by its two extremty points.
+		\subsubsection{Rectangle}
+			A rectangle is defined by two points : the top left point and the bottom right point.
+			All 4 segments which compose a rectangle are horizontal or vertical. Consequently, a rectangle cannot be oblic.
+		\subsubsection{Polygone}
+			A polygon is defined by a sorted list of points that are linked in order to form a closed figure.
+			Our application only manages convec polygons,  that is that no diagonal is outside of the figure.
+			A polygon is at least formed with 3 points.
+	\subsection{Actions}
+		\subsubsection{Add a segment}
+			\uline{Command syntax} :
+			S Name X1 Y1 X2 Y2
+			\begin{itemize}
+				\item Name : The identifier of the object.
+				\item X1, Y1 : Coordinates of the first point.
+				\item X2, Y2 : Coordinates of the second point.
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : Incorrect name.
+				\item Error n°2 : Incorrect number of coordinates
+			\end{itemize}
+			\uline{Output} : OK and confirmation or ERR and explanation.\\
+			\uline{Note} : 
+			Non entire coordinates will be truncated.\\
+			You can give the same coordinates for the two points.
+
+		\subsubsection{Add a rectangle}
+			\uline{Command syntax} :
+			R Name X1 Y1 X2 Y2
+			\begin{itemize}
+				\item Name : The identifier of the object.
+				\item X1, Y1 : Coordinates of the top-left point.
+				\item X2, Y2 : Coordinates of the bottom-right point.
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : Incorrect name.
+				\item Error n°2 : Incorrect number of coordinates
+				\item Error n°3 : Incorrect point placement (Exemple, the second point is on the left of the first point)
+			\end{itemize}
+			\uline{Output} : OK and confirmation or ERR and explanation\\
+			\uline{Note} : 
+			Non entire coordinates will be truncated.\\
+			You can give the same coordinates for the two points.
+
+		\subsubsection{Add a convex polygon}
+			\uline{Command syntax} :
+			PC Name X1 Y1 X2 Y2 .. Xn Yn
+			\begin{itemize}
+				\item Name : The identifier of the object.
+				\item Xi Yi : Coordinates of the ith point. Points must be given in cyclic order.
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : Incorrect name.
+				\item Error n°2 : Incorrect number of coordinates (less than three points)
+				\item Error n°3 : Non convex polygon.
+				\item Error n°4 : Same coordinates used several times.
+			\end{itemize}
+			\uline{Output} : OK and confirmation or ERR and explanation\\
+			\uline{Note} : 
+			Non entire coordinates will be truncated.
+
+		\subsubsection{Create an object by reunion of several other objects}
+			\uline{Command syntax} :
+			OR Name Name1 Name2 ... NameN
+			\begin{itemize}
+				\item Name : The identifier of the new object.
+				\item NameI : The identifier of one of the included objets
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : Incorrect name.
+				\item Error n°2 : Incorrect number of objects (less than 2).
+				\item Error n°3 : Several uses of the same objects.
+				\item Error n°4 : Inclusion of a non-existant object.
+			\end{itemize}
+			\uline{Output} : OK and confirmation or ERR and explanation\\
+			\uline{Note} : 
+			Non entire coordinates will be truncated.\\
+			You can use objects already created by reunion or intersection.
+
+		\subsubsection{Create an object by intersection of several other objects}
+			\uline{Command syntax} :
+			OI Name Name1 Name2 ... NameN
+			\begin{itemize}
+				\item Name : The identifier of the new object.
+				\item NameI : The identifier of one of the intersected objets
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : Incorrect name.
+				\item Error n°2 : Incorrect number of objects (less than 2).
+				\item Error n°3 : Several uses of the same objects.
+				\item Error n°4 : Intersection with a non-existant object.
+			\end{itemize}
+			\uline{Output} : OK and confirmation or ERR and explanation\\
+			\uline{Note} : 
+			Non entire coordinates will be truncated.\\
+			You can use objects already created by reunion or intersection.\\
+			You can intersect two unjoined objects.
+
+		\subsubsection{Check a point-inclusion}
+			\uline{Command syntax} :
+			HIT Name X Y
+			\begin{itemize}
+				\item Name : The identifier of the tested object.
+				\item X Y : Coordinates of the point that have to be into the object.
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : Incorrect or inexistant name.
+				\item Error n°2 : Invalid format of coordinates.
+			\end{itemize}
+			\uline{Output} : YES or NO or ERR and explanation\\
+			\uline{Note} : 
+			Non entire coordinates will be truncated.
+
+		\subsubsection{Delete an object}
+			\uline{Command syntax} :
+			DELETE Name1 Name2 ... NameN
+			\begin{itemize}
+				\item NameI : One of the objects to delete.
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : One of the names were invalid or non-existant. The operation is aborted.
+			\end{itemize}
+			\uline{Output} : OK or ERR and explanation\\
+			\uline{Note} : 
+			If one of the names is incorrect, no object is deleted.
+
+		\subsubsection{Move an object}
+			\uline{Command syntax} :
+			MOVE Name dX dY
+			\begin{itemize}
+				\item Name : Identifier of the object to move.
+				\item dX dY : Coordinates of the moving vector.
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : Incorrect or inexistant name.
+				\item Error n°2 : Invalid format of coordinates.
+			\end{itemize}
+			\uline{Output} : OK or ERR and explanation\\
+			\uline{Note} : 
+			Non entire coordinates will be truncated.
+
+		\subsubsection{Enumeration}
+			\uline{Command syntax} :
+			LIST\\
+			\uline{Error cases} : No error case.\\
+			\uline{Output} : Give a list of the objects (Identifier and type). One object by line.\\
+			\uline{Note} : 
+			If there is no object, nothing is returned.\\
+			The different types of objects are : Segment, Rectangle, Polygon, Intersection and Reunion.
+
+		\subsubsection{Undo the last action}
+			\uline{Command syntax} :
+			UNDO\\
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : No action to undo.
+			\end{itemize}
+			\uline{Output} : OK and description of the undid command or ERR and explanation\\
+			\uline{Note} : 
+			The action-hictoric has a size of 20 actions.
+
+		\subsubsection{Redo the last undo}
+			\uline{Command syntax} :
+			REDO\\
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : No undo to redo.
+			\end{itemize}
+			\uline{Output} : OK and description of the redid command or ERR and explanation\\
+			\uline{Note} : 
+			You cannot redo an action if you did something beetween the undo and your redo tentative.
+
+		\subsubsection{Load an old draw}
+			\uline{Command syntax} :
+			LOAD filename
+			\begin{itemize}
+				\item filename : Name of the text file with the extension if it needs one.
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : The file is not accessible for reading (maybe it does not exist).
+				\item Error n°2 : Invalid filename.
+				\item Error n°3 : The program doesn't understand the file.
+			\end{itemize}
+			\uline{Output} : OK or ERR and explanation\\
+			%\uline{Note} : 
+
+		\subsubsection{Save the current draw}
+			\uline{Command syntax} :
+			SAVE filename
+			\begin{itemize}
+				\item filename : Name of the text file with the extension if it needs one.
+			\end{itemize}
+			\uline{Error cases}
+			\begin{itemize}
+				\item Error n°1 : The file is not accessible for writing.
+				\item Error n°2 : Invalid filename.
+			\end{itemize}
+			\uline{Output} : OK or ERR and explanation\\
+			\uline{Note} : 
+			If you enter the name an existent file, it will be overwritten.
+
+		\subsubsection{Delete all objects}
+			CLEAR\\
+			\uline{Error cases} : No error case.\\
+			\uline{Output} : Delete confirmation\\
+			\uline{Note} : 
+			You can undo a clear command.
+
+		\subsubsection{Exit the application}
+			CLEAR\\
+			\uline{Error cases} : No error case.\\
+			\uline{Output} : No output.\\
+			\uline{Note} : 
+			If you didn't save your draw, it is lost forever.
+
+		
+	\subsection{Save-file format}
+		Our saved file begins with : "<B3133drawingFile>".\\
+		Next lines describe objects the program needs to recreate to restore the draw.\\
+		Action-hictoric is not restored. Objects are memorised as follows :
+
+		\begin{itemize}
+			\item \uline{Rectangle} : R Name X1 Y1 X2 Y2
+			\item \uline{Segment} : S Name X1 Y1 X2 Y2
+			\item \uline{Convex Polygon} : PC Name X1 Y1 X2 Y2 .. Xn Yn
+			\item \uline{Reunion Object} : OR Name Name1 .. NameN
+			\item \uline{Intersection Object} : OI Name Name1 .. NameN
+		\end{itemize}
+
+
+
+\end{document}
