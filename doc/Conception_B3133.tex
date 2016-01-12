@@ -47,7 +47,24 @@
     \subsection{Multi-Objects}
     \subsection{Reunion}
     \subsection{Intersection}
-\section{Actions}
+
+\section{Historic of actions}
+    To implement the ability for th user to undo and redo actions, we chose a quite simple model :
+    \begin{itemize}
+        \item When the user calls a valid action, it is executed.
+        \item Meanwhile, the command of this action is registered in a list, detailed later.
+        \item The program creates an oppostit command which can be executed if the user decides to undo the action.
+        This command is stored in another list, but with the same iterator.
+        \item Then, when undo and redo are called, we just have to navigate in this list and (re)execute corresponding
+        actions
+    \end{itemize}
+
+    \subsection{command historic storage}
+        Commands are strings which are stored in lists (implemented by a double-linked list in the STL). Their "undo
+        counterpart" is stored at the same index but in a different list. We chose to cap the size of both lists to 20,
+        which is sufficient for a normal utilisation of the undo possibility. If an action is made but there are
+        already 20 commands registered, we erase the oldest to make some space to the new.
+
 \section{Persistance}
     \subsection{Load}
     \subsection{Save}
