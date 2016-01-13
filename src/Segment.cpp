@@ -27,6 +27,7 @@ const bool Segment::Hits(Point aPoint) {
 }
 
 int Segment::Move(int dX, int dY) {
-    
+    pointA.Move(dX,dY);
+    pointB.Move(dX,dY);
     return 0;
 }

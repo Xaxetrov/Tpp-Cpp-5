@@ -22,8 +22,6 @@ public :
     //Constructor
     Polygon(const std::string aName); //TODO : What if there is less than 3 points ?
 
-    friend int main();
-
 //Protected attributes
 protected :
     std::vector<Point> points;

@@ -6,6 +6,7 @@
 #define TP_CPP_5_SEGMENT_H
 
 #include "Object.h"
+#include "Point.h"
 
 //Constants
 static const double EPSILON = 0.5;
