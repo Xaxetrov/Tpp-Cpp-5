@@ -27,6 +27,6 @@ const bool Segment::Hits(Point aPoint) {
 }
 
 int Segment::Move(int dX, int dY) {
-
+    
     return 0;
 }

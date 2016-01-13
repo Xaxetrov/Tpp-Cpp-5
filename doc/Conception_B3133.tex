@@ -45,8 +45,14 @@
     \subsection{Polygon}
     \subsection{Rectangle}
     \subsection{Multi-Objects}
+        Multi-objects, like Reunion or Intersection, are made with other objects. All objects which composed the multi-object are
+        stored in a vector of Objects. Multi-object is a derived class of Object, it's permits that a multi-object could be composed
+        by other multi-object. Do an action on a multi-object (like a move) means do an action on all objects which composed it.
+        Multi-Objects is an abstract class because a multi-object is always an intersection or a reunion.
     \subsection{Reunion}
+        Reunion is a kind of multi-object. A point is into a Reunion-Object if it hits any object which composed it.
     \subsection{Intersection}
+        Intersection is a kind of multi-object. A point is into a Intersection-Object only if it hits all objects which composed it.
 
 \section{Historic of actions}
     To implement the ability for th user to undo and redo actions, we chose a quite simple model :

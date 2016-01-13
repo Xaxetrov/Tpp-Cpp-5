@@ -10,6 +10,18 @@
 
 class Rectangle : public Polygon{
 
+//Public methods
+public :
+
+    //Public methods
+    const bool Hits(Point aPoint);
+
+    //Constructor
+    Rectangle(const std::string aName); //TODO : What if there is less than 3 points ?
+
+//Protected attributes
+protected :
+    std::vector<Point> points;
 };
 
 

@@ -7,7 +7,6 @@
 
 Polygon::Polygon(const std::string aName) : Object(aName)
 {
-
 }
 
 const bool Polygon::Hits(Point aPoint) {
