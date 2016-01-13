@@ -19,6 +19,9 @@ public :
     //Constructor
     Point(int myX, int myY);
 
+    //Other methods
+    void Move(int dX, int dY);
+
 //private attributes
 private :
     int x, y;
