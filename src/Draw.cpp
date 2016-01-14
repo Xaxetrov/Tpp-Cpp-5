@@ -200,3 +200,77 @@
 //Constructors
     Draw::Draw() : historicPosition(0)
     {}
+
+int Draw::ExecuteCommand(string cmdStr) {
+    stringstream ss(cmdStr);
+
+    string cmdType;
+    ss >> cmdType;
+    if(cmdType=="S")
+    {
+        int x1,x2;
+        ss >> x1;
+        ss >> x2;
+        //Call Segment creation method here
+    }
+    else if(cmdType=="R")
+    {
+        int x1,x2;
+        ss >> x1;
+        ss >> x2;
+        //Call Rectangle creation method here
+    }
+    else if(cmdType=="PC")
+    {
+        vector<int> pts;
+        int ptI;
+        while(ss>>ptI)
+        {
+            pts.push_back(ptI);
+        }
+    }
+    else if(cmdType=="OR")
+    {
+
+    }
+    else if(cmdType=="OI")
+    {
+
+    }
+    else if(cmdType=="HIT")
+    {
+
+    }
+    else if(cmdType=="DELETE")
+    {
+
+    }
+    else if(cmdType=="MOVE")
+    {
+
+    }
+    else if(cmdType=="LIST")
+    {
+
+    }
+    else if(cmdType=="UNDO")
+    {
+
+    }
+    else if(cmdType == "REDO")
+    {
+
+    }
+    else if(cmdType=="LOAD")
+    {
+
+    }
+    else if(cmdType=="SAVE")
+    {
+
+    }
+    else if(cmdType=="CLEAR")
+    {
+
+    }
+}

@@ -5,7 +5,7 @@
 #ifndef TP_CPP_5_DRAW_H
 #define TP_CPP_5_DRAW_H
 
-#include "Object.h"
+#include "Rectangle.h"
 #include <string>
 #include <map>
 #include <list>
