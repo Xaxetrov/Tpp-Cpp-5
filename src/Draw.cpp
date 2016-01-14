@@ -5,6 +5,7 @@
 #include "Draw.h"
 #include "Segment.h"
 #include "Polygon.h"
+#include "Rectangle.h"
 #include <vector>
 #include <sstream>
 
@@ -136,6 +137,52 @@
         }
 
         historic.push_front("P "+name+" "+points);
+        reverseHistoric.push_front("DELETE "+name);
+
+        return 0;
+    }
+
+    int Draw::AddRectangle(string name, string points)
+    {
+        if(allObjects.find(name) != allObjects.end())
+        {
+            // This object name already exists !
+            return 1;
+        }
+
+        int pos=0;
+        int toPos;
+        vector<int> myCoords;
+
+        istringstream myStream(points);
+        while(!myStream.eof())
+        {
+            int tempI;
+            if(myStream >> tempI)
+            {
+                myCoords.push_back(tempI);
+            }
+            else
+            {
+                // The entered number is not really a number ...
+                return 2;
+            }
+        }
+
+        if(myCoords.size() != 4)
+        {
+            // A Rectangle is defined by only two points.
+            return 2;
+        }
+
+        if(myCoords[0] > myCoords[2] || myCoords[1] < myCoords[3])
+        {
+            // Your points arent corrects. I mean its not top-left and bottom-right points.
+            return 2;
+        }
+
+        allObjects.insert(make_pair(name,Rectangle(name))); //TODO : Think about how we can add points.
+        historic.push_front("R "+name+" "+points);
         reverseHistoric.push_front("DELETE "+name);
 
         return 0;
