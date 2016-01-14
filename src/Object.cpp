@@ -11,7 +11,7 @@ const bool Object::Hits(Point aPoint) {
 }
 
 int Object::Move(int dX, int dY) {
-    std::cerr << "Object virtual method called";
+    std::cerr << "Object virtual move method called";
     return 0;
 }
 

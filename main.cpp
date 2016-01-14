@@ -1,8 +1,9 @@
 #include <iostream>
+#include "src/Rectangle.h"
 
 using namespace std;
 
 int main() {
-    cout << "Hello, World!" << endl;
-    return 0;
+    Object* o1 = new Rectangle("BLA");
+    o1->Move(1,2);
 }

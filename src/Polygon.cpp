@@ -26,6 +26,7 @@ int Polygon::Move(int dX, int dY)
     {
         i->Move(dX,dY);
     }
+    std::cerr << "Polygon move method called";
 }
 
 int Polygon::Add(Point aPoint)
