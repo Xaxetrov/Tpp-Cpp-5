@@ -4,6 +4,7 @@
 
 #include "Draw.h"
 #include "Segment.h"
+#include "Polygon.h"
 #include <vector>
 #include <sstream>
 
@@ -43,6 +44,98 @@
 
         allObjects.insert(make_pair(name,Segment(name,Point(myCoords[0],myCoords[1]),Point(myCoords[2],myCoords[3]))));
         historic.push_front("S "+name+" "+points);
+        reverseHistoric.push_front("DELETE "+name);
+
+        return 0;
+    }
+
+    int Draw::AddPolygon(string name,string points)
+    {
+        if(allObjects.find(name) != allObjects.end())
+        {
+            // This object name already exists !
+            return 1;
+        }
+
+        int pos=0;
+        int toPos;
+        vector<int> myCoords;
+
+        istringstream myStream(points);
+        while(!myStream.eof())
+        {
+            int tempI;
+            if(myStream >> tempI)
+            {
+                myCoords.push_back(tempI);
+            }
+            else
+            {
+                // The entered number is not really a number ...
+                return 2;
+            }
+
+            if(myCoords.size() % 2 == 0)
+            {
+                int size = myCoords.size();
+                for(int i=0; i< size-3; i+=2)
+                {
+                    if(myCoords[i] == myCoords[size-2] && myCoords[i+1] == myCoords[size-1])
+                    {
+                        // You passed the same point two times
+                        return 4;
+                    }
+                }
+
+                if(size >= 6)
+                {
+                    Point A(myCoords[size-6],myCoords[size-5]);
+                    Point B(myCoords[size-4],myCoords[size-3]);
+                    Point C(myCoords[size-2],myCoords[size-1]);
+
+                    Segment AB("AB",A,B);
+                    Segment BC("BC",B,C);
+
+                    if(AB.Angle(BC) > 90)
+                    {
+                        // The polynom is not convex.
+                        return 3;
+                    }
+                }
+            }
+        }
+
+        int finalSize = myCoords.size();
+        if(finalSize < 6 || finalSize%2 != 0)
+        {
+            // A Polygon is defined by at least three points.
+            return 2;
+        }
+
+        // Test if the closing segment of the polygon is not making it not convex
+        Point A(myCoords[finalSize-4],myCoords[finalSize-3]);
+        Point B(myCoords[finalSize-2],myCoords[finalSize-1]);
+        Point C(myCoords[0],myCoords[1]);
+        Point D(myCoords[2],myCoords[3]);
+
+        Segment AB("AB",A,B);
+        Segment BC("BC",B,C);
+        Segment CD("CD",C,D);
+
+        if(AB.Angle(BC) > 90 || BC.Angle(CD) > 90)
+        {
+            // The polynom is not convex.
+            return 3;
+        }
+
+        //pair<map<string,Object>::iterator,bool> o = allObjects.insert(make_pair(name,Polygon(name)));
+
+        for(int i = 0; i < finalSize; i+=2)
+        {
+            //myPoly->second.Add(Point(myCoords[i],myCoords[i+1]));  //TODO: Find a way to add points in Polygon ...
+        }
+
+        historic.push_front("P "+name+" "+points);
         reverseHistoric.push_front("DELETE "+name);
 
         return 0;

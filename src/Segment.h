@@ -23,6 +23,7 @@ public :
     //Public methods
     const bool Hits(Point aPoint);
     int Move(int dX, int dY);
+    int Angle(Segment othSeg);
 
     //Constructor
     Segment(std::string aName, Point point1, Point point2);
