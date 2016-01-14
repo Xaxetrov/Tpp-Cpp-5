@@ -3,6 +3,8 @@
 //
 
 #include "Segment.h"
+#include <string>
+#include <cmath>
 
 using namespace std;
 
@@ -30,4 +32,24 @@ int Segment::Move(int dX, int dY) {
     pointA.Move(dX,dY);
     pointB.Move(dX,dY);
     return 0;
+}
+
+int Segment::Angle(Segment othSeg)
+{
+    int aX=pointB.GetX()-pointA.GetX();
+    int aY=pointB.GetY()-pointA.GetY();
+    int bX=othSeg.pointB.GetX()-pointB.GetX();
+    int bY=othSeg.pointB.GetY()-pointB.GetY();
+
+    float sizeA = sqrt(aX*aX+aY*aY);
+    float sizeB = sqrt(bX*bX+bY*bY);
+
+    int angle = (int)(acos((aX*bX+aY*bY)/(sizeA*sizeB))*(180/3.14159265358979323846));
+
+    return angle;
+}
+
+string Segment::toString()
+{
+    return "Segment named "+name;
 }

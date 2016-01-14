@@ -15,6 +15,12 @@ int Object::Move(int dX, int dY) {
     return 0;
 }
 
+std::string Object::toString()
+{
+    std::cerr << "Object virtual method called";
+    return "";
+}
+
 Object::Object(std::string aName) : name(aName)
 {
 
