@@ -7,6 +7,7 @@
 
 #include "Object.h"
 #include "Point.h"
+#include <string>
 
 //Constants
 static const double EPSILON = 0.5;
@@ -24,6 +25,7 @@ public :
     const bool Hits(Point aPoint);
     int Move(int dX, int dY);
     int Angle(Segment othSeg);
+    std::string toString();
 
     //Constructor
     Segment(std::string aName, Point point1, Point point2);

@@ -3,6 +3,7 @@
 //
 
 #include "Segment.h"
+#include <string>
 #include <cmath>
 
 using namespace std;
@@ -46,4 +47,9 @@ int Segment::Angle(Segment othSeg)
     int angle = (int)(acos((aX*bX+aY*bY)/(sizeA*sizeB))*(180/3.14159265358979323846));
 
     return angle;
+}
+
+string Segment::toString()
+{
+    return "Segment named "+name;
 }

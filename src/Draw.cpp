@@ -188,6 +188,15 @@
         return 0;
     }
 
+    void Draw::List()
+    {
+        map<string,Object>::iterator i;
+        for(i = allObjects.begin();i!=allObjects.end();i++)
+        {
+            cout << (*i).second.toString() << endl;
+        }
+    }
+
 //Constructors
     Draw::Draw() : historicPosition(0)
     {}

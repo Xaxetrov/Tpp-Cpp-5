@@ -3,12 +3,16 @@
 //
 
 #include "Polygon.h"
+#include <string>
 using namespace std;
 
 
 Polygon::Polygon(const std::string aName) : Object(aName)
 {
 }
+
+Polygon::~Polygon()
+{}
 
 const bool Polygon::Hits(Point aPoint)
 {
@@ -27,4 +31,9 @@ int Polygon::Move(int dX, int dY)
 int Polygon::Add(Point aPoint)
 {
     points.push_back(aPoint);
+}
+
+string Polygon::toString()
+{
+    return "Polygon named "+name;
 }
