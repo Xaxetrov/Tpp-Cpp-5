@@ -16,6 +16,8 @@ class Draw
 
 //Public methods
 public:
+    int ExecuteCommand(string cmdStr);
+
     int AddSegment(string name, string points);
     int AddPolygon(string name, string points);
     int AddRectangle(string name, string points);
