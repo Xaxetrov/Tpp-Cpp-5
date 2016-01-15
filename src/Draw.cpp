@@ -197,6 +197,21 @@
         }
     }
 
+    int Draw::Move(string name, int dX, int dY)
+    {
+        map<string,Object>::iterator myObj = allObjects.find(name);
+
+        if(myObj == allObjects.end())
+        {
+            // This object doesnt exists !
+            return 1;
+        }
+        else
+        {
+            return myObj->second.Move(dX,dY);
+        }
+    }
+
 //Constructors
     Draw::Draw() : historicPosition(0)
     {}
@@ -208,27 +223,33 @@ int Draw::ExecuteCommand(string cmdStr) {
     ss >> cmdType;
     if(cmdType=="S")
     {
-        int x1,x2;
-        ss >> x1;
-        ss >> x2;
-        //Call Segment creation method here
+        string name;
+        string points;
+
+        ss >> name;
+        getline(ss,points);
+
+        return AddSegment(name,points);
     }
     else if(cmdType=="R")
     {
-        int x1,x2;
-        ss >> x1;
-        ss >> x2;
-        //Call Rectangle creation method here
+        string name;
+        string points;
+
+        ss >> name;
+        getline(ss,points);
+
+        return AddRectangle(name,points);
     }
     else if(cmdType=="PC")
     {
-        vector<int> pts;
-        int ptI;
-        while(ss>>ptI)
-        {
-            pts.push_back(ptI);
-        }
-        //Call Polygon creation method here
+        string name;
+        string points;
+
+        ss >> name;
+        getline(ss,points);
+
+        return AddPolygon(name,points);
     }
     else if(cmdType=="OR")
     {
@@ -273,12 +294,12 @@ int Draw::ExecuteCommand(string cmdStr) {
             string Name;
             int dX, dY;
             cin >> Name >> dX >> dY;
-            //Call Move method here
+            return Move(Name,dX,dY);
         }
     }
     else if(cmdType=="LIST")
     {
-        //Call List method here
+        List();
     }
     else if(cmdType=="UNDO")
     {
