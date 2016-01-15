@@ -1,6 +1,6 @@
 #include <iostream>
-#include "src/Rectangle.h"
-#include "src/Draw.h"
+#include "Rectangle.h"
+#include "Draw.h"
 
 using namespace std;
 
