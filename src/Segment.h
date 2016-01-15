@@ -23,7 +23,7 @@ public :
 
     //Public methods
     const bool Hits(Point aPoint);
-    int Move(int dX, int dY);
+    virtual int Move(int dX, int dY);
     int Angle(Segment othSeg);
     std::string toString();
 
