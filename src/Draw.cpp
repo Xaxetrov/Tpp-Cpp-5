@@ -299,7 +299,7 @@ int Draw::ExecuteCommand(string cmdStr) {
     }
     else if(cmdType=="LIST")
     {
-        //Call List method here
+        List();
     }
     else if(cmdType=="UNDO")
     {
