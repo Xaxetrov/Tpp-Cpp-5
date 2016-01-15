@@ -10,6 +10,9 @@ int main() {
 */
     Draw d;
     string s;
-    getline(cin,s);
-    d.ExecuteCommand(s);
+    while(1)
+    {
+        getline(cin, s);
+        d.ExecuteCommand(s);
+    }
 }

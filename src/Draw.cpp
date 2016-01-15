@@ -273,31 +273,39 @@ int Draw::ExecuteCommand(string cmdStr) {
             string Name;
             int dX, dY;
             cin >> Name >> dX >> dY;
-            //Call Move test method here
+            //Call Move method here
         }
     }
     else if(cmdType=="LIST")
     {
-
+        //Call List method here
     }
     else if(cmdType=="UNDO")
     {
-
+        //Call Undo method here
     }
     else if(cmdType == "REDO")
     {
-
+        //Call Redo method here
     }
     else if(cmdType=="LOAD")
     {
-
+        string filename;
+        cin >> filename;
+        //Call Load method here
     }
     else if(cmdType=="SAVE")
     {
-
+        string filename;
+        cin >> filename;
+        //Call Save method here
     }
     else if(cmdType=="CLEAR")
     {
-
+        //Call Clear method here
+    }
+    else if(cmdType=="EXIT")
+    {
+        exit(0);
     }
 }
