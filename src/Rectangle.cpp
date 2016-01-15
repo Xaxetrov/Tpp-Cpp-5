@@ -15,14 +15,10 @@ using namespace std;
         return false;
     }
 
-    /*int Rectangle::Move(int dX, int dY)
+    int Rectangle::Move(int dX, int dY)
     {
-        vector<Point>::iterator i;
-        for(i=points.begin();i != points.end(); i++)
-        {
-            i->Move(dX,dY);
-        }
-    }*/
+        Polygon::Move(dX,dY);
+    }
 
     string Rectangle::toString()
     {
