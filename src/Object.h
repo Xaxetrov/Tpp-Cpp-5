@@ -18,7 +18,7 @@ public :
 
     //Public abstract methods
     virtual const bool Hits(Point aPoint);
-    virtual int Move(int dX, int dY);
+    virtual int Move(int dX, int dY)=0;
     virtual std::string toString();
 
     //Public constructor
