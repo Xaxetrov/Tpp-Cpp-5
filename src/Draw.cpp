@@ -42,8 +42,7 @@
             // A Segment is defined by only two points.
             return 2;
         }
-
-        allObjects.insert(make_pair(name,Segment(name,Point(myCoords[0],myCoords[1]),Point(myCoords[2],myCoords[3]))));
+        allObjects.insert(make_pair(name,new Segment(name,Point(myCoords[0],myCoords[1]),Point(myCoords[2],myCoords[3]))));
         historic.push_front("S "+name+" "+points);
         reverseHistoric.push_front("DELETE "+name);
 
@@ -181,7 +180,7 @@
             return 2;
         }
 
-        allObjects.insert(make_pair(name,Rectangle(name))); //TODO : Think about how we can add points.
+        allObjects.insert(make_pair(name,new Rectangle(name))); //TODO : Think about how we can add points.
         historic.push_front("R "+name+" "+points);
         reverseHistoric.push_front("DELETE "+name);
 
@@ -190,16 +189,16 @@
 
     void Draw::List()
     {
-        map<string,Object>::iterator i;
+        map<string,Object*>::iterator i;
         for(i = allObjects.begin();i!=allObjects.end();i++)
         {
-            cout << (*i).second.toString() << endl;
+            cout << i->second->toString() << endl;
         }
     }
 
     int Draw::Move(string name, int dX, int dY)
     {
-        map<string,Object>::iterator myObj = allObjects.find(name);
+        map<string,Object*>::iterator myObj = allObjects.find(name);
 
         if(myObj == allObjects.end())
         {
@@ -208,7 +207,7 @@
         }
         else
         {
-            return myObj->second.Move(dX,dY);
+            return myObj->second->Move(dX,dY);
         }
     }
 

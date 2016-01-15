@@ -33,7 +33,7 @@ public:
     Draw();
 
 protected:
-    map<string,Object> allObjects;
+    map<string,Object*> allObjects;
     list<string> historic;
     list<string> reverseHistoric;
     int historicPosition;

@@ -16,7 +16,6 @@ public :
 
     //Public methods
     const bool Hits(Point aPoint);
-    virtual int Move(int dX,int dY); //TODO : Do we really need to exactly copy the Move method of Polygon in Rectangle ?
     std::string toString();
 
     //Constructor

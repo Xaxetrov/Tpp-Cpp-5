@@ -18,18 +18,6 @@ using namespace std;
         && aPoint.GetY()<=points[1].GetY());
     }
 
-    int Rectangle::Move(int dX, int dY)
-    {
-        /*Polygon::Move(dX,dY);
-        return 0;*/
-        vector<Point>::iterator i;
-        for(i=points.begin();i != points.end(); i++)
-        {
-            i->Move(dX,dY);
-        }
-        std::cerr << "Polygon move method called";
-    }
-
     string Rectangle::toString()
     {
         return "Rectangle named "+name;
