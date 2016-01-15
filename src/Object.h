@@ -17,7 +17,7 @@ public :
     const std::string& GetName() {return name;}
 
     //Public abstract methods
-    virtual const bool Hits(Point aPoint);
+    virtual const bool Hits(Point aPoint)=0;
     virtual int Move(int dX, int dY)=0;
     virtual std::string toString();
 

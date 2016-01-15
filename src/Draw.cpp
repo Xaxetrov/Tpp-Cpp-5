@@ -8,6 +8,7 @@
 #include "Rectangle.h"
 #include <vector>
 #include <sstream>
+#include <fstream>
 
 //Public methods
     int Draw::AddSegment(string name,string points)
@@ -211,11 +212,51 @@
         }
     }
 
+    int Draw::Load(string filename)
+    {
+        ifstream saveFile(filename, ios::in);
+        if(!saveFile)
+        {
+            cerr << "error when opening the file : " << filename << endl;
+            //cout << "ERR failed to open the file" << endl;
+            return 1;
+        }
+        else
+        {
+            string line;
+            int succeededLines(0), totalLines(0);
+            while(getline(saveFile,line))
+            {
+                try
+                {
+                    succeededLines += (ExecuteCommand(line)==0);
+                    totalLines++;
+                }
+                catch (exception e)
+                {
+                    cerr << e.what() << " when reading the saved file" << endl;
+                    //cout << "ERR failed to read the file" << endl;
+                }
+            }
+            if(succeededLines!=totalLines)
+            {
+                cerr << "Warning, only " << succeededLines << " lines correctly read out of " << totalLines << " !" << endl;
+                //cout << "ERR not all lines have been correctly read" << endl;
+            }
+            else
+            {
+                //cout << "OK" << endl;
+            }
+        }
+        return 0;
+    }
+
 //Constructors
     Draw::Draw() : historicPosition(0)
     {}
 
 int Draw::ExecuteCommand(string cmdStr) {
+    cout << "C: " << cmdStr <<endl;
     stringstream ss(cmdStr);
 
     string cmdType;

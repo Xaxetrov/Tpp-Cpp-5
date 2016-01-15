@@ -16,7 +16,7 @@ class Polygon : public Object{
 public :
 
     //Public methods
-    const bool Hits(Point aPoint);
+    virtual const bool Hits(Point aPoint);
     virtual int Move(int dX, int dY);
     int Add(Point aPoint); //TODO : Do we really want to do this ? That mean that polygon may be empty ?! I just put that for tests.
     std::string toString();
