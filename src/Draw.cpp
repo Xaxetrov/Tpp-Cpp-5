@@ -228,26 +228,53 @@ int Draw::ExecuteCommand(string cmdStr) {
         {
             pts.push_back(ptI);
         }
+        //Call Polygon creation method here
     }
     else if(cmdType=="OR")
     {
-
+        vector<string> toTreat;
+        string nameX;
+        while(ss>>nameX)
+        {
+            toTreat.push_back(nameX);
+        }
+        //Call Reunion method here
     }
     else if(cmdType=="OI")
     {
-
+        vector<string> toTreat;
+        string nameX;
+        while(ss>>nameX)
+        {
+            toTreat.push_back(nameX);
+        }
+        //Call Intersection method here
     }
     else if(cmdType=="HIT")
     {
-
+        string Name;
+        int x, y;
+        cin >> Name >> x >> y;
+        //Call Hit test method here
     }
     else if(cmdType=="DELETE")
     {
-
+        vector<string> toTreat;
+        string nameX;
+        while(ss>>nameX)
+        {
+            toTreat.push_back(nameX);
+        }
+        //Call Deletion method here
     }
     else if(cmdType=="MOVE")
     {
-
+        {
+            string Name;
+            int dX, dY;
+            cin >> Name >> dX >> dY;
+            //Call Move test method here
+        }
     }
     else if(cmdType=="LIST")
     {
