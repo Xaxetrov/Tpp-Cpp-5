@@ -25,7 +25,6 @@ public :
 
 //Protected attributes
 protected :
-    std::vector<Point> points;
 
 };
 

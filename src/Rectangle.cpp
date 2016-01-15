@@ -12,7 +12,10 @@ using namespace std;
     //Public methods
     const bool Rectangle::Hits(Point aPoint)
     {
-        return false;
+        return(aPoint.GetX()>=points[0].GetX()
+        && aPoint.GetX()<=points[1].GetX()
+        && aPoint.GetY()>=points[0].GetY()
+        && aPoint.GetY()<=points[1].GetY());
     }
 
     int Rectangle::Move(int dX, int dY)
