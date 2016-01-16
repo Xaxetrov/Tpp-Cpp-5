@@ -253,7 +253,30 @@
 
     int Draw::Delete(string names)
     {
-        return 0; //TODO : Delete method
+        vector<string> toDelete;
+        stringstream ss(names);
+        string current;
+
+        while(!ss.eof())
+        {
+            if (ss >> current)
+            {
+                toDelete.push_back(current);
+                map<string,Object*>::iterator myObj = allObjects.find(current);
+
+                if(myObj == allObjects.end())
+                {
+                    // This object doesnt exists !
+                    return 1;
+                }
+            }
+            else
+            {
+                return 2;
+            }
+        }
+
+        return 0; //TODO : How to insert multiple adds in reverse historic ?
     }
 
     int Draw::Clear()
