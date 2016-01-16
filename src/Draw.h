@@ -21,6 +21,7 @@ public:
     int AddSegment(string name, string points);
     int AddPolygon(string name, string points);
     int AddRectangle(string name, string points);
+    int Delete(string names);
     void List();
     int Move(string object, int dX, int dY);
     int Clear();

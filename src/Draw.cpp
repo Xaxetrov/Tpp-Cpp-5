@@ -248,6 +248,40 @@
         return 0;
     }
 
+    int Draw::Delete(string names)
+    {
+        return 0; //TODO : Delete method
+    }
+
+    int Draw::Clear()
+    {
+        int result = Save("../tmpClearSave");
+        if(result == 0)
+        {
+            map<string,Object*>::iterator i;
+            string names;
+
+            for(i=allObjects.begin();i != allObjects.end();i++)
+            {
+                names += (i->first);
+            }
+
+            if(names != "")
+            {
+                Delete(names);
+            }
+
+            historic.push_front("CLEAR");
+            reverseHistoric.push_front("LOAD ../tmpClearSave");
+
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
 //Constructors
     Draw::Draw() : historicPosition(0)
     {}
