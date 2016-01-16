@@ -4,9 +4,6 @@
 
 #include "Draw.h"
 #include "Segment.h"
-#include "Polygon.h"
-#include "Rectangle.h"
-#include <vector>
 #include <sstream>
 #include <fstream>
 
@@ -214,7 +211,7 @@
 
     int Draw::Load(string filename)
     {
-        ifstream saveFile(filename, ios::in);
+        ifstream saveFile(filename.c_str(), ios::in);
         if(!saveFile)
         {
             cerr << "error when opening the file : " << filename << endl;
@@ -369,4 +366,6 @@ int Draw::ExecuteCommand(string cmdStr) {
     {
         exit(0);
     }
+
+    return 0;
 }

@@ -1,18 +1,19 @@
-CC = gcc
-CFLAGS = -W -Wall -g
+CC = g++
+CFLAGS = -Wall
 LDFLAGS =
 
 SRC = $(wildcard src/*.cpp)
-OBJS = $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
-AOUT = B3133
+OBJS = $(addprefix obj/,$(notdir $(SRC:.cpp=.o)))
+OUT = B3133
 
-all : $(AOUT)
+all : $(OUT)
 
-prog : $(OBJS)
+$(OUT) : $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $^
-%.o : %.c
+
+obj/%.o : src/%.cpp
 	$(CC) $(CFLAGS) -o $@ -c $<
 clean :
-	@rm *.o
+	@rm $(OBJS)
 cleaner : clean
-	@rm $(AOUT)
+	@rm $(OUT)

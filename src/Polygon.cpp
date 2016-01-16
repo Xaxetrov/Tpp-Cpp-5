@@ -27,11 +27,13 @@ int Polygon::Move(int dX, int dY)
         i->Move(dX,dY);
     }
     std::cerr << "Polygon move method called";
+    return 0;
 }
 
 int Polygon::Add(Point aPoint)
 {
     points.push_back(aPoint);
+    return 0;
 }
 
 string Polygon::toString()
