@@ -209,6 +209,11 @@
         }
     }
 
+    int Draw::Save(string filename)
+    {
+        return 0;
+    }
+
     int Draw::Load(string filename)
     {
         ifstream saveFile(filename.c_str(), ios::in);
@@ -233,16 +238,14 @@
                 {
                     cerr << e.what() << " when reading the saved file" << endl;
                     //cout << "ERR failed to read the file" << endl;
+                    return 2;
                 }
             }
             if(succeededLines!=totalLines)
             {
                 cerr << "Warning, only " << succeededLines << " lines correctly read out of " << totalLines << " !" << endl;
                 //cout << "ERR not all lines have been correctly read" << endl;
-            }
-            else
-            {
-                //cout << "OK" << endl;
+                return 3;
             }
         }
         return 0;
@@ -292,6 +295,9 @@ int Draw::ExecuteCommand(string cmdStr) {
 
     string cmdType;
     ss >> cmdType;
+
+    int returnCode(0);
+
     if(cmdType=="S")
     {
         string name;
@@ -300,7 +306,7 @@ int Draw::ExecuteCommand(string cmdStr) {
         ss >> name;
         getline(ss,points);
 
-        return AddSegment(name,points);
+        returnCode = AddSegment(name,points);
     }
     else if(cmdType=="R")
     {
@@ -310,7 +316,7 @@ int Draw::ExecuteCommand(string cmdStr) {
         ss >> name;
         getline(ss,points);
 
-        return AddRectangle(name,points);
+        returnCode = AddRectangle(name,points);
     }
     else if(cmdType=="PC")
     {
@@ -320,7 +326,7 @@ int Draw::ExecuteCommand(string cmdStr) {
         ss >> name;
         getline(ss,points);
 
-        return AddPolygon(name,points);
+        returnCode = AddPolygon(name,points);
     }
     else if(cmdType=="OR")
     {
@@ -365,7 +371,7 @@ int Draw::ExecuteCommand(string cmdStr) {
             string Name;
             int dX, dY;
             cin >> Name >> dX >> dY;
-            return Move(Name,dX,dY);
+            returnCode = Move(Name,dX,dY);
         }
     }
     else if(cmdType=="LIST")
@@ -401,5 +407,179 @@ int Draw::ExecuteCommand(string cmdStr) {
         exit(0);
     }
 
+    printResult(cmdType, returnCode);
     return 0;
+}
+
+void Draw::printResult(string cmdType, int returnCode)
+{
+    cout << "R: ";
+    if(returnCode==0)
+    {
+        cout << "OK" << endl;
+    }
+    else
+    {
+        cout << "ERR";
+        if (cmdType == "S") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " Incorrect name";
+                    break;
+                case 2 :
+                    cout << " Incorrect number of coordinates";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "R") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " Incorrect name";
+                    break;
+                case 2 :
+                    cout << " Incorrect number of coordinates";
+                    break;
+                case 3 :
+                    cout << " Incorrect point placement";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "PC") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " Incorrect name";
+                    break;
+                case 2 :
+                    cout << " Incorrect number of coordinates";
+                    break;
+                case 3 :
+                    cout << " Non convex polygon";
+                    break;
+                case 4 :
+                    cout << " Same coordinates used several times";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "OR") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " Incorrect name";
+                    break;
+                case 2 :
+                    cout << " Incorrect number of objects";
+                    break;
+                case 3 :
+                    cout << " Several uses of the same object";
+                    break;
+                case 4 :
+                    cout << " Inclusion of a non-existant object";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "OI") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " Incorrect name";
+                    break;
+                case 2 :
+                    cout << " Incorrect number of objects";
+                    break;
+                case 3 :
+                    cout << " Several uses of the same object";
+                    break;
+                case 4 :
+                    cout << " Intersection with a non-existant object";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "HIT") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " Incorrect name";
+                    break;
+                case 2 :
+                    cout << " Incorrect format or number of coordinates";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "DELETE") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " Incorrect name";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "MOVE") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " Incorrect name";
+                    break;
+                case 2 :
+                    cout << " Incorrect format or number of coordinates";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "UNDO") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " No action to undo";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "REDO") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " No action to redo";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "LOAD") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " The file is not accessible for reading";
+                    break;
+                case 2 :
+                    cout << " The file reading generated an exception";
+                    break;
+                case 3 :
+                    cout << " The program does not understand the file";
+                    break;
+                default:break;
+            }
+        }
+        else if (cmdType == "SAVE") {
+            switch (returnCode)
+            {
+                case 1 :
+                    cout << " The file is not accessible for writing";
+                    break;
+                case 2 :
+                    cout << " Invalid filename";
+                    break;
+                default:break;
+            }
+        }
+        cout << endl;
+    }
 }
