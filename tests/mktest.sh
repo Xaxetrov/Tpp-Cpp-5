@@ -7,7 +7,7 @@ nMis=0
 
 for i in Test*
 do
-  test.sh $i results.csv
+  sh test.sh $i results.csv #added sh to make it work
   result=$?
   if [ $result -eq 0 ]
   then
