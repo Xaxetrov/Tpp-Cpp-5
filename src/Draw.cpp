@@ -308,7 +308,7 @@
         {
             allObjects.erase(toDelete.at(i));
             command += " " + toDelete.at(i);
-            ss << " ";
+            ss << "\r\n";
             allObjects.find(toDelete.at(i))->second->GetCommand(ss);
         }
         getline(ss,temp);
