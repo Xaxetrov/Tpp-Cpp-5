@@ -4,6 +4,8 @@
 
 #include "Draw.h"
 #include "Segment.h"
+#include <iostream>
+#include <string>
 #include <sstream>
 #include <fstream>
 
@@ -100,6 +102,11 @@
                         return 3;
                     }
                 }
+            }
+            else
+            {
+                //bad number of args
+                return 2;
             }
         }
 
@@ -205,6 +212,12 @@
         }
         else
         {
+            string dxString = static_cast<ostringstream*>( &(ostringstream() << dX) )->str();
+            string dyString = static_cast<ostringstream*>( &(ostringstream() << dY) )->str();
+            string mdxString = static_cast<ostringstream*>( &(ostringstream() << (-dX)) )->str();
+            string mdyString = static_cast<ostringstream*>( &(ostringstream() << (-dY)) )->str();
+            historic.push_front("MOVE "+name+" "+dxString+" "+dyString);
+            reverseHistoric.push_front("MOVE "+name+" "+mdxString+" "+mdyString);
             return myObj->second->Move(dX,dY);
         }
     }
