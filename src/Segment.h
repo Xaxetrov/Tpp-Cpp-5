@@ -8,6 +8,7 @@
 #include "Object.h"
 #include "Point.h"
 #include <string>
+#include <iostream>
 
 //Constants
 static const double EPSILON = 0.5;
@@ -26,6 +27,7 @@ public :
     virtual int Move(int dX, int dY);
     int Angle(Segment othSeg);
     std::string toString();
+    int GetCommand(std::iostream &ios);
 
     //Constructor
     Segment(std::string aName, Point point1, Point point2);

@@ -4,6 +4,7 @@
 
 
 #include "Object.h"
+#include <iostream>
 
 const bool Object::Hits(Point aPoint) {
     std::cerr << "Object virtual method called";
@@ -19,6 +20,12 @@ std::string Object::toString()
 {
     std::cerr << "Object virtual method called";
     return "";
+}
+
+int Object::GetCommand(std::iostream &ios)
+{
+    ios << "ERROR Object virtual";
+    return 1;
 }
 
 Object::Object(std::string aName) : name(aName)

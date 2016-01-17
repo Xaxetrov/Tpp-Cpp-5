@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include "Point.h"
+#include <iostream>
 
 #ifndef TP_CPP_5_OBJECT_H
 #define TP_CPP_5_OBJECT_H
@@ -20,6 +21,7 @@ public :
     virtual const bool Hits(Point aPoint)=0;
     virtual int Move(int dX, int dY)=0;
     virtual std::string toString();
+    virtual int GetCommand(std::iostream &ios);
 
     //Public constructor
     Object(std::string aName);

@@ -40,3 +40,16 @@ string Polygon::toString()
 {
     return "Polygon named "+name;
 }
+
+int Polygon::GetCommand(std::iostream &ios)
+{
+    ios << "P";
+    vector<Point>::iterator i;
+
+    for(i = points.begin();i != points.end(); i++)
+    {
+        ios << " " << i->GetX() << " " << i->GetY();
+    }
+
+    return 0;
+}

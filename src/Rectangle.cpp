@@ -23,6 +23,11 @@ using namespace std;
         return "Rectangle named "+name;
     }
 
+    int Rectangle::GetCommand(iostream &ios)
+    {
+        ios << "R "; // << points[0].GetX() << " " << points[0].GetY() << " " << points[1].GetX() << " " << points[1].GetY(); //TODO:We can put that back when we found a way to put points in Rectangle.
+    }
+
     //Constructors
     Rectangle::Rectangle(const std::string aName) : Polygon(aName)
     {

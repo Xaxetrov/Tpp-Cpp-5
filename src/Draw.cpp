@@ -211,6 +211,21 @@
 
     int Draw::Save(string filename)
     {
+        string adress = "../saves/" + filename;
+        fstream myFile(adress.c_str());
+        if(!myFile.is_open())
+        {
+            return 1;
+        }
+
+        map<string,Object*>::iterator i;
+        for(i=allObjects.begin();i!=allObjects.end();i++)
+        {
+            //cout << i->first << endl;
+            i->second->GetCommand(myFile);
+            myFile << endl;
+        }
+
         return 0;
     }
 
