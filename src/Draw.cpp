@@ -291,7 +291,6 @@
             {
                 toDelete.push_back(current);
                 map<string,Object*>::iterator myObj = allObjects.find(current);
-
                 if(myObj == allObjects.end())
                 {
                     // This object doesnt exists !
@@ -303,7 +302,19 @@
                 return 2;
             }
         }
-
+        stringstream ss();
+        string reverseCommand("MULT"), command("DELETE"), temp;
+        for(int i=0; i<toDelete.size(); i++)
+        {
+            allObjects.erase(toDelete.at(i));
+            command += " " + toDelete.at(i);
+            ss << " ";
+            allObjects.find(toDelete.at(i))->second->GetCommand(ss);
+        }
+        getline(ss,temp);
+        reverseCommand += temp;
+        historic.push_front(command);
+        reverseHistoric.push_front(reverseCommand);
         return 0; //TODO : How to insert multiple adds in reverse historic ?
     }
 
