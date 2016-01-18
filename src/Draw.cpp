@@ -362,6 +362,7 @@ int Draw::ExecuteCommand(string cmdStr) {
 
     string cmdType;
     ss >> cmdType;
+    ss.ignore();
 
     int returnCode(0);
 
@@ -391,7 +392,6 @@ int Draw::ExecuteCommand(string cmdStr) {
         string points;
 
         ss >> name;
-        ss.ignore();
         getline(ss,points);
 
         returnCode = AddPolygon(name,points);
@@ -469,6 +469,19 @@ int Draw::ExecuteCommand(string cmdStr) {
     else if(cmdType=="CLEAR")
     {
         //Call Clear method here
+    }
+    else if(cmdType.substr(0,4)=="MULT")
+    {
+        string cmdNumStr=cmdType.substr(4,cmdType.size()-4);
+        stringstream cmdNumSS(cmdNumStr);
+        int cmdNum;
+        cmdNumSS >> cmdNum;
+        string currentCmd;
+        for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
+        {
+            getline(ss, currentCmd);
+            ExecuteCommand(currentCmd);
+        }
     }
     else if(cmdType=="EXIT")
     {
