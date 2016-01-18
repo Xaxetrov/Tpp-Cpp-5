@@ -300,8 +300,15 @@
                 return 2;
             }
         }
-        stringstream ss();
-        string reverseCommand("MULT"), command("DELETE"), temp;
+
+        ss.str(std::string()); //reset ss
+        ss << toDelete.size();
+        string reverseCommand("MULT "), command("DELETE"), temp;
+        ss >> temp;
+        reverseCommand += temp;
+        temp="";
+        ss.str(std::string()); //reset ss
+
         for(int i=0; i<toDelete.size(); i++)
         {
             allObjects.erase(toDelete.at(i));
