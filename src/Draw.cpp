@@ -288,7 +288,7 @@
         return 0;
     }
 
-    int Draw::Delete(string names)
+    int Draw::Delete(string names, bool notInHistoric)
     {
         vector<string> toDelete;
         stringstream ss(names);
@@ -331,8 +331,11 @@
         }
         getline(ss,temp);
         reverseCommand += temp;
-        historic.push_front(command);
-        reverseHistoric.push_front(reverseCommand);
+        if(!notInHistoric)
+        {
+            historic.push_front(command);
+            reverseHistoric.push_front(reverseCommand);
+        }
         return 0; //TODO : How to insert multiple adds in reverse historic ?
     }
 
@@ -383,7 +386,7 @@
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
 
-        //cout << "The UNDO method try to do this : "+*i << endl;
+        cout << "The UNDO method try to do this : "+*i << endl;
 
         ExecuteCommand(*i,true);
         historicPosition++;
@@ -409,7 +412,7 @@
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition);
 
-        //cout << "The REDO method try to do this : "+*i << endl;
+        cout << "The REDO method try to do this : "+*i << endl;
         ExecuteCommand(*i,true);
 
         return 0;

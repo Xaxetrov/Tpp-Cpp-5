@@ -22,7 +22,7 @@ public:
     int AddSegment(string name, string points, bool notInHistoric = false);
     int AddPolygon(string name, string points, bool notInHistoric = false);
     int AddRectangle(string name, string points, bool notInHistoric = false);
-    int Delete(string names);
+    int Delete(string names, bool notInHistoric = false);
     void List();
     int Move(string object, int dX, int dY);
     int Clear();
