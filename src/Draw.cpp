@@ -254,22 +254,21 @@
             getline(saveFile,line);
             if(line != "=drawingfileB3133")
             {
-                cerr << "ONE" << endl;
+                cerr << "Error : this file is not a file made by our program" << endl;
                 return 3;
             }
             getline(saveFile,line);
             if(line != "*"+filename)
             {
-                cerr << "TWO" << endl;
+                cerr << "Error : this file is not a file made by our program" << endl;
                 return 3;
             }
 
-            cerr << "THREE" << endl;
             while(getline(saveFile,line))
             {
                 try
                 {
-                    succeededLines += (ExecuteCommand(line)==0);
+                    succeededLines += (ExecuteCommand(line,true)==0);
                     totalLines++;
                 }
                 catch (exception e)
@@ -363,6 +362,56 @@
             return 1;
         }
     }
+
+    int Draw::Undo()
+    {
+        if(historic.size() == 0)
+        {
+            //The historic is empty
+            return 1;
+        }
+
+        if(historicPosition == historic.size()-1)
+        {
+            //We are at the end of the historic :(
+            return 1;
+        }
+
+        list<string>::iterator i = reverseHistoric.begin();
+        advance(i,historicPosition);
+
+        ExecuteCommand(*i,true);
+        historicPosition++;
+
+        return 0;
+    }
+
+    int Draw::Redo()
+    {
+        if(historic.size() == 0)
+        {
+            //The historic is empty
+            return 1;
+        }
+
+        if(historicPosition == 0)
+        {
+            //We are at the beginning of the historic :(
+            return 1;
+        }
+
+        historicPosition--;
+        list<string>::iterator i = historic.begin();
+        advance(i,historicPosition);
+
+        ExecuteCommand(*i,true);
+
+        return 0;
+    }
+
+//Constructors
+    Draw::Draw() : historicPosition(0)
+    {}
 
 int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     if(!notInHistoric)
@@ -460,10 +509,12 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     else if(cmdType=="UNDO")
     {
         //Call Undo method here
+        Undo();
     }
     else if(cmdType == "REDO")
     {
         //Call Redo method here
+        Redo();
     }
     else if(cmdType=="LOAD")
     {
