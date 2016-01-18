@@ -21,7 +21,7 @@ public :
     virtual const bool Hits(Point aPoint)=0;
     virtual int Move(int dX, int dY)=0;
     virtual std::string toString();
-    virtual int GetCommand(std::iostream &ios)=0;
+    virtual int GetCommand(std::ostream &os)=0;
 
     //Public constructor
     Object(std::string aName);

@@ -55,8 +55,8 @@ string Segment::toString()
     return "Segment named "+name;
 }
 
-int Segment::GetCommand(iostream &ios)
+int Segment::GetCommand(ostream &os)
 {
-    ios << "S " << pointA.GetX() << " " << pointA.GetY() << " " << pointB.GetX() << " " + pointB.GetY();
+    os << "S " << name << " " << pointA.GetX() << " " << pointA.GetY() << " " << pointB.GetX() << " " << pointB.GetY();
     return 0;
 }

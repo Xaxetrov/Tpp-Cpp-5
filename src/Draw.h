@@ -19,9 +19,9 @@ public:
     int ExecuteCommand(string cmdStr);
     void printResult(string cmdType, int returncode);
 
-    int AddSegment(string name, string points);
-    int AddPolygon(string name, string points);
-    int AddRectangle(string name, string points);
+    int AddSegment(string name, string points, bool notInHistoric = false);
+    int AddPolygon(string name, string points, bool notInHistoric = false);
+    int AddRectangle(string name, string points, bool notInHistoric = false);
     int Delete(string names);
     void List();
     int Move(string object, int dX, int dY);

@@ -18,10 +18,10 @@ public :
     //Public methods
     const bool Hits(Point aPoint);
     std::string toString();
-    int GetCommand(std::iostream &ios);
+    int GetCommand(std::ostream &os);
 
     //Constructor
-    Rectangle(const std::string aName); //TODO : What if there is less than 3 points ?
+    Rectangle(const std::string aName, std::vector<int> &myCoords); //TODO : What if there is less than 3 points ?
     virtual ~Rectangle();
 
 //Protected attributes

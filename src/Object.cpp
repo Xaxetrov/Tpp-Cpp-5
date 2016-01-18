@@ -22,9 +22,9 @@ std::string Object::toString()
     return "";
 }
 
-int Object::GetCommand(std::iostream &ios)
+int Object::GetCommand(std::ostream &os)
 {
-    ios << "ERROR Object virtual";
+    os << "ERROR Object virtual";
     return 1;
 }
 

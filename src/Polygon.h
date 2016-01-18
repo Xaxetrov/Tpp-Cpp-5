@@ -19,16 +19,18 @@ public :
     //Public methods
     virtual const bool Hits(Point aPoint);
     virtual int Move(int dX, int dY);
-    int Add(Point aPoint); //TODO : Do we really want to do this ? That mean that polygon may be empty ?! I just put that for tests.
     std::string toString();
-    int GetCommand(std::iostream &ios);
+    int GetCommand(std::ostream &os);
 
     //Constructor
-    Polygon(const std::string aName); //TODO : What if there is less than 3 points ?
+    Polygon(const std::string aName,std::vector<int> &myCoords);
     virtual ~Polygon();
 
-//Protected attributes
 protected :
+    //Protected Methods
+    int Add(Point aPoint);
+
+    //Protected Attribute
     std::vector<Point> points;
 };
 

@@ -10,7 +10,7 @@
 #include <fstream>
 
 //Public methods
-    int Draw::AddSegment(string name,string points)
+    int Draw::AddSegment(string name,string points, bool notInHistoric)
     {
         if(allObjects.find(name) != allObjects.end())
         {
@@ -41,13 +41,17 @@
             return 2;
         }
         allObjects.insert(make_pair(name,new Segment(name,Point(myCoords[0],myCoords[1]),Point(myCoords[2],myCoords[3]))));
-        historic.push_front("S "+name+" "+points);
-        reverseHistoric.push_front("DELETE "+name);
+
+        if(!notInHistoric)
+        {
+            historic.push_front("S "+name+" "+points);
+            reverseHistoric.push_front("DELETE "+name);
+        }
 
         return 0;
     }
 
-    int Draw::AddPolygon(string name,string points)
+    int Draw::AddPolygon(string name,string points, bool notInHistoric)
     {
         if(allObjects.find(name) != allObjects.end())
         {
@@ -58,7 +62,7 @@
         int pos=0;
         int toPos;
         vector<int> myCoords;
-        cerr << points << endl;
+
         istringstream myStream(points);
         while(!myStream.eof())
         {
@@ -72,7 +76,7 @@
                 // The entered number is not really a number ...
                 return 2;
             }
-            cerr << myCoords.size() <<endl;
+
             if(myCoords.size() % 2 == 0)
             {
                 int size = myCoords.size();
@@ -101,11 +105,6 @@
                     }
                 }
             }
-            else
-            {
-                //bad number of args
-                return 2;
-            }
         }
 
         int finalSize = myCoords.size();
@@ -131,20 +130,17 @@
             return 3;
         }
 
-        //pair<map<string,Object>::iterator,bool> o = allObjects.insert(make_pair(name,Polygon(name)));
+        allObjects.insert(make_pair(name,new Polygon(name,myCoords)));
 
-        for(int i = 0; i < finalSize; i+=2)
-        {
-            //myPoly->second.Add(Point(myCoords[i],myCoords[i+1]));  //TODO: Find a way to add points in Polygon ...
+        if(!notInHistoric) {
+            historic.push_front("PC " + name + " " + points);
+            reverseHistoric.push_front("DELETE " + name);
         }
-
-        historic.push_front("P "+name+" "+points);
-        reverseHistoric.push_front("DELETE "+name);
 
         return 0;
     }
 
-    int Draw::AddRectangle(string name, string points)
+    int Draw::AddRectangle(string name, string points, bool notInHistoric)
     {
         if(allObjects.find(name) != allObjects.end())
         {
@@ -183,9 +179,12 @@
             return 2;
         }
 
-        allObjects.insert(make_pair(name,new Rectangle(name))); //TODO : Think about how we can add points.
-        historic.push_front("R "+name+" "+points);
-        reverseHistoric.push_front("DELETE "+name);
+        allObjects.insert(make_pair(name,new Rectangle(name, myCoords)));
+
+        if(!notInHistoric) {
+            historic.push_front("R " + name + " " + points);
+            reverseHistoric.push_front("DELETE " + name);
+        }
 
         return 0;
     }
@@ -223,16 +222,18 @@
     int Draw::Save(string filename)
     {
         string adress = "../saves/" + filename;
-        fstream myFile(adress.c_str());
+        ofstream myFile(adress.c_str());
         if(!myFile.is_open())
         {
             return 1;
         }
 
+        myFile << "=drawingfileB3133" << endl;
+        myFile << "*" << filename << endl;
+
         map<string,Object*>::iterator i;
         for(i=allObjects.begin();i!=allObjects.end();i++)
         {
-            //cout << i->first << endl;
             i->second->GetCommand(myFile);
             myFile << endl;
         }
