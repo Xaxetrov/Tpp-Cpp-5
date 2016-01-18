@@ -478,7 +478,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     else if(cmdType=="LOAD")
     {
         string filename;
-        cin >> filename;
+        ss >> filename;
         //Call Load method here
         Load(filename);
     }
