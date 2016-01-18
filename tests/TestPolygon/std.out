@@ -1,3 +1,11 @@
 C: PC Poly1 10 10 10 20 15 25 30 20 30 10
 R: OK
+C: PC Poly1 -10 -10 0 0
+R: ERR Incorrect number of coordinates
+C: PC Poly1 10 10 10 20 15 25 30 20 30 10
+R: ERR Incorrect name
+C: PC Poly3 0 -10 0 0 10 0 1 -1
+R: ERR Non convex polygon
+C: PC Poly4 0 0 0 10 10 10 10 0 0 0 0 10
+R: ERR Same coordinates used several times
 C: EXIT

@@ -18,8 +18,6 @@
             return 1;
         }
 
-        int pos=0;
-        int toPos;
         vector<int> myCoords;
 
         istringstream myStream(points);
@@ -490,7 +488,7 @@ void Draw::printResult(string cmdType, int returnCode)
                     cout << " Incorrect name";
                     break;
                 case 2 :
-                    cout << " Incorrect number of coordinates";
+                    cout << " Invalid format or number of coordinates";
                     break;
                 default:break;
             }
