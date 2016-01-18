@@ -308,13 +308,14 @@
             }
             else
             {
+                // This is not a correct name.
                 return 2;
             }
         }
 
         ss.str(std::string()); //reset ss
         ss << toDelete.size();
-        string reverseCommand("MULT "), command("DELETE"), temp;
+        string reverseCommand("MULT"), command("DELETE"), temp;
         ss >> temp;
         reverseCommand += temp;
         temp="";
@@ -322,10 +323,11 @@
 
         for(unsigned int i=0; i<toDelete.size(); i++)
         {
-            allObjects.erase(toDelete.at(i));
             command += " " + toDelete.at(i);
-            ss << "\r\n";
+            ss << "\n";
             allObjects.find(toDelete.at(i))->second->GetCommand(ss);
+            delete allObjects.find(toDelete.at(i))->second;
+            allObjects.erase(toDelete.at(i));
         }
         getline(ss,temp);
         reverseCommand += temp;
@@ -371,14 +373,17 @@
             return 1;
         }
 
-        if(historicPosition == historic.size()-1)
+        if(historicPosition == historic.size())
         {
             //We are at the end of the historic :(
+
             return 1;
         }
 
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
+
+        //cout << "The UNDO method try to do this : "+*i << endl;
 
         ExecuteCommand(*i,true);
         historicPosition++;
@@ -404,14 +409,11 @@
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition);
 
+        //cout << "The REDO method try to do this : "+*i << endl;
         ExecuteCommand(*i,true);
 
         return 0;
     }
-
-//Constructors
-    Draw::Draw() : historicPosition(0)
-    {}
 
 int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     if(!notInHistoric)
@@ -485,13 +487,11 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     }
     else if(cmdType=="DELETE")
     {
-        vector<string> toTreat;
-        string nameX;
-        while(ss>>nameX)
-        {
-            toTreat.push_back(nameX);
-        }
-        //Call Deletion method here
+        string names;
+        getline(ss,names);
+
+        returnCode = Delete(names);
+
     }
     else if(cmdType=="MOVE")
     {
@@ -509,12 +509,12 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     else if(cmdType=="UNDO")
     {
         //Call Undo method here
-        Undo();
+        returnCode=Undo();
     }
     else if(cmdType == "REDO")
     {
         //Call Redo method here
-        Redo();
+        returnCode=Redo();
     }
     else if(cmdType=="LOAD")
     {
