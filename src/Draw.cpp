@@ -58,7 +58,7 @@
         int pos=0;
         int toPos;
         vector<int> myCoords;
-
+        cerr << points << endl;
         istringstream myStream(points);
         while(!myStream.eof())
         {
@@ -72,7 +72,7 @@
                 // The entered number is not really a number ...
                 return 2;
             }
-
+            cerr << myCoords.size() <<endl;
             if(myCoords.size() % 2 == 0)
             {
                 int size = myCoords.size();
@@ -391,6 +391,7 @@ int Draw::ExecuteCommand(string cmdStr) {
         string points;
 
         ss >> name;
+        ss.ignore();
         getline(ss,points);
 
         returnCode = AddPolygon(name,points);
