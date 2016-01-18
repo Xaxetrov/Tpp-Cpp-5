@@ -10,7 +10,7 @@
 #include <fstream>
 
 //Public methods
-    int Draw::AddSegment(string name,string points, bool notInHistoric)
+    int Draw::AddSegment(string name, string points, bool notInHistoric)
     {
         if(allObjects.find(name) != allObjects.end())
         {
@@ -51,7 +51,7 @@
         return 0;
     }
 
-    int Draw::AddPolygon(string name,string points, bool notInHistoric)
+    int Draw::AddPolygon(string name, string points, bool notInHistoric)
     {
         if(allObjects.find(name) != allObjects.end())
         {
