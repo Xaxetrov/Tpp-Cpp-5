@@ -27,7 +27,7 @@ public :
     virtual int Move(int dX, int dY);
     int Angle(Segment othSeg);
     std::string toString();
-    int GetCommand(std::iostream &ios);
+    int GetCommand(std::ostream &os);
 
     //Constructor
     Segment(std::string aName, Point point1, Point point2);

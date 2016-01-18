@@ -4,11 +4,17 @@
 
 #include "Polygon.h"
 #include <string>
+#include <vector>
 using namespace std;
 
 
-Polygon::Polygon(const std::string aName) : Object(aName)
+Polygon::Polygon(const std::string aName, vector<int> &myCoords) : Object(aName)
 {
+    for(int i = 0;i<myCoords.size();i+=2)
+    {
+        Point tmpPoint(myCoords[i],myCoords[i+1]);
+        Add(tmpPoint);
+    }
 }
 
 Polygon::~Polygon()
@@ -41,14 +47,14 @@ string Polygon::toString()
     return "Polygon named "+name;
 }
 
-int Polygon::GetCommand(std::iostream &ios)
+int Polygon::GetCommand(std::ostream &os)
 {
-    ios << "P";
+    os << "PC " << name;
     vector<Point>::iterator i;
 
     for(i = points.begin();i != points.end(); i++)
     {
-        ios << " " << i->GetX() << " " << i->GetY();
+        os << " " << i->GetX() << " " << i->GetY();
     }
 
     return 0;
