@@ -4,8 +4,6 @@
 
 #include "Draw.h"
 #include "Segment.h"
-#include <iostream>
-#include <string>
 #include <sstream>
 #include <fstream>
 
@@ -169,10 +167,10 @@
             return 2;
         }
 
-        if(myCoords[0] > myCoords[2] || myCoords[1] < myCoords[3])
+        if(myCoords[0] > myCoords[2] || myCoords[1] > myCoords[3])
         {
             // Your points arent corrects. I mean its not top-left and bottom-right points.
-            return 2;
+            return 3;
         }
 
         allObjects.insert(make_pair(name,new Rectangle(name, myCoords)));
