@@ -59,8 +59,6 @@
             return 1;
         }
 
-        int pos=0;
-        int toPos;
         vector<int> myCoords;
 
         istringstream myStream(points);
@@ -148,8 +146,6 @@
             return 1;
         }
 
-        int pos=0;
-        int toPos;
         vector<int> myCoords;
 
         istringstream myStream(points);
@@ -327,7 +323,7 @@
         temp="";
         ss.str(std::string()); //reset ss
 
-        for(int i=0; i<toDelete.size(); i++)
+        for(unsigned int i=0; i<toDelete.size(); i++)
         {
             allObjects.erase(toDelete.at(i));
             command += " " + toDelete.at(i);
@@ -369,10 +365,6 @@
             return 1;
         }
     }
-
-//Constructors
-    Draw::Draw() : historicPosition(0)
-    {}
 
 int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     if(!notInHistoric)
@@ -689,3 +681,7 @@ void Draw::printResult(string cmdType, int returnCode)
         cout << endl;
     }
 }
+
+//Constructors
+Draw::Draw() : historicPosition(0)
+{}

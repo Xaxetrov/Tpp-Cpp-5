@@ -10,7 +10,7 @@ using namespace std;
 
 Polygon::Polygon(const std::string aName, vector<int> &myCoords) : Object(aName)
 {
-    for(int i = 0;i<myCoords.size();i+=2)
+    for(unsigned int i = 0;i<myCoords.size();i+=2)
     {
         Point tmpPoint(myCoords[i],myCoords[i+1]);
         Add(tmpPoint);
