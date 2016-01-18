@@ -386,7 +386,7 @@
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
 
-        cout << "The UNDO method try to do this : "+*i << endl;
+        //cout << "The UNDO method try to do this : "+*i << endl;
 
         ExecuteCommand(*i,true);
         historicPosition++;
@@ -412,7 +412,7 @@
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition);
 
-        cout << "The REDO method try to do this : "+*i << endl;
+        //cout << "The REDO method try to do this : "+*i << endl;
         ExecuteCommand(*i,true);
 
         return 0;
@@ -493,7 +493,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
         string names;
         getline(ss,names);
 
-        returnCode = Delete(names);
+        returnCode = Delete(names,notInHistoric);
 
     }
     else if(cmdType=="MOVE")
