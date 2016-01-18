@@ -429,6 +429,20 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     ss >> cmdType;
     ss.ignore();
 
+    //If a command is done after few UNDO we need to delete these from the historic
+    if(notInHistoric == false && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE")
+    {
+        list<string>::iterator i = historic.begin();
+        advance(i,historicPosition-1);
+        historic.erase(historic.begin(),i);
+
+        i=reverseHistoric.begin();
+        advance(i,historicPosition-1);
+        reverseHistoric.erase(reverseHistoric.begin(),i);
+
+        historicPosition = 0;
+    }
+
     int returnCode(0);
 
     if(cmdType=="S")
@@ -558,6 +572,10 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     {
         printResult(cmdType, returnCode);
     }
+
+    //TODO:Delete the oldest command in historic if there is more than 20 commands.
+
+
     return 0;
 }
 
