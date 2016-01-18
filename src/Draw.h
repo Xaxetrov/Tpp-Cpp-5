@@ -16,7 +16,7 @@ class Draw
 
 //Public methods
 public:
-    int ExecuteCommand(string cmdStr);
+    int ExecuteCommand(string cmdStr, bool notInHistoric = false);
     void printResult(string cmdType, int returncode);
 
     int AddSegment(string name, string points, bool notInHistoric = false);

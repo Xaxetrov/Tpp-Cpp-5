@@ -357,8 +357,11 @@
     Draw::Draw() : historicPosition(0)
     {}
 
-int Draw::ExecuteCommand(string cmdStr) {
-    cout << "C: " << cmdStr <<endl;
+int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
+    if(!notInHistoric)
+    {
+        cout << "C: " << cmdStr << endl;
+    }
     stringstream ss(cmdStr);
 
     string cmdType;
@@ -375,7 +378,7 @@ int Draw::ExecuteCommand(string cmdStr) {
         ss >> name;
         getline(ss,points);
 
-        returnCode = AddSegment(name,points);
+        returnCode = AddSegment(name,points, notInHistoric);
     }
     else if(cmdType=="R")
     {
@@ -385,7 +388,7 @@ int Draw::ExecuteCommand(string cmdStr) {
         ss >> name;
         getline(ss,points);
 
-        returnCode = AddRectangle(name,points);
+        returnCode = AddRectangle(name,points, notInHistoric);
     }
     else if(cmdType=="PC")
     {
@@ -395,7 +398,7 @@ int Draw::ExecuteCommand(string cmdStr) {
         ss >> name;
         getline(ss,points);
 
-        returnCode = AddPolygon(name,points);
+        returnCode = AddPolygon(name,points, notInHistoric);
     }
     else if(cmdType=="OR")
     {
@@ -481,7 +484,7 @@ int Draw::ExecuteCommand(string cmdStr) {
         for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
         {
             getline(ss, currentCmd);
-            ExecuteCommand(currentCmd);
+            ExecuteCommand(currentCmd, true);
         }
     }
     else if(cmdType=="EXIT")
@@ -489,7 +492,10 @@ int Draw::ExecuteCommand(string cmdStr) {
         exit(0);
     }
 
-    printResult(cmdType, returnCode);
+    if(!notInHistoric)
+    {
+        printResult(cmdType, returnCode);
+    }
     return 0;
 }
 
