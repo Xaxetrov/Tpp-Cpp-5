@@ -1,9 +1,42 @@
 C: S s1 -5 5 -15 -10
 R: OK
-C: S s1 56 56 98 22
-R: ERR Incorrect name
-C: S s2 12 54 87 65 95 45
-R: ERR Invalid format or number of coordinates
-C: S s3 56 AB 42 15
-R: ERR Invalid format or number of coordinates
+C: R r1 0 0 10 10
+R: OK
+C: LIST
+Rectangle named r1
+Segment named s1
+R: OK
+C: UNDO
+R: OK
+C: LIST
+Segment named s1
+R: OK
+C: PC pc1 0 0 0 10 10 10
+R: OK
+C: PC pc2 1 1 1 11 11 11
+R: OK
+C: LIST
+Polygon named pc1
+Polygon named pc2
+Segment named s1
+C: UNDO
+R: OK
+C: UNDO
+R: OK
+C: UNDO
+R: OK
+C: LIST
+R: OK
+C: PC pc1 0 0 0 10 10 10 10 0
+R: OK
+C: HIT pc1 5 5
+R: YES
+C: MOVE pc1 20 0
+R: OK
+C: HIT pc1 5 5
+R: NO
+C: UNDO
+R: OK
+C: HIT pc1 5 5
+R: YES
 C: EXIT

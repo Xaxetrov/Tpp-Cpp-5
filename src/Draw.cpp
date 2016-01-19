@@ -313,11 +313,10 @@
             }
         }
 
-        ss.str(std::string()); //reset ss
-        ss << toDelete.size();
         string reverseCommand("MULT"), command("DELETE"), temp;
-        ss >> temp;
+        temp = to_string(toDelete.size());
         reverseCommand += temp;
+
         temp="";
         ss.str(std::string()); //reset ss
 
@@ -386,7 +385,7 @@
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
 
-        //cout << "The UNDO method try to do this : "+*i << endl;
+        cout << "The UNDO method try to do this : "+*i << endl;
 
         ExecuteCommand(*i,true);
         historicPosition++;
@@ -412,7 +411,7 @@
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition);
 
-        //cout << "The REDO method try to do this : "+*i << endl;
+        cout << "The REDO method try to do this : "+*i << endl;
         ExecuteCommand(*i,true);
 
         return 0;
