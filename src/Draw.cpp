@@ -314,7 +314,12 @@
         }
 
         string reverseCommand("MULT"), command("DELETE"), temp;
-        temp = to_string(toDelete.size());
+        // temp = to_string(toDelete.size()); TODO : Put this back
+
+        stringstream tmp;
+        tmp << toDelete.size();
+        tmp >> temp;
+
         reverseCommand += temp;
 
         stringstream ss2;
@@ -421,6 +426,21 @@
         return 0;
     }
 
+    int Draw::Hit(string name, int x, int y)
+    {
+        map<string,Object*>::iterator myObj = allObjects.find(name);
+
+        if(myObj == allObjects.end())
+        {
+            // This object doesnt exists !
+            return 2;
+        }
+
+        cout << "Ok" << endl;
+        return myObj->second->Hits(Point(x,y));
+
+    }
+
 int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     if(!notInHistoric)
     {
@@ -433,7 +453,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     ss.ignore();
 
     //If a command is done after few UNDO we need to delete these from the historic
-    if(notInHistoric == false && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE")
+    if(notInHistoric == false && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
     {
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition-1);
@@ -502,7 +522,19 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     {
         string Name;
         int x, y;
-        cin >> Name >> x >> y;
+
+        if(!(ss >> Name))
+        {
+            returnCode = 2;
+        }
+        else if(!(ss >> x >> y))
+        {
+            returnCode = 3;
+        }
+        else
+        {
+            returnCode = Hit(Name,x,y);
+        }
         //Call Hit test method here
     }
     else if(cmdType=="DELETE")
@@ -518,8 +550,20 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
         {
             string Name;
             int dX, dY;
-            cin >> Name >> dX >> dY;
-            returnCode = Move(Name,dX,dY);
+            bool state;
+
+            if(!(ss >> Name))
+            {
+                returnCode = 1;
+            }
+            else if(!(ss >> dX >> dY))
+            {
+                    returnCode = 2;
+            }
+            else
+            {
+                returnCode = Move(Name,dX,dY);
+            }
         }
     }
     else if(cmdType=="LIST")
@@ -568,6 +612,11 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     }
     else if(cmdType=="EXIT")
     {
+        map<string,Object *>::iterator i;
+        for(i = allObjects.begin();i!=allObjects.end();i++)
+        {
+            delete i->second;
+        }
         exit(0);
     }
 
@@ -677,9 +726,12 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << " The point doesn't hit the object"; //TODO: This is not really an error ...
                     break;
                 case 2 :
+                    cout << " Incorrect name";
+                    break;
+                case 3 :
                     cout << " Incorrect format or number of coordinates";
                     break;
                 default:break;
