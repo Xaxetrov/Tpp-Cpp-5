@@ -3,6 +3,7 @@
 //
 
 #include "Polygon.h"
+#include "Segment.h"
 #include <string>
 #include <vector>
 using namespace std;
@@ -22,7 +23,58 @@ Polygon::~Polygon()
 
 const bool Polygon::Hits(Point aPoint)
 {
-    return Object::Hits(aPoint);
+    vector<Point>::iterator i;
+    int side = -1;
+
+    for(i = points.begin();i != points.end()-1;i++)
+    {
+        // A Point is into a polygon is it's at the same size of all his segment
+
+        Segment inPoly("AB",*i,*(i+1));
+        Segment toPoint("AP",*i,aPoint);
+
+        int angle = inPoly.Angle(toPoint);
+        int tmpSide;
+        if(angle > 180)
+        {
+            tmpSide=1;
+        }else
+        {
+            tmpSide=0;
+        }
+
+        if(side = -1)
+        {
+            side=tmpSide;
+        }
+
+        if(side != tmpSide)
+        {
+            return false;
+        }
+    }
+
+    // Check on the closing segment
+    Segment inPoly("ZA",points.back(),points.front());
+    Segment toPoint("ZP",points.back(),aPoint);
+
+    int angle = inPoly.Angle(toPoint);
+    int tmpSide;
+    if(angle > 180)
+    {
+        tmpSide=1;
+    }
+    else
+    {
+        tmpSide=0;
+    }
+
+    if(side != tmpSide)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 int Polygon::Move(int dX, int dY)

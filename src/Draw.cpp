@@ -437,7 +437,7 @@
         }
 
         cout << "Ok" << endl;
-        return myObj->second->Hits(Point(x,y));
+        return !(myObj->second->Hits(Point(x,y)));
 
     }
 
