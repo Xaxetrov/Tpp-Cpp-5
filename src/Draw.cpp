@@ -343,7 +343,6 @@
             historic.push_front(command);
             reverseHistoric.push_front(reverseCommand);
         }
-        cerr << reverseCommand <<endl;
         return 0;
     }
 
