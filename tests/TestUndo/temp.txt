@@ -7,7 +7,6 @@ Rectangle named r1
 Segment named s1
 R: OK
 C: UNDO
-The UNDO method try to do this : DELETE r1
 R: OK
 C: LIST
 Segment named s1
@@ -20,10 +19,8 @@ C: LIST
 Segment named s1
 R: OK
 C: UNDO
-The UNDO method try to do this : DELETE r1
 R: OK
 C: UNDO
-The UNDO method try to do this : DELETE s1
 R: OK
 C: UNDO
 R: ERR No action to undo
@@ -40,7 +37,6 @@ C: HIT pc1 5 5
 Ok
 R: OK
 C: UNDO
-The UNDO method try to do this : MOVE pc1 -20 0
 R: OK
 C: HIT pc1 5 5
 Ok

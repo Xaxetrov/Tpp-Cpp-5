@@ -393,7 +393,7 @@
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
 
-        cout << "The UNDO method try to do this : "+*i << endl;
+        cerr << "The UNDO method try to do this : "+*i << endl;
 
         ExecuteCommand(*i,true);
         historicPosition++;
@@ -419,7 +419,7 @@
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition);
 
-        cout << "The REDO method try to do this : "+*i << endl;
+        cerr << "The REDO method try to do this : "+*i << endl;
         ExecuteCommand(*i,true);
 
         return 0;
@@ -435,9 +435,18 @@
             return 2;
         }
 
-        cout << "Ok" << endl;
-        return !(myObj->second->Hits(Point(x,y)));
-
+        bool returnedBool = myObj->second->Hits(Point(x,y));
+        if(returnedBool == 0)
+        {
+            cout << "NO" <<endl;
+            return 0;
+        }
+        else if(returnedBool == 1)
+        {
+            cout << "YES" <<endl;
+            return 0;
+        }
+        return returnedBool;
     }
 
 int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
