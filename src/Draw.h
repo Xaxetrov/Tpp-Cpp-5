@@ -30,6 +30,7 @@ public:
     int Load(string filename);
     int Undo();
     int Redo();
+    int Hit(string name, int x, int y);
 
     //Constructor
     Draw();
