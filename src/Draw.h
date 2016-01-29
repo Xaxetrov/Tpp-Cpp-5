@@ -8,41 +8,102 @@
 #ifndef TP_CPP_5_DRAW_H
 #define TP_CPP_5_DRAW_H
 
+//------------------------------------------------------------------------------------------------------------- Includes
+// Personal includes
 #include "Rectangle.h"
+// System includes
 #include <string>
 #include <map>
 #include <list>
 using namespace std;
 
+//----------------------------------------------------------------------------------------------------------------------
+// The class Draw handles the interpretation and the execution call of commands
+// It represents the application draw
+//----------------------------------------------------------------------------------------------------------------------
 class Draw
 {
-
-//Public methods
-public:
+//--------------------------------------------------------------------------------------------------------------- Public
+// Public methods
+public :
     int ExecuteCommand(string cmdStr, bool notInHistoric = false);
-    void printResult(string cmdType, int returncode);
-
-    int AddSegment(string name, string points, bool notInHistoric = false);
-    int AddPolygon(string name, string points, bool notInHistoric = false);
-    int AddRectangle(string name, string points, bool notInHistoric = false);
-    int Delete(string names, bool notInHistoric = false);
-    void List();
-    int Move(string object, int dX, int dY);
-    int Clear();
-    int Save(string filename);
-    int Load(string filename);
-    int Undo();
-    int Redo();
-    int Hit(string name, int x, int y);
+    // Manual :
+    // Executes a command contained in cmdStr
+    // If notInHistoric is true, does not add the command to the historic
 
     //Constructor
     Draw();
+//-------------------------------------------------------------------------------------------------------------- Private
+// Private methods
+private :
+    void printResult(string cmdType, int returncode);
+    // Manual :
+    // Prints the result of the execution of a command, depending on the returncode
+    // Contract :
+    //
 
-protected:
+    int AddSegment(string name, string points, bool notInHistoric = false);
+    // Manual :
+    // Adds a segment to the draw
+
+    int AddPolygon(string name, string points, bool notInHistoric = false);
+    // Manual :
+    // Adds a polygon to the draw
+
+    int AddRectangle(string name, string points, bool notInHistoric = false);
+    // Manual :
+    // Adds a rectangle to the draw
+
+    int Delete(string names, bool notInHistoric = false);
+    // Manual :
+    // Deletes one or several objects of the draw
+
+    void List();
+    // Manual :
+    // Prints all objects of the draw
+
+    int Move(string object, int dX, int dY);
+    // Manual :
+    // Moves one object of dX and dY
+
+    int Clear();
+    // Manual :
+    // Clears all objects of the draw
+
+    int Save(string filename);
+    // Manual :
+    // Saves all objects of the draw in a file named with filename
+
+    int Load(string filename);
+    // Manual :
+    // Add all objects of named with filename to the draw
+
+    int Undo();
+    // Manual :
+    // Undo last action
+
+    int Redo();
+    // Manual :
+    // Redo last undid action
+
+    int Hit(string name, int x, int y);
+    // Manual :
+    // Prints whether the point given by x and y is in an object identified by its name
+
+// Private attributes
+private:
     map<string,Object*> allObjects;
+    // All of our objects currently in the draw
+    // Stored in a map for performance
+
     list<string> historic;
+    // The historic of actions
+
     list<string> reverseHistoric;
+    // The historic of opposite actions to the historic
+
     int historicPosition;
+    // The current position in the historic
 
 };
 
