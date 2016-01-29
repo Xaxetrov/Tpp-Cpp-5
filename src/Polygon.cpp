@@ -31,27 +31,33 @@ const bool Polygon::Hits(Point aPoint)
 
     for(i = points.begin();i != points.end()-1;i++)
     {
-        // A Point is into a polygon is it's at the same size of all his segment
+        // A Point is into a polygon is it's at the same side of all his segment
 
         Segment inPoly("AB",*i,*(i+1));
         Segment toPoint("AP",*i,aPoint);
 
         int angle = inPoly.Angle(toPoint);
         int tmpSide;
-        if(angle > 180)
-        {
-            tmpSide=1;
-        }else
+
+        if(angle == 0 || angle == 180)
         {
             tmpSide=0;
         }
+        else if(angle > 0)
+        {
+            tmpSide=1;
+        }
+        else
+        {
+            tmpSide=2;
+        }
 
-        if(side = -1)
+        if(side == -1 && tmpSide != 0)
         {
             side=tmpSide;
         }
 
-        if(side != tmpSide)
+        if(side != tmpSide && tmpSide != 0)
         {
             return false;
         }
@@ -63,16 +69,20 @@ const bool Polygon::Hits(Point aPoint)
 
     int angle = inPoly.Angle(toPoint);
     int tmpSide;
-    if(angle > 180)
+    if(angle == 0 || angle == 180)
+    {
+        tmpSide=0;
+    }
+    else if(angle > 0)
     {
         tmpSide=1;
     }
     else
     {
-        tmpSide=0;
+        tmpSide=2;
     }
 
-    if(side != tmpSide)
+    if(side != tmpSide && tmpSide != 0)
     {
         return false;
     }

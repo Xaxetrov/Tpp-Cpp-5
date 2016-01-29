@@ -40,15 +40,23 @@ int Segment::Move(int dX, int dY) {
 
 int Segment::Angle(Segment othSeg)
 {
+    //Calculate vectors'coordinates
     int aX=pointB.GetX()-pointA.GetX();
     int aY=pointB.GetY()-pointA.GetY();
-    int bX=othSeg.pointB.GetX()-pointB.GetX();
-    int bY=othSeg.pointB.GetY()-pointB.GetY();
+    int bX=othSeg.pointB.GetX()-othSeg.pointA.GetX();
+    int bY=othSeg.pointB.GetY()-othSeg.pointA.GetY();
 
+    //Calculate the angle with scalar product
     float sizeA = sqrt(aX*aX+aY*aY);
     float sizeB = sqrt(bX*bX+bY*bY);
-
     int angle = (int)(acos((aX*bX+aY*bY)/(sizeA*sizeB))*(180/3.14159265358979323846));
+
+    //Calculate the sign with the vectorial product
+    int vectorial = aX*bY-aY*bX;
+    if(vectorial < 0)
+    {
+        angle = -1 * angle;
+    }
 
     return angle;
 }

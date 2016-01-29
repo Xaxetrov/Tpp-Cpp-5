@@ -61,6 +61,7 @@
         }
 
         vector<int> myCoords;
+        int direction = -1;
 
         istringstream myStream(points);
         while(!myStream.eof())
@@ -97,7 +98,22 @@
                     Segment AB("AB",A,B);
                     Segment BC("BC",B,C);
 
-                    if(AB.Angle(BC) > 90)
+                    int angle=AB.Angle(BC);
+                    cout << angle << endl;
+                    if(direction == -1 && angle != 0 && angle != 180)
+                    {
+                        //Detect the direction of all vectors in the polygon
+                        if(angle>0)
+                        {
+                            direction = 1;
+                        }
+                        else
+                        {
+                            direction = 2;
+                        }
+                    }
+
+                    if((direction==1 && angle < 0) || (direction ==2 && angle > 0))
                     {
                         // The polynom is not convex.
                         return 3;
@@ -123,7 +139,26 @@
         Segment BC("BC",B,C);
         Segment CD("CD",C,D);
 
-        if(AB.Angle(BC) > 90 || BC.Angle(CD) > 90)
+        int angleOne = AB.Angle(BC);
+        int angleTwo = BC.Angle(CD);
+
+        cout << angleOne << endl;
+        cout << angleTwo << endl;
+
+        if(direction == -1 && angleOne != 0 && angleOne != 180)
+        {
+            //Detect the direction of all vectors in the polygon
+            if(angleOne>0)
+            {
+                direction = 1;
+            }
+            else
+            {
+                direction = 2;
+            }
+        }
+
+        if((direction==1 &&(angleOne < 0 || angleTwo < 0)) || (direction==2 &&(angleOne>0 || angleTwo > 0)))
         {
             // The polynom is not convex.
             return 3;
