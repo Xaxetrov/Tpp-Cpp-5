@@ -317,25 +317,29 @@
         temp = to_string(toDelete.size());
         reverseCommand += temp;
 
-        temp="";
-        ss.str(std::string()); //reset ss
+        stringstream ss2;
 
         for(unsigned int i=0; i<toDelete.size(); i++)
         {
             command += " " + toDelete.at(i);
-            ss << "\n";
-            allObjects.find(toDelete.at(i))->second->GetCommand(ss);
+
+            temp="";
+            allObjects.find(toDelete.at(i))->second->GetCommand(ss2);
+            ss2 << "\n";
+            getline(ss2,temp);
+            reverseCommand += "\n" + temp;
+
             delete allObjects.find(toDelete.at(i))->second;
             allObjects.erase(toDelete.at(i));
         }
-        getline(ss,temp);
-        reverseCommand += temp;
+
         if(!notInHistoric)
         {
             historic.push_front(command);
             reverseHistoric.push_front(reverseCommand);
         }
-        return 0; //TODO : How to insert multiple adds in reverse historic ?
+        cerr << reverseCommand <<endl;
+        return 0;
     }
 
     int Draw::Clear()
