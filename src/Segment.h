@@ -14,7 +14,7 @@
 #include <iostream>
 
 //Constants
-static const double EPSILON = 0.5;
+static const double EPSILON = 0.1;
 
 class Segment : public Object{
 
