@@ -18,6 +18,7 @@ static const double EPSILON = 0.1;
 
 //----------------------------------------------------------------------------------------------------------------------
 // The Segment class represents a segment defined by its two points
+// A Segment is an Object
 //----------------------------------------------------------------------------------------------------------------------
 class Segment : public Object{
 

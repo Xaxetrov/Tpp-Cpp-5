@@ -15,7 +15,8 @@
 #include <vector>
 
 //----------------------------------------------------------------------------------------------------------------------
-// The Segment class represents a convex polygon defined by its points
+// The Polygon class represents a convex polygon defined by its points
+// A Polygon is an Object
 //----------------------------------------------------------------------------------------------------------------------
 class Polygon : public Object{
 
@@ -35,7 +36,7 @@ public :
     // Manual :
     // Method used to print Polygon information (name)
 
-    int GetCommand(std::ostream &os);
+    virtual int GetCommand(std::ostream &os);
     // Manual :
     // Method used to get the command that can create the instantiated Polygon
 
