@@ -95,6 +95,8 @@ private:
     map<string,Object*> allObjects;
     // All of our objects currently in the draw
     // Stored in a map for performance
+    // Contract :
+    // Behavior is not guaranteed if you insert an object with a name that already exists in the map
 
     list<string> historic;
     // The historic of actions
