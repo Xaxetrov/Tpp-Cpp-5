@@ -11,6 +11,7 @@ int main() {
     while(1)
     {
         getline(cin, s);
-        d.ExecuteCommand(s);
+        stringstream ss(s);
+        d.ExecuteCommand(ss);
     }
 }
