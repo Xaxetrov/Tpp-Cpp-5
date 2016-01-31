@@ -78,6 +78,11 @@ int MultiObject::Move(int dX, int dY)
 
 int MultiObject::GetCommand(ostream &os)
 {
+    /*os << "MULT" << composingObjects.size();
+    for (int i=0; i<composingObjects.size(); i++)
+    {
+
+    }*/
     return 0;
 }
 
