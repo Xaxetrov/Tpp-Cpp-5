@@ -31,6 +31,12 @@ int Object::GetCommand(std::ostream &os)
     return 1;
 }
 
+Object * Object::Clone()
+{
+    std::cerr << "You are trying to clone an abstract object" << std::endl;
+    return this;
+}
+
 Object::Object(std::string aName) : name(aName)
 {
 

@@ -23,6 +23,17 @@ MultiObject::MultiObject(string aName, list<Object *> objectsToUse)
     }
 }
 
+MultiObject::MultiObject(MultiObject &toCopy)
+    : Object(toCopy.name)
+{
+    list<Object *>::iterator i;
+    for(i = toCopy.composingObjects.begin();i != toCopy.composingObjects.end(); i++)
+    {
+        //Object *obj =
+        //composingObjects.push_back()
+    }
+}
+
 MultiObject::~MultiObject()
 {
     list<Object *>::iterator i;

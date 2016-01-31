@@ -46,6 +46,10 @@ public :
     // Manual :
     // Pure abstract method used to get the command that can create the instantiated Object
 
+    virtual Object * Clone();
+    // Manual :
+    // Return a pointer on a copy of the object
+
     //Public constructor
     Object(std::string aName);
 

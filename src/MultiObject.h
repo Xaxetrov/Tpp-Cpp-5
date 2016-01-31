@@ -39,7 +39,10 @@ public:
 
     //Constructor(s)
     MultiObject(string aName, list<Object *> objectsToUse);
-    // This method create a multiobject based on other objects.
+    // This constructor create a multiobject based on other objects.
+
+    MultiObject(MultiObject &toCopy);
+    // This constructor make a copy of an other multiobject
 
     virtual ~MultiObject();
     // Destructor of a MultiObject

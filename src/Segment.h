@@ -50,6 +50,10 @@ public :
     // Manual :
     // Method used to get the command that can create the instantiated Segment
 
+    Object * Clone();
+    // Manual :
+    // The method return a pointer on a copy of the Segment
+
     //Constructor
     Segment(std::string aName, Point point1, Point point2);
     Segment(Segment &toCopy);

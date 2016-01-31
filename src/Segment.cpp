@@ -76,3 +76,9 @@ int Segment::GetCommand(ostream &os)
     os << "S " << name << " " << pointA.GetX() << " " << pointA.GetY() << " " << pointB.GetX() << " " << pointB.GetY();
     return 0;
 }
+
+Object * Segment::Clone()
+{
+    Object *ptr = new Segment(*this);
+    return ptr;
+}
