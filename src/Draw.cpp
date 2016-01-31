@@ -6,7 +6,6 @@
 ***********************************************************************************************************************/
 
 #include "Draw.h"
-#include <sstream>
 #include <fstream>
 
 //Public methods
@@ -250,7 +249,7 @@
                 return 4;
             }
 
-            for (unsigned int j=i; j<otherNames.size(); j++)
+            for (unsigned int j=i+1; j<otherNames.size(); j++)
             {
                 if (otherNames.at(j) == otherNames.at(i))
                 {
@@ -418,11 +417,12 @@
                 return 3;
             }
 
-            while(getline(saveFile,line))
+            while(getline(saveFile,line))/*TO OPTI*********************************************************************/
             {
+                stringstream mySS(line);/*TO OPTI**********************************************************************/
                 try
                 {
-                    succeededLines += (ExecuteCommand(line,true)==0);
+                    succeededLines += (ExecuteCommand(mySS,true)==0);
                     totalLines++;
                 }
                 catch (exception e)
@@ -548,8 +548,8 @@
         advance(i,historicPosition);
 
         cerr << "The UNDO method try to do this : "+*i << endl;
-
-        ExecuteCommand(*i,true);
+        stringstream mySS(*i);/*TO OPTI********************************************************************************/
+        ExecuteCommand(mySS,true);
         historicPosition++;
 
         return 0;
@@ -574,7 +574,8 @@
         advance(i,historicPosition);
 
         cerr << "The REDO method try to do this : "+*i << endl;
-        ExecuteCommand(*i,true);
+        stringstream mySS(*i);/*TO OPTI********************************************************************************/
+        ExecuteCommand(mySS,true);
 
         return 0;
     }
@@ -602,13 +603,27 @@
         }
         return returnedBool;
     }
-
-int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
-    if(!notInHistoric)
+/*
+R r 0 0 1 1
+R r2 0 0 1 1
+OI o r r2
+DELETE o
+UNDO
+LIST
+EXIT
+*/
+int Draw::Mult(stringstream &ss, int cmdNum)
+{
+    for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
     {
-        cout << "C: " << cmdStr << endl;
+        cout <<currentCmdNum<<endl;
+        ExecuteCommand(ss, true);
     }
-    stringstream ss(cmdStr);
+    cout << "End of MULT"<<cmdNum << endl;
+    return 0;
+}
+
+int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
     string cmdType;
     ss >> cmdType;
@@ -647,7 +662,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
 
         ss >> name;
         getline(ss,points);
-
+        cout << ":" << name << points << endl;
         returnCode = AddRectangle(name,points, notInHistoric);
     }
     else if(cmdType=="PC")
@@ -763,12 +778,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
         stringstream cmdNumSS(cmdNumStr);
         int cmdNum;
         cmdNumSS >> cmdNum;
-        string currentCmd;
-        for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
-        {
-            getline(ss, currentCmd);
-            ExecuteCommand(currentCmd, true);
-        }
+        returnCode = Mult(ss, cmdNum);
     }
     else if(cmdType=="EXIT")
     {
@@ -782,6 +792,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
 
     if(!notInHistoric)
     {
+        cout << "C: " << cmdType << endl;
         printResult(cmdType, returnCode);
     }
 

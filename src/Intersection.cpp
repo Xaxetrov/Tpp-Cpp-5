@@ -64,7 +64,18 @@ string Intersection::toString()
 
 int Intersection::GetCommand(ostream &os)
 {
-    return 0; //TODO : This.
+    string nameLine ="";
+    os << "MULT" << composingObjects.size()+2;
+    list<Object *>::iterator i;
+    for (i=composingObjects.begin();i != composingObjects.end();i++)
+    {
+        os << "\n";
+        (*i)->GetCommand(os);
+        string currentName = (*i)->GetName();
+        nameLine+= " " + currentName;
+    }
+    os << "\n" << "OI" << nameLine;
+    os << "\n" << "DELETE" << nameLine;
 }
 
 Object * Intersection::Clone()

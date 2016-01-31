@@ -18,6 +18,8 @@
 #include <string>
 #include <map>
 #include <list>
+#include <sstream>
+
 using namespace std;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -29,7 +31,7 @@ class Draw
 //--------------------------------------------------------------------------------------------------------------- Public
 // Public methods
 public :
-    int ExecuteCommand(string cmdStr, bool notInHistoric = false);
+    int ExecuteCommand(stringstream &ss, bool notInHistoric = false);
     // Manual :
     // Executes a command contained in cmdStr
     // If notInHistoric is true, does not add the command to the historic
@@ -100,6 +102,8 @@ private :
     int Hit(string name, int x, int y);
     // Manual :
     // Prints whether the point given by x and y is in an object identified by its name
+
+    int Mult(stringstream &ss, int cmdNum);
 
 // Private attributes
 private:
