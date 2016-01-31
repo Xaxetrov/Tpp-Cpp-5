@@ -40,6 +40,10 @@ public :
     // Manual :
     // Method used to get the command that can create the instantiated Polygon
 
+    virtual Object * Clone();
+    // Manual :
+    // This method return a pointer on a copy of the Polygon
+
     // Constructor
     Polygon(const std::string aName,std::vector<int> &myCoords);
     // Manual :

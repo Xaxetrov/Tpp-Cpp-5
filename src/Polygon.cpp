@@ -132,3 +132,9 @@ int Polygon::GetCommand(std::ostream &os)
 
     return 0;
 }
+
+Object * Polygon::Clone()
+{
+    Object *ptr = new Polygon(*this);
+    return ptr;
+}
