@@ -20,11 +20,11 @@ Segment::Segment(std::string aName, Point point1, Point point2) : Object(aName),
 const bool Segment::Hits(Point aPoint) {
     int x1 = pointA.GetX(), y1 = pointA.GetY(), x2 = pointB.GetX(), y2 = pointB.GetY();
     int x = aPoint.GetX(), y = aPoint.GetY();
-    if(x<max(x1,x2) && x>min(x1,x2) && y<max(x1,x2) && y>max(y1,y2))
+    if((x<=max(x1,x2)) && (x>=min(x1,x2)) && (y<=max(x1,x2)) && (y>=min(y1,y2)))
     {
-        double dYdXSeg = (y2-y1)/(x2-x1);
-        double dYdXTest = (y-y1)/(x-x1);
-        if(dYdXSeg-dYdXTest < EPSILON)
+        double dYdXSeg = (y2-y1)/(double)(x2-x1);
+        double dYdXTest = (y-y1)/(double)(x-x1);
+        if(abs(dYdXSeg-dYdXTest) < EPSILON)
         {
             return true;
         }

@@ -99,7 +99,7 @@
                     Segment BC("BC",B,C);
 
                     int angle=AB.Angle(BC);
-                    cout << angle << endl;
+                    cerr << angle << endl;
                     if(direction == -1 && angle != 0 && angle != 180)
                     {
                         //Detect the direction of all vectors in the polygon
@@ -142,8 +142,8 @@
         int angleOne = AB.Angle(BC);
         int angleTwo = BC.Angle(CD);
 
-        cout << angleOne << endl;
-        cout << angleTwo << endl;
+        cerr << angleOne << endl;
+        cerr << angleTwo << endl;
 
         if(direction == -1 && angleOne != 0 && angleOne != 180)
         {
@@ -165,7 +165,6 @@
         }
 
         allObjects.insert(make_pair(name,new Polygon(name,myCoords)));
-
         if(!notInHistoric) {
             historic.push_front("PC " + name + " " + points);
             reverseHistoric.push_front("DELETE " + name);

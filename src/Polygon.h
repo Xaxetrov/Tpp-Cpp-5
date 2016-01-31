@@ -7,33 +7,57 @@
 #ifndef TP_CPP_5_POLYGON_H
 #define TP_CPP_5_POLYGON_H
 
+//------------------------------------------------------------------------------------------------------------- Includes
+// Personal includes
 #include "Object.h"
 #include "Point.h"
+// System includes
 #include <vector>
-#include <string>
-#include <iostream>
 
+//----------------------------------------------------------------------------------------------------------------------
+// The Polygon class represents a convex polygon defined by its points
+// A Polygon is an Object
+//----------------------------------------------------------------------------------------------------------------------
 class Polygon : public Object{
 
-//Public methods
+//--------------------------------------------------------------------------------------------------------------- Public
 public :
 
-    //Public methods
+    // Public methods
     virtual const bool Hits(Point aPoint);
-    virtual int Move(int dX, int dY);
-    std::string toString();
-    int GetCommand(std::ostream &os);
+    // Manual :
+    // Checks if a point given in parameter is in the Polygon
 
-    //Constructor
+    virtual int Move(int dX, int dY);
+    // Manual :
+    // Moves the Polygon position by dX and dY
+
+    std::string toString();
+    // Manual :
+    // Method used to print Polygon information (name)
+
+    virtual int GetCommand(std::ostream &os);
+    // Manual :
+    // Method used to get the command that can create the instantiated Polygon
+
+    // Constructor
     Polygon(const std::string aName,std::vector<int> &myCoords);
+    // Manual :
+    // Creates a polygon and initialize its list of points with another given in parameter
+
+    // Destructor
     virtual ~Polygon();
 
+//------------------------------------------------------------------------------------------------------------ Protected
 protected :
-    //Protected Methods
+    // Protected Methods
     int Add(Point aPoint);
+    // Manual :
+    // Adds a point to the polygon
 
     //Protected Attribute
     std::vector<Point> points;
+    // The list of the points that define the polygon
 };
 
 

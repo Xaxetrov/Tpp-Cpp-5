@@ -8,9 +8,12 @@
 #ifndef TP_CPP_5_POINT_H
 #define TP_CPP_5_POINT_H
 
-
+//----------------------------------------------------------------------------------------------------------------------
+// The Segment class represents a segment defined by its two coordinates
+//----------------------------------------------------------------------------------------------------------------------
 class Point {
 
+//--------------------------------------------------------------------------------------------------------------- Public
 public :
 
     //Inline getters and setters
@@ -24,6 +27,8 @@ public :
 
     //Other methods
     void Move(int dX, int dY);
+    // Manual :
+    // Moves the segment position by dX and dY
 
 //private attributes
 private :
