@@ -33,6 +33,12 @@ using namespace std;
         return 0;
     }
 
+    Object * Rectangle::Clone()
+    {
+        Object *ptr =  new Rectangle(*this);
+        return ptr;
+    }
+
     //Constructors
     Rectangle::Rectangle(const std::string aName, vector<int> &myCoords) : Polygon(aName,myCoords)
     {

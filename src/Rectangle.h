@@ -34,6 +34,10 @@ public :
     // Manual :
     // Method used to get the command that can create the instantiated Rectangle
 
+    Object * Clone();
+    // Manual :
+    // Returns a pointer on a copy of the Rectangle
+
     // Constructor
     Rectangle(const std::string aName, std::vector<int> &myCoords); //TODO : What if there is less than 3 points ?
     Rectangle(Rectangle &toCopy);
