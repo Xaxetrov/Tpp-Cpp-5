@@ -6,7 +6,6 @@
 ***********************************************************************************************************************/
 
 #include "Draw.h"
-#include "Segment.h"
 #include <sstream>
 #include <fstream>
 
@@ -217,6 +216,108 @@
             reverseHistoric.push_front("DELETE " + name);
         }
 
+        return 0;
+    }
+
+    int Draw::AddIntersection(string name, string others, bool notInHistoric)
+    {
+        if(allObjects.find(name) != allObjects.end())
+        {
+            // This object name already exists !
+            return 1;
+        }
+
+        vector<string> otherNames;
+        stringstream myStream(others);
+        while(!myStream.eof())
+        {
+            string tempI;
+            myStream >> tempI;
+            otherNames.push_back(tempI);
+        }
+
+        if(otherNames.size()<2)
+        {
+            // Not enough objects !
+            return 2;
+        }
+
+        for(unsigned int i=0; i<otherNames.size(); i++)
+        {
+            if(allObjects.find(otherNames.at(i)) == allObjects.end())
+            {
+                // One of the composing objects does not exist !
+                return 4;
+            }
+
+            for (unsigned int j=i; j<otherNames.size(); j++)
+            {
+                if (otherNames.at(j) == otherNames.at(i))
+                {
+                    // Object given twice !
+                    return 3;
+                }
+            }
+        }
+        /*Intersection* myIntersection = new Intersection(name, );
+        allObjects.insert(make_pair(name,myIntersection));*/
+        //TODO copy objects and construct intersection here
+
+        if(!notInHistoric) {
+            historic.push_front("OI " + name + " " + others);
+            reverseHistoric.push_front("DELETE " + name);
+        }
+
+        return 0;
+    }
+
+    int Draw::AddReunion(string name, string others, bool notInHistoric)
+    {
+        if(allObjects.find(name) != allObjects.end())
+        {
+            // This object name already exists !
+            return 1;
+        }
+
+        vector<string> otherNames;
+        stringstream myStream(others);
+        while(!myStream.eof())
+        {
+            string tempI;
+            myStream >> tempI;
+            otherNames.push_back(tempI);
+        }
+
+        if(otherNames.size()<2)
+        {
+            // Not enough objects !
+            return 2;
+        }
+
+        for(unsigned int i=0; i<otherNames.size(); i++)
+        {
+            if(allObjects.find(otherNames.at(i)) == allObjects.end())
+            {
+                // One of the composing objects does not exist !
+                return 4;
+            }
+
+            for (unsigned int j=i; j<otherNames.size(); j++)
+            {
+                if (otherNames.at(j) == otherNames.at(i))
+                {
+                    // Object given twice !
+                    return 3;
+                }
+            }
+        }
+
+        //TODO copy objects and construct reunion here
+
+        if(!notInHistoric) {
+            historic.push_front("OI " + name + " " + others);
+            reverseHistoric.push_front("DELETE " + name);
+        }
         return 0;
     }
 
@@ -498,7 +599,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     ss.ignore();
 
     //If a command is done after few UNDO we need to delete these from the historic
-    if(notInHistoric == false && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
+    if(!notInHistoric && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
     {
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition-1);
@@ -545,23 +646,23 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     }
     else if(cmdType=="OR")
     {
-        vector<string> toTreat;
-        string nameX;
-        while(ss>>nameX)
-        {
-            toTreat.push_back(nameX);
-        }
-        //Call Reunion method here
+        string name;
+        string others;
+
+        ss >> name;
+        getline(ss, others);
+
+        returnCode = AddReunion(name, others, notInHistoric);
     }
     else if(cmdType=="OI")
     {
-        vector<string> toTreat;
-        string nameX;
-        while(ss>>nameX)
-        {
-            toTreat.push_back(nameX);
-        }
-        //Call Intersection method here
+        string name;
+        string others;
+
+        ss >> name;
+        getline(ss, others);
+
+        returnCode = AddIntersection(name, others, notInHistoric);
     }
     else if(cmdType=="HIT")
     {
@@ -580,7 +681,6 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
         {
             returnCode = Hit(Name,x,y);
         }
-        //Call Hit test method here
     }
     else if(cmdType=="DELETE")
     {
@@ -595,7 +695,6 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
         {
             string Name;
             int dX, dY;
-            bool state;
 
             if(!(ss >> Name))
             {
@@ -640,7 +739,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     }
     else if(cmdType=="CLEAR")
     {
-        //Call Clear method here
+        returnCode = Clear();
     }
     else if(cmdType.substr(0,4)=="MULT")
     {

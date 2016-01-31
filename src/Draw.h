@@ -11,6 +11,9 @@
 //------------------------------------------------------------------------------------------------------------- Includes
 // Personal includes
 #include "Rectangle.h"
+#include "Segment.h"
+#include "Intersection.h"
+#include "Union.h"
 // System includes
 #include <string>
 #include <map>
@@ -53,6 +56,14 @@ private :
     int AddRectangle(string name, string points, bool notInHistoric = false);
     // Manual :
     // Adds a rectangle to the draw
+
+    int AddIntersection(string name, string others, bool notInHistoric = false);
+    // Manual :
+    // Adds an object by intersection of others
+
+    int AddReunion(string name, string others, bool notInHistoric = false);
+    // Manual :
+    // Adds an object by reunion of others
 
     int Delete(string names, bool notInHistoric = false);
     // Manual :
