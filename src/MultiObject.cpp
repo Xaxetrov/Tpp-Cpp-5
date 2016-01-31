@@ -70,7 +70,7 @@ int MultiObject::Move(int dX, int dY)
 
     for(i=composingObjects.begin();i != composingObjects.end();i++)
     {
-        if(!((*i)->Move(dX,dY)))
+        if((*i)->Move(dX,dY))
         {
             result=3;
         }
@@ -84,7 +84,7 @@ int MultiObject::GetCommand(ostream &os)
     return 0;
 }
 
-Object * Object::Clone()
+Object * MultiObject::Clone()
 {
     cerr << "You are trying to clone an abstract multiobject ..." << endl;
     return this;

@@ -264,12 +264,11 @@
         for(unsigned int i=0; i<otherNames.size(); i++)
         {
             Object* tempObjPointer = allObjects.find(otherNames.at(i))->second;
-            Object tempObjCopy(*tempObjPointer);
-            objectsToUse.push_back(&tempObjCopy);
+            Object* tempObjCopyPointer = tempObjPointer->Clone();
+            objectsToUse.push_back(tempObjCopyPointer);
         }
         Intersection* myIntersection = new Intersection(name, objectsToUse);
         allObjects.insert(make_pair(name,myIntersection));
-        //TODO copy objects and construct intersection here
 
         if(!notInHistoric) {
             historic.push_front("OI " + name + " " + others);
@@ -310,7 +309,7 @@
                 return 4;
             }
 
-            for (unsigned int j=i; j<otherNames.size(); j++)
+            for (unsigned int j=i+1; j<otherNames.size(); j++)
             {
                 if (otherNames.at(j) == otherNames.at(i))
                 {
@@ -320,12 +319,21 @@
             }
         }
 
-        //TODO copy objects and construct reunion here
+        list<Object*> objectsToUse;
+        for(unsigned int i=0; i<otherNames.size(); i++)
+        {
+            Object* tempObjPointer = allObjects.find(otherNames.at(i))->second;
+            Object* tempObjCopyPointer = tempObjPointer->Clone();
+            objectsToUse.push_back(tempObjCopyPointer);
+        }
+        Union* myUnion = new Union(name, objectsToUse);
+        allObjects.insert(make_pair(name,myUnion));
 
         if(!notInHistoric) {
             historic.push_front("OI " + name + " " + others);
             reverseHistoric.push_front("DELETE " + name);
         }
+
         return 0;
     }
 
