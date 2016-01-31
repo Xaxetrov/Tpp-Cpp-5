@@ -242,7 +242,7 @@
             return 2;
         }
 
-        for(int i=0; i<otherNames.size(); i++)
+        for(unsigned int i=0; i<otherNames.size(); i++)
         {
             if(allObjects.find(otherNames.at(i)) == allObjects.end())
             {
@@ -250,7 +250,7 @@
                 return 4;
             }
 
-            for (int j=i; j<otherNames.size(); j++)
+            for (unsigned int j=i; j<otherNames.size(); j++)
             {
                 if (otherNames.at(j) == otherNames.at(i))
                 {
@@ -294,7 +294,7 @@
             return 2;
         }
 
-        for(int i=0; i<otherNames.size(); i++)
+        for(unsigned int i=0; i<otherNames.size(); i++)
         {
             if(allObjects.find(otherNames.at(i)) == allObjects.end())
             {
@@ -302,7 +302,7 @@
                 return 4;
             }
 
-            for (int j=i; j<otherNames.size(); j++)
+            for (unsigned int j=i; j<otherNames.size(); j++)
             {
                 if (otherNames.at(j) == otherNames.at(i))
                 {
@@ -599,7 +599,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     ss.ignore();
 
     //If a command is done after few UNDO we need to delete these from the historic
-    if(notInHistoric == false && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
+    if(!notInHistoric && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
     {
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition-1);
@@ -695,7 +695,6 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
         {
             string Name;
             int dX, dY;
-            bool state;
 
             if(!(ss >> Name))
             {
@@ -740,7 +739,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
     }
     else if(cmdType=="CLEAR")
     {
-        //Call Clear method here
+        returnCode = Clear();
     }
     else if(cmdType.substr(0,4)=="MULT")
     {
