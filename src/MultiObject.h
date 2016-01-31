@@ -37,6 +37,9 @@ public:
     virtual int GetCommand(ostream &os)=0;
     // This method give the command that permits to make the multiobject
 
+    virtual Object * Clone();
+    // This method returns a pointer on a copy of the multiobject
+
     //Constructor(s)
     MultiObject(string aName, list<Object *> objectsToUse);
     // This constructor create a multiobject based on other objects.

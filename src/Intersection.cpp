@@ -19,6 +19,12 @@ Intersection::Intersection(string name, list<Object*> objectsToUse)
 
 }
 
+Intersection::Intersection(Intersection &toCopy)
+        : MultiObject(toCopy)
+{
+
+}
+
 Intersection::~Intersection()
 {
 
@@ -59,5 +65,11 @@ string Intersection::toString()
 int Intersection::GetCommand(ostream &os)
 {
     return 0; //TODO : This.
+}
+
+Object * Intersection::Clone()
+{
+    Object *ptr = new Intersection(*this);
+    return ptr;
 }
 

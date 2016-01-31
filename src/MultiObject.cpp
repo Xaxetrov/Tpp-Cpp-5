@@ -29,8 +29,8 @@ MultiObject::MultiObject(MultiObject &toCopy)
     list<Object *>::iterator i;
     for(i = toCopy.composingObjects.begin();i != toCopy.composingObjects.end(); i++)
     {
-        //Object *obj =
-        //composingObjects.push_back()
+        Object *obj = (*i)->Clone();
+        composingObjects.push_back(obj);
     }
 }
 
@@ -82,4 +82,10 @@ int MultiObject::Move(int dX, int dY)
 int MultiObject::GetCommand(ostream &os)
 {
     return 0;
+}
+
+Object * Object::Clone()
+{
+    cerr << "You are trying to clone an abstract multiobject ..." << endl;
+    return this;
 }

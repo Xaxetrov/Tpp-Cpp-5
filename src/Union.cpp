@@ -14,7 +14,13 @@ using namespace std;
 
 // ------------------------------------------------------------------------------------------------------ CONSTRUCTOR(S)
 Union::Union(string name, list<Object*> objectsToUse)
-            : MultiObject(name,objectsToUse)
+        : MultiObject(name,objectsToUse)
+{
+
+}
+
+Union::Union(Union &toCopy)
+        : MultiObject(toCopy)
 {
 
 }
@@ -61,3 +67,8 @@ int Union::GetCommand(ostream &os)
     return 0; //TODO : This.
 }
 
+Object * Union::Clone()
+{
+    Object *ptr = new Union(*this);
+    return ptr;
+}

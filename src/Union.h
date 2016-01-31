@@ -33,8 +33,12 @@ public:
     int GetCommand(ostream &os);
     // This method give the command that permits to make the union
 
+    Object * Clone();
+    // This method returns a pointer on a copy of the union
+
     // Constructor(s)
     Union(string name, list<Object *> objectsToUse);
+    Union(Union &toCopy);
     virtual ~Union();
 
 };
