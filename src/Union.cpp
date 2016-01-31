@@ -76,6 +76,7 @@ int Union::GetCommand(ostream &os)
     }
     os << "\n" << "OR" << nameLine;
     os << "\n" << "DELETE" << nameLine;
+    return 0;
 }
 
 Object * Union::Clone()

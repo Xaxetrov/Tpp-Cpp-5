@@ -76,6 +76,7 @@ int Intersection::GetCommand(ostream &os)
     }
     os << "\n" << "OI" << nameLine;
     os << "\n" << "DELETE" << nameLine;
+    return 0;
 }
 
 Object * Intersection::Clone()

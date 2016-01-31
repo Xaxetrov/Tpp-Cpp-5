@@ -488,6 +488,7 @@
             allObjects.find(toDelete.at(i))->second->GetCommand(ss2);
             ss2 << "\n";
             getline(ss2,temp);
+            cerr << ":"<<temp<<endl;
             reverseCommand += "\n" + temp;
 
             delete allObjects.find(toDelete.at(i))->second;
