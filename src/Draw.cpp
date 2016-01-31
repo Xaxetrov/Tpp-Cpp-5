@@ -346,7 +346,7 @@
         }
     }
 
-    int Draw::Move(string name, int dX, int dY)
+    int Draw::Move(string name, int dX, int dY, bool notInHistoric)
     {
         map<string,Object*>::iterator myObj = allObjects.find(name);
 
@@ -357,12 +357,14 @@
         }
         else
         {
-            string dxString = static_cast<ostringstream*>( &(ostringstream() << dX) )->str();
-            string dyString = static_cast<ostringstream*>( &(ostringstream() << dY) )->str();
-            string mdxString = static_cast<ostringstream*>( &(ostringstream() << (-dX)) )->str();
-            string mdyString = static_cast<ostringstream*>( &(ostringstream() << (-dY)) )->str();
-            historic.push_front("MOVE "+name+" "+dxString+" "+dyString);
-            reverseHistoric.push_front("MOVE "+name+" "+mdxString+" "+mdyString);
+            if(!notInHistoric) {
+                string dxString = static_cast<ostringstream *>( &(ostringstream() << dX))->str();
+                string dyString = static_cast<ostringstream *>( &(ostringstream() << dY))->str();
+                string mdxString = static_cast<ostringstream *>( &(ostringstream() << (-dX)))->str();
+                string mdyString = static_cast<ostringstream *>( &(ostringstream() << (-dY)))->str();
+                historic.push_front("MOVE " + name + " " + dxString + " " + dyString);
+                reverseHistoric.push_front("MOVE " + name + " " + mdxString + " " + mdyString);
+            }
             return myObj->second->Move(dX,dY);
         }
     }
@@ -722,7 +724,7 @@ int Draw::ExecuteCommand(string cmdStr, bool notInHistoric) {
             }
             else
             {
-                returnCode = Move(Name,dX,dY);
+                returnCode = Move(Name,dX,dY,notInHistoric);
             }
         }
     }

@@ -73,7 +73,7 @@ private :
     // Manual :
     // Prints all objects of the draw
 
-    int Move(string object, int dX, int dY);
+    int Move(string object, int dX, int dY, bool notInHistoric = false);
     // Manual :
     // Moves one object of dX and dY
 
