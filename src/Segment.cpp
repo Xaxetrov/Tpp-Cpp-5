@@ -17,6 +17,11 @@ Segment::Segment(std::string aName, Point point1, Point point2) : Object(aName),
 
 }
 
+Segment::Segment(Segment &toCopy) : Object(toCopy.name), pointA(toCopy.GetPointA()), pointB(toCopy.GetPointB())
+{
+
+}
+
 const bool Segment::Hits(Point aPoint) {
     int x1 = pointA.GetX(), y1 = pointA.GetY(), x2 = pointB.GetX(), y2 = pointB.GetY();
     int x = aPoint.GetX(), y = aPoint.GetY();
