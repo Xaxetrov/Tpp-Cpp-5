@@ -259,8 +259,16 @@
                 }
             }
         }
-        /*Intersection* myIntersection = new Intersection(name, );
-        allObjects.insert(make_pair(name,myIntersection));*/
+
+        list<Object*> objectsToUse;
+        for(unsigned int i=0; i<otherNames.size(); i++)
+        {
+            Object* tempObjPointer = allObjects.find(otherNames.at(i))->second;
+            Object tempObjCopy(*tempObjPointer);
+            objectsToUse.push_back(&tempObjCopy);
+        }
+        Intersection* myIntersection = new Intersection(name, objectsToUse);
+        allObjects.insert(make_pair(name,myIntersection));
         //TODO copy objects and construct intersection here
 
         if(!notInHistoric) {
