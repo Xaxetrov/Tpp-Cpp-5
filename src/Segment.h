@@ -54,8 +54,6 @@ public :
     Segment(std::string aName, Point point1, Point point2);
     Segment(Segment &toCopy);
 
-    friend int main();
-
 //-------------------------------------------------------------------------------------------------------------- Private
 //Private attributes
 private :

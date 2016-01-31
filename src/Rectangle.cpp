@@ -38,6 +38,11 @@ using namespace std;
     {
     }
 
+    Rectangle::Rectangle(Rectangle &toCopy) : Polygon(toCopy)
+    {
+
+    }
+
     Rectangle::~Rectangle()
     {
     }

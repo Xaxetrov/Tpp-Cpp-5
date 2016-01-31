@@ -21,6 +21,14 @@ Polygon::Polygon(const std::string aName, vector<int> &myCoords) : Object(aName)
     }
 }
 
+Polygon::Polygon(Polygon &toCopy) : Object(toCopy.name)
+{
+    for(unsigned int i = 0;i<toCopy.points.size();i++)
+    {
+        Add(toCopy.points[i]);
+    }
+}
+
 Polygon::~Polygon()
 {}
 

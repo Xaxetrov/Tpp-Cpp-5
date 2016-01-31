@@ -45,8 +45,14 @@ public :
     // Manual :
     // Creates a polygon and initialize its list of points with another given in parameter
 
+    Polygon(Polygon &toCopy);
+    // Manual:
+    // Create a new Polygon by coping an other.
+
     // Destructor
     virtual ~Polygon();
+
+    friend int main();
 
 //------------------------------------------------------------------------------------------------------------ Protected
 protected :

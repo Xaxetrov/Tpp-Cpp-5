@@ -36,6 +36,7 @@ public :
 
     // Constructor
     Rectangle(const std::string aName, std::vector<int> &myCoords); //TODO : What if there is less than 3 points ?
+    Rectangle(Rectangle &toCopy);
 
     // Destructor
     virtual ~Rectangle();
