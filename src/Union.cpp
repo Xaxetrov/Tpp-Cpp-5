@@ -74,7 +74,7 @@ int Union::GetCommand(ostream &os)
         string currentName = (*i)->GetName();
         nameLine+= " " + currentName;
     }
-    os << "\n" << "OR" << nameLine;
+    os << "\n" << "OR " << name << nameLine;
     os << "\n" << "DELETE" << nameLine;
     return 0;
 }

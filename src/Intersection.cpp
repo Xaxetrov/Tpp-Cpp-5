@@ -74,7 +74,7 @@ int Intersection::GetCommand(ostream &os)
         string currentName = (*i)->GetName();
         nameLine+= " " + currentName;
     }
-    os << "\n" << "OI" << nameLine;
+    os << "\n" << "OI " << name << nameLine;
     os << "\n" << "DELETE" << nameLine;
     return 0;
 }
