@@ -19,7 +19,9 @@
 
         vector<int> myCoords;
 
-        istringstream myStream(points);
+        stringstream myStream;
+        myStream << points;
+
         while(!myStream.eof())
         {
             int tempI;
@@ -486,8 +488,13 @@
 
             temp="";
             allObjects.find(toDelete.at(i))->second->GetCommand(ss2);
-            ss2 << "\n";
-            getline(ss2,temp);
+            while(ss2)
+            {
+                string line;
+                getline(ss2,line);
+                temp += line;
+                temp += '\n';
+            }
             cerr << ":"<<temp<<endl;
             reverseCommand += "\n" + temp;
 
@@ -550,7 +557,7 @@
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
 
-        cerr << "The UNDO method try to do this : "+*i << endl;
+        cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
         stringstream mySS(*i);/*TO OPTI********************************************************************************/
         ExecuteCommand(mySS,true);
         historicPosition++;
@@ -620,6 +627,11 @@ int Draw::Mult(stringstream &ss, int cmdNum)
     for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
     {
         cout <<currentCmdNum<<endl;
+
+        //string cmd;
+        //getline(ss,cmd);
+        //cout << cmd << endl;
+
         ExecuteCommand(ss, true);
     }
     cout << "End of MULT"<<cmdNum << endl;
