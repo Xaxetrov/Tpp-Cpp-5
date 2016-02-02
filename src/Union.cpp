@@ -55,7 +55,7 @@ string Union::toString()
     toReturn << name;
     toReturn << " from ";
     toReturn << composingObjects.size();
-    toReturn << " objects.";
+    toReturn << " objects";
 
     string result;
     getline(toReturn,result);

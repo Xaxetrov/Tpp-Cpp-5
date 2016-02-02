@@ -1,0 +1,17 @@
+S s1 -5 5 -15 -10
+R r1 0 0 1 1
+PC pc1 0 0 10 0 10 10 0 10
+OR or1 s1
+OI oi1 r1 pc1
+OR or2 or1 oi1
+DELETE r1
+SAVE ²-"r01
+SAVE saveForTest
+CLEAR
+LIST
+LOAD ²²565;<~
+LOAD saveForTest
+LIST
+UNDO
+LIST
+EXIT
