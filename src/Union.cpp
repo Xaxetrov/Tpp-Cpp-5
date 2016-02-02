@@ -74,10 +74,16 @@ int Union::GetCommand(ostream &os,string newName)
     list<Object *>::iterator i;
     for (i=composingObjects.begin();i != composingObjects.end();i++)
     {
+        //Temporary name to avoid double with original object
+        string tmpName = "tmpObjectForMultiConstruction";
+        tmpName += name;
+        tmpName += "From";
+        tmpName += (*i)->GetName();;
+
         os << "\n";
-        (*i)->GetCommand(os);
-        string currentName = (*i)->GetName();
-        nameLine+= " " + currentName;
+        (*i)->GetCommand(os,tmpName);
+        //string currentName = (*i)->GetName();
+        nameLine+= " " + tmpName;
     }
     os << "\n" << "OR " << newName << nameLine;
     os << "\n" << "DELETE" << nameLine;
