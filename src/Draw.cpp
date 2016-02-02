@@ -811,7 +811,11 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
 void Draw::printResult(string cmdType, int returnCode)
 {
-    if(returnCode==0)
+    if((cmdType=="LIST" || cmdType=="HIT") && returnCode==0)
+    {
+        //nothing
+    }
+    else if(returnCode==0)
     {
         cout << "OK" << endl;
     }
