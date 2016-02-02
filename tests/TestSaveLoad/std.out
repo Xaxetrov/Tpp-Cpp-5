@@ -5,17 +5,12 @@ OK
 OK
 OK
 OK
-ERR
-#Invalid filename
 OK
-OK
-ERR
-#Invalid filename
 OK
 Intersection named oi1 from 2 objects
 Union named or1 from 1 object
 Union named or2 from 2 objects
 Polygon named pc1
+Rectangle named r1
 Segment named s1
-OK
 
