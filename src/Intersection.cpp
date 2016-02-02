@@ -62,8 +62,13 @@ string Intersection::toString()
     return result;
 }
 
-int Intersection::GetCommand(ostream &os)
+int Intersection::GetCommand(ostream &os,string newName)
 {
+    if(newName=="")
+    {
+        newName = name;
+    }
+
     string nameLine ="";
     os << "MULT" << composingObjects.size()+2;
     list<Object *>::iterator i;
@@ -74,7 +79,7 @@ int Intersection::GetCommand(ostream &os)
         string currentName = (*i)->GetName();
         nameLine+= " " + currentName;
     }
-    os << "\n" << "OI " << name << nameLine;
+    os << "\n" << "OI " << newName << nameLine;
     os << "\n" << "DELETE" << nameLine;
     return 0;
 }

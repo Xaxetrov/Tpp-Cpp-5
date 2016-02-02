@@ -30,8 +30,8 @@ public:
     string toString();
     // This method give a representation of the union in a string
 
-    int GetCommand(ostream &os);
-    // This method give the command that permits to make the union
+    int GetCommand(ostream &os,string newName="");
+    // This method give the command that permits to make the union with potentially a new name
 
     Object * Clone();
     // This method returns a pointer on a copy of the union

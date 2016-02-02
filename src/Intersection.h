@@ -29,8 +29,8 @@ public:
     string toString();
     // This method give a representation of the intersection in a string
 
-    int GetCommand(ostream &os);
-    // This method give the command that permits to make the intersection
+    int GetCommand(ostream &os,string newName="");
+    // This method give the command that permits to make the intersection with potentially a new name
 
     Object * Clone();
     // This method returns a pointer on a copy of the intersection

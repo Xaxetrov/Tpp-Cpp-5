@@ -76,7 +76,7 @@ int MultiObject::Move(int dX, int dY)
     return result;
 }
 
-int MultiObject::GetCommand(ostream &os)
+int MultiObject::GetCommand(ostream &os,string newName)
 {
     return 0;
 }

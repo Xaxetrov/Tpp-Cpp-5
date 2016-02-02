@@ -46,9 +46,9 @@ public :
     // Manual :
     // Method used to print Segment information (name)
 
-    int GetCommand(std::ostream &os);
+    int GetCommand(std::ostream &os, std::string newName="");
     // Manual :
-    // Method used to get the command that can create the instantiated Segment
+    // Method used to get the command that can create the instantiated Segment with potentially a new name
 
     Object * Clone();
     // Manual :
