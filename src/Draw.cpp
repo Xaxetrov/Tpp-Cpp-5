@@ -99,7 +99,8 @@
                     Segment BC("BC",B,C);
 
                     int angle=AB.Angle(BC);
-                    cerr << angle << endl;
+                    //cerr << angle << endl;
+
                     if(direction == -1 && angle != 0 && angle != 180)
                     {
                         //Detect the direction of all vectors in the polygon
@@ -142,8 +143,8 @@
         int angleOne = AB.Angle(BC);
         int angleTwo = BC.Angle(CD);
 
-        cerr << angleOne << endl;
-        cerr << angleTwo << endl;
+        //cerr << angleOne << endl;
+        //cerr << angleTwo << endl;
 
         if(direction == -1 && angleOne != 0 && angleOne != 180)
         {
@@ -467,7 +468,7 @@
             else
             {
                 // This is not a correct name.
-                return 2;
+                return 1;
             }
         }
 
@@ -495,7 +496,7 @@
                 temp += line;
                 temp += '\n';
             }
-            cerr << ":"<<temp<<endl;
+            //cerr << ":"<<temp<<endl;
             reverseCommand += "\n" + temp;
 
             delete allObjects.find(toDelete.at(i))->second;
@@ -557,7 +558,8 @@
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
 
-        cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
+        //cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
+
         stringstream mySS(*i);/*TO OPTI********************************************************************************/
         ExecuteCommand(mySS,true);
         historicPosition++;
@@ -583,7 +585,8 @@
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition);
 
-        cerr << "The REDO method try to do this : "+*i << endl;
+        //cerr << "The REDO method try to do this : "+*i << endl;
+
         stringstream mySS(*i);/*TO OPTI********************************************************************************/
         ExecuteCommand(mySS,true);
 
@@ -613,30 +616,21 @@
         }
         return returnedBool;
     }
-/*
-R r 0 0 1 1
-R r2 0 0 1 1
-OI o r r2
-DELETE o
-UNDO
-LIST
-EXIT
-*/
-int Draw::Mult(stringstream &ss, int cmdNum)
-{
-    for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
+
+    int Draw::Mult(stringstream &ss, int cmdNum)
     {
-        cout <<currentCmdNum<<endl;
+        for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
+        {
+            //cout <<currentCmdNum<<endl;
+            //string cmd;
+            //getline(ss,cmd);
+            //cout << cmd << endl;
 
-        //string cmd;
-        //getline(ss,cmd);
-        //cout << cmd << endl;
-
-        ExecuteCommand(ss, true);
+            ExecuteCommand(ss, true);
+        }
+        //cout << "End of MULT"<<cmdNum << endl;
+        return 0;
     }
-    cout << "End of MULT"<<cmdNum << endl;
-    return 0;
-}
 
 int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
@@ -677,7 +671,6 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
         ss >> name;
         getline(ss,points);
-        cout << ":" << name << points << endl;
         returnCode = AddRectangle(name,points, notInHistoric);
     }
     else if(cmdType=="PC")
@@ -807,7 +800,6 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
     if(!notInHistoric)
     {
-        cout << "C: " << cmdType << endl;
         printResult(cmdType, returnCode);
     }
 
@@ -819,22 +811,21 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
 void Draw::printResult(string cmdType, int returnCode)
 {
-    cout << "R: ";
     if(returnCode==0)
     {
         cout << "OK" << endl;
     }
     else
     {
-        cout << "ERR";
+        cout << "ERR" << endl;
         if (cmdType == "S") {
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Invalid format or number of coordinates";
+                    cout << "#Invalid format or number of coordinates" << endl;
                     break;
                 default:break;
             }
@@ -843,13 +834,13 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect number of coordinates";
+                    cout << "#Incorrect number of coordinates" << endl;
                     break;
                 case 3 :
-                    cout << " Incorrect point placement";
+                    cout << "#Incorrect point placement" << endl;
                     break;
                 default:break;
             }
@@ -858,16 +849,16 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect number of coordinates";
+                    cout << "#Incorrect number of coordinates" << endl;
                     break;
                 case 3 :
-                    cout << " Non convex polygon";
+                    cout << "#Non convex polygon" << endl;
                     break;
                 case 4 :
-                    cout << " Same coordinates used several times";
+                    cout << "#Same coordinates used several times" << endl;
                     break;
                 default:break;
             }
@@ -876,16 +867,16 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect number of objects";
+                    cout << "#Incorrect number of objects" << endl;
                     break;
                 case 3 :
-                    cout << " Several uses of the same object";
+                    cout << "#Several uses of the same object" << endl;
                     break;
                 case 4 :
-                    cout << " Inclusion of a non-existant object";
+                    cout << "#Inclusion of a non-existant object" << endl;
                     break;
                 default:break;
             }
@@ -894,16 +885,16 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect number of objects";
+                    cout << "#Incorrect number of objects" << endl;
                     break;
                 case 3 :
-                    cout << " Several uses of the same object";
+                    cout << "#Several uses of the same object" << endl;
                     break;
                 case 4 :
-                    cout << " Intersection with a non-existant object";
+                    cout << "#Intersection with a non-existant object" << endl;
                     break;
                 default:break;
             }
@@ -912,13 +903,13 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " The point doesn't hit the object"; //TODO: This is not really an error ...
+                    cout << "#The point doesn't hit the object" << endl; //TODO: Not used because it have been replaced by YES/NO
                     break;
                 case 2 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;;
                     break;
                 case 3 :
-                    cout << " Incorrect format or number of coordinates";
+                    cout << "#Incorrect format or number of coordinates" << endl;;
                     break;
                 default:break;
             }
@@ -927,7 +918,7 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 default:break;
             }
@@ -936,10 +927,10 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect format or number of coordinates";
+                    cout << "#Incorrect format or number of coordinates" << endl;
                     break;
                 default:break;
             }
@@ -948,7 +939,7 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " No action to undo";
+                    cout << "#No action to undo" << endl;
                     break;
                 default:break;
             }
@@ -957,7 +948,7 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " No action to redo";
+                    cout << "#No action to redo" << endl;
                     break;
                 default:break;
             }
@@ -966,13 +957,13 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " The file is not accessible for reading";
+                    cout << "#The file is not accessible for reading" << endl;
                     break;
                 case 2 :
-                    cout << " The file reading generated an exception";
+                    cout << "#The file reading generated an exception" << endl;
                     break;
                 case 3 :
-                    cout << " The program does not understand the file";
+                    cout << "#The program does not understand the file" << endl;
                     break;
                 default:break;
             }
@@ -981,15 +972,14 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " The file is not accessible for writing";
+                    cout << "#The file is not accessible for writing" << endl;
                     break;
                 case 2 :
-                    cout << " Invalid filename";
+                    cout << "#Invalid filename" << endl;
                     break;
                 default:break;
             }
         }
-        cout << endl;
     }
 }
 
