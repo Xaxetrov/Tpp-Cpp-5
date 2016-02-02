@@ -36,9 +36,9 @@ public :
     // Manual :
     // Method used to print Polygon information (name)
 
-    virtual int GetCommand(std::ostream &os);
+    virtual int GetCommand(std::ostream &os,std::string newName="");
     // Manual :
-    // Method used to get the command that can create the instantiated Polygon
+    // Method used to get the command that can create the instantiated Polygon with potentially a new name
 
     virtual Object * Clone();
     // Manual :

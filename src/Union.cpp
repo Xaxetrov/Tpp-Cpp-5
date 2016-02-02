@@ -62,8 +62,13 @@ string Union::toString()
     return result;
 }
 
-int Union::GetCommand(ostream &os)
+int Union::GetCommand(ostream &os,string newName)
 {
+    if(newName == "")
+    {
+        newName = name;
+    }
+
     string nameLine ="";
     os << "MULT" << composingObjects.size()+2;
     list<Object *>::iterator i;
@@ -74,7 +79,7 @@ int Union::GetCommand(ostream &os)
         string currentName = (*i)->GetName();
         nameLine+= " " + currentName;
     }
-    os << "\n" << "OR " << name << nameLine;
+    os << "\n" << "OR " << newName << nameLine;
     os << "\n" << "DELETE" << nameLine;
     return 0;
 }

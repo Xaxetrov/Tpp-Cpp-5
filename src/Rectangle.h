@@ -30,9 +30,9 @@ public :
     // Manual :
     // Method used to print Rectangle  information (name)
 
-    int GetCommand(std::ostream &os);
+    int GetCommand(std::ostream &os,std::string newName="");
     // Manual :
-    // Method used to get the command that can create the instantiated Rectangle
+    // Method used to get the command that can create the instantiated Rectangle with potentially a new name
 
     Object * Clone();
     // Manual :

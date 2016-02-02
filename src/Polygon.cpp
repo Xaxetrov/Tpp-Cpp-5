@@ -120,9 +120,14 @@ string Polygon::toString()
     return "Polygon named "+name;
 }
 
-int Polygon::GetCommand(std::ostream &os)
+int Polygon::GetCommand(ostream &os,string newName)
 {
-    os << "PC " << name;
+    if(newName == "")
+    {
+        newName = name;
+    }
+
+    os << "PC " << newName;
     vector<Point>::iterator i;
 
     for(i = points.begin();i != points.end(); i++)

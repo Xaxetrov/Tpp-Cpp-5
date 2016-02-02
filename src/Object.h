@@ -42,9 +42,9 @@ public :
     // Manual :
     // Abstract method used to print Object information
 
-    virtual int GetCommand(std::ostream &os)=0;
+    virtual int GetCommand(std::ostream &os,std::string newName ="")=0;
     // Manual :
-    // Pure abstract method used to get the command that can create the instantiated Object
+    // Pure abstract method used to get the command that can create the instantiated Object with potentially a new name
 
     virtual Object * Clone();
     // Manual :

@@ -25,7 +25,7 @@ std::string Object::toString()
     return "";
 }
 
-int Object::GetCommand(std::ostream &os)
+int Object::GetCommand(std::ostream &os,std::string newName)
 {
     os << "ERROR Object virtual";
     return 1;
