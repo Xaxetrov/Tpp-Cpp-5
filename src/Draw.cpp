@@ -514,7 +514,6 @@
     int Draw::Clear()
     {
         int result = Save("tmpClearSave");
-        cerr << result;
         if(result == 0)
         {
             map<string,Object*>::iterator i;
