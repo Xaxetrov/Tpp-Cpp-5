@@ -422,19 +422,41 @@
                 return 3;
             }
 
-            while(getline(saveFile,line))/*TO OPTI*********************************************************************/
+            while(getline(saveFile,line))
             {
-                stringstream mySS(line);/*TO OPTI**********************************************************************/
-                try
+                stringstream mySS(line);
+                if(line.substr(0,4)=="MULT")
                 {
-                    succeededLines += (ExecuteCommand(mySS,true)==0);
-                    totalLines++;
+                    int numOfCmd = atoi(line.substr(4,line.size()-4).c_str());
+                    for(int i=0;i<numOfCmd; i++)
+                    {
+                        string lineOfMult;
+                        getline(saveFile,lineOfMult);
+                        stringstream mySS2(lineOfMult);
+                        try
+                        {
+                            succeededLines += (ExecuteCommand(mySS2,true)==0);
+                            totalLines++;
+                        }
+                        catch (exception e)
+                        {
+                            cerr << e.what() << " when reading the saved file" << endl;
+                            //cout << "ERR failed to read the file" << endl;
+                            return 2;
+                        }
+                    }
                 }
-                catch (exception e)
+                else
                 {
-                    cerr << e.what() << " when reading the saved file" << endl;
-                    //cout << "ERR failed to read the file" << endl;
-                    return 2;
+                    try {
+                        succeededLines += (ExecuteCommand(mySS, true) == 0);
+                        totalLines++;
+                    }
+                    catch (exception e) {
+                        cerr << e.what() << " when reading the saved file" << endl;
+                        //cout << "ERR failed to read the file" << endl;
+                        return 2;
+                    }
                 }
             }
             if(succeededLines!=totalLines)
@@ -521,8 +543,9 @@
 
             for(i=allObjects.begin();i != allObjects.end();i++)
             {
-                names += (i->first);
+                names += (i->first)+" ";
             }
+            names.pop_back();
 
             if(names != "")
             {
@@ -755,12 +778,10 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
     }
     else if(cmdType=="UNDO")
     {
-        //Call Undo method here
         returnCode=Undo();
     }
     else if(cmdType == "REDO")
     {
-        //Call Redo method here
         returnCode=Redo();
     }
     else if(cmdType=="LOAD")
