@@ -39,7 +39,7 @@
 	This is the document of conception of the application. It is ended by a class diagram which summarize its content.
 
 \section{Objects}
-    Objects are instanciated Whe the corresponding form is created.
+    Objects are instanciated Whe the corresponding form is created. They are then added in a map which stores all active objects of the draw.
     \subsection{Point}
         Point is not an object but it composed them. A Point is described by his two coordinates. We need to add a getter and
         a setter so we can read (to check a hit) and update (to move an object) coordinates of a point.
@@ -58,11 +58,11 @@
         Intersection is a kind of multi-object. A point is into a Intersection-Object only if it hits all objects which composed it.
 
 \section{Historic of actions}
-    To implement the ability for th user to undo and redo actions, we chose a quite simple model :
+    To implement the ability for the user to undo and redo actions, we chose a quite simple model :
     \begin{itemize}
         \item When the user calls a valid action, it is executed.
         \item Meanwhile, the command of this action is registered in a list, detailed later.
-        \item The program creates an oppostit command which can be executed if the user decides to undo the action.
+        \item The program creates an opposit command which can be executed if the user decides to undo the action.
         This command is stored in another list, but with the same iterator.
         \item Then, when undo and redo are called, we just have to navigate in this list and (re)execute corresponding
         actions
@@ -75,7 +75,10 @@
         already 20 commands registered, we erase the oldest to make some space to the new.
 
 \section{Persistance}
-    \subsection{Load}
     \subsection{Save}
+        When the user asks to save the state of the draw, the program take each object of the objects map and call their getCommand method.
+        The string returned is the command that can recreate the objects at an identic state. These commands are stored in the desired file.
+    \subsection{Load}
+        The program simply reads the commands of a given savefile and executes them. Thus, desired objects are imported in the draw.
 
 \end{document}

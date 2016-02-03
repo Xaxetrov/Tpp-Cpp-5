@@ -1,0 +1,9 @@
+=drawingfileB3133
+*t1
+MULT4
+S tmpObjectForMultiConstructionorFroms 0 0 1 1
+R tmpObjectForMultiConstructionorFromr 0 0 1 1
+OR or tmpObjectForMultiConstructionorFroms tmpObjectForMultiConstructionorFromr
+DELETE tmpObjectForMultiConstructionorFroms tmpObjectForMultiConstructionorFromr
+R r 0 0 1 1
+S s 0 0 1 1
