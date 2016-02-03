@@ -373,7 +373,7 @@
 
     int Draw::Save(string filename)
     {
-        string adress = "../saves/" + filename;
+        string adress = "saves/" + filename;
         ofstream myFile(adress.c_str());
         if(!myFile.is_open())
         {
@@ -395,7 +395,7 @@
 
     int Draw::Load(string filename)
     {
-        string adress = "../saves/" + filename;
+        string adress = "saves/" + filename;
         ifstream saveFile(adress.c_str(), ios::in);
         if(!saveFile)
         {
@@ -513,7 +513,8 @@
 
     int Draw::Clear()
     {
-        int result = Save("../tmpClearSave");
+        int result = Save("tmpClearSave");
+        cerr << result;
         if(result == 0)
         {
             map<string,Object*>::iterator i;
@@ -530,7 +531,7 @@
             }
 
             historic.push_front("CLEAR");
-            reverseHistoric.push_front("LOAD ../tmpClearSave");
+            reverseHistoric.push_front("LOAD tmpClearSave");
 
             return 0;
         }
@@ -767,14 +768,13 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
     {
         string filename;
         ss >> filename;
-        //Call Load method here
         Load(filename);
     }
     else if(cmdType=="SAVE")
     {
         string filename;
-        cin >> filename;
-        //Call Save method here
+        ss >> filename;
+        Save(filename);
     }
     else if(cmdType=="CLEAR")
     {

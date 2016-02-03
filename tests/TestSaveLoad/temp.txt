@@ -1,9 +1,25 @@
-C: S s1 -5 5 -15 -10
-R: OK
-C: S s1 56 56 98 22
-R: ERR Incorrect name
-C: S s2 12 54 87 65 95 45
-R: ERR Invalid format or number of coordinates
-C: S s3 56 AB 42 15
-R: ERR Invalid format or number of coordinates
-C: EXIT
+OK
+OK
+OK
+ERR
+#Incorrect number of objects
+OK
+ERR
+#Inclusion of a non-existant object
+OK
+OK
+OK
+ERR
+Intersection named oi1 from 2 objects
+Polygon named pc1
+Segment named s1
+OK
+OK
+Intersection named oi1 from 2 objects
+Polygon named pc1
+Segment named s1
+OK
+Intersection named oi1 from 2 objects
+Polygon named pc1
+Rectangle named r1
+Segment named s1
