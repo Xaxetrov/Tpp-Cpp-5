@@ -400,7 +400,6 @@
         if(!saveFile)
         {
             cerr << "error when opening the file : " << filename << endl;
-            //cout << "ERR failed to open the file" << endl;
             return 1;
         }
         else
@@ -466,6 +465,9 @@
                 return 3;
             }
         }
+        /*TODO write reverseHistoric command...
+        historic.push_front("LOAD "+filename);
+        reverseHistoric.push_front(reverseCommand);*/
         return 0;
     }
 
@@ -581,7 +583,7 @@
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
 
-        //cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
+        cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
 
         stringstream mySS(*i);/*TO OPTI********************************************************************************/
         ExecuteCommand(mySS,true);
@@ -644,11 +646,6 @@
     {
         for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
         {
-            //cout <<currentCmdNum<<endl;
-            //string cmd;
-            //getline(ss,cmd);
-            //cout << cmd << endl;
-
             ExecuteCommand(ss, true);
         }
         //cout << "End of MULT"<<cmdNum << endl;
@@ -788,13 +785,13 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
     {
         string filename;
         ss >> filename;
-        Load(filename);
+        returnCode=Load(filename);
     }
     else if(cmdType=="SAVE")
     {
         string filename;
         ss >> filename;
-        Save(filename);
+        returnCode=Save(filename);
     }
     else if(cmdType=="CLEAR")
     {

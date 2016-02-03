@@ -1,0 +1,7 @@
+OK
+ERR
+#Incorrect name
+ERR
+#Invalid format or number of coordinates
+ERR
+#Invalid format or number of coordinates

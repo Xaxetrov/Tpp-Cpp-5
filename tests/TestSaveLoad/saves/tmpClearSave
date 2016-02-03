@@ -1,0 +1,27 @@
+=drawingfileB3133
+*tmpClearSave
+MULT4
+R tmpObjectForMultiConstructionoi1Fromr1 0 0 1 1
+PC tmpObjectForMultiConstructionoi1Frompc1 0 0 10 0 10 10 0 10
+OI oi1 tmpObjectForMultiConstructionoi1Fromr1 tmpObjectForMultiConstructionoi1Frompc1
+DELETE tmpObjectForMultiConstructionoi1Fromr1 tmpObjectForMultiConstructionoi1Frompc1
+MULT4
+S tmpObjectForMultiConstructionor1Froms1 -5 5 -15 -10
+R tmpObjectForMultiConstructionor1Fromr1 0 0 1 1
+OR or1 tmpObjectForMultiConstructionor1Froms1 tmpObjectForMultiConstructionor1Fromr1
+DELETE tmpObjectForMultiConstructionor1Froms1 tmpObjectForMultiConstructionor1Fromr1
+MULT4
+MULT4
+S tmpObjectForMultiConstructionor1Froms1 -5 5 -15 -10
+R tmpObjectForMultiConstructionor1Fromr1 0 0 1 1
+OR tmpObjectForMultiConstructionor2Fromor1 tmpObjectForMultiConstructionor1Froms1 tmpObjectForMultiConstructionor1Fromr1
+DELETE tmpObjectForMultiConstructionor1Froms1 tmpObjectForMultiConstructionor1Fromr1
+MULT4
+R tmpObjectForMultiConstructionoi1Fromr1 0 0 1 1
+PC tmpObjectForMultiConstructionoi1Frompc1 0 0 10 0 10 10 0 10
+OI tmpObjectForMultiConstructionor2Fromoi1 tmpObjectForMultiConstructionoi1Fromr1 tmpObjectForMultiConstructionoi1Frompc1
+DELETE tmpObjectForMultiConstructionoi1Fromr1 tmpObjectForMultiConstructionoi1Frompc1
+OR or2 tmpObjectForMultiConstructionor2Fromor1 tmpObjectForMultiConstructionor2Fromoi1
+DELETE tmpObjectForMultiConstructionor2Fromor1 tmpObjectForMultiConstructionor2Fromoi1
+PC pc1 0 0 10 0 10 10 0 10
+S s1 -5 5 -15 -10

@@ -4,8 +4,6 @@ OK
 OK
 OK
 OK
-OK
-OK
 ERR
 #Incorrect name
 ERR
