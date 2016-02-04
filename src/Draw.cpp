@@ -421,6 +421,14 @@
                 return 3;
             }
 
+            // Save of the vector of object here before load
+            vector<string> anteriorObjects;
+            map<string,Object *>::iterator i;
+            for(i=allObjects.begin();i != allObjects.end(); i++)
+            {
+                anteriorObjects.push_back(i->first);
+            }
+
             stringstream commands;
             commands << saveFile.rdbuf();
 
@@ -441,11 +449,26 @@
                 //cout << "ERR not all lines have been correctly read" << endl;
                 return 3;
             }
+
+            //TODO write reverseHistoric command...
+            historic.push_front("LOAD "+filename);
+
+            // Reverse command : delete all objects which were not in the anterior list.
+            string reverseCommand = "DELETE";
+            for(i = allObjects.begin();i != allObjects.end(); i++)
+            {
+                if(anteriorObjects.end() == find(anteriorObjects.begin(),anteriorObjects.end(),i->first))
+                {
+                    // This is a new object !
+                    reverseCommand += " ";
+                    reverseCommand += i->first;
+                }
+            }
+            reverseHistoric.push_front(reverseCommand);
+            return 0;
         }
-        /*TODO write reverseHistoric command...
-        historic.push_front("LOAD "+filename);
-        reverseHistoric.push_front(reverseCommand);*/
-        return 0;
+
+
     }
 
     int Draw::Delete(string names, bool notInHistoric)
