@@ -824,7 +824,6 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
     //TODO:Delete the oldest command in historic if there is more than 20 commands.
 
-
     return 0;
 }
 

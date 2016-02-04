@@ -5,6 +5,6 @@ TestMultiobjets;1;1;2;2;1
 TestPolygon;1;1;2;2;1
 TestRectangle;1;1;2;2;1
 TestRedo;1;0;2;2;0
-TestSaveLoad;1;0;2;2;0
+TestSaveLoad;1;1;2;2;1
 TestSegment;1;1;2;2;1
 TestUndo;0;0;2;2;0
