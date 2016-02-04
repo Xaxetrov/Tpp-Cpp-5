@@ -19,7 +19,6 @@ Polygon::Polygon(const std::string aName, vector<int> &myCoords) : Object(aName)
         Point tmpPoint(myCoords[i],myCoords[i+1]);
         Add(tmpPoint);
     }
-    cout << "Polygon created" << endl;
 }
 
 Polygon::Polygon(Polygon &toCopy) : Object(toCopy.name)
@@ -32,7 +31,6 @@ Polygon::Polygon(Polygon &toCopy) : Object(toCopy.name)
 
 Polygon::~Polygon()
 {
-    cout << "Polygon destroyed"<<endl;
 }
 
 const bool Polygon::Hits(Point aPoint)

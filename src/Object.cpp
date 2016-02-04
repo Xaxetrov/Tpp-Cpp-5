@@ -40,9 +40,7 @@ Object * Object::Clone()
 
 Object::Object(std::string aName) : name(aName)
 {
-    cout << "Object created" << endl;
 }
 
 Object::~Object() {
-    cout << "Object destroyed" << endl;
 }
