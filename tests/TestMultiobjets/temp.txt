@@ -1,0 +1,22 @@
+OK
+OK
+OK
+OK
+OK
+OK
+ERR
+#Incorrect name
+ERR
+#Incorrect name
+ERR
+#Incorrect number of objects
+ERR
+#Incorrect number of objects
+ERR
+#Several uses of the same object
+ERR
+#Several uses of the same object
+ERR
+#Inclusion of a non-existant object
+ERR
+#Intersection with a non-existant object

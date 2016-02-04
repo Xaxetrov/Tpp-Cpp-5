@@ -1,0 +1,9 @@
+OK
+ERR
+#Incorrect number of coordinates
+ERR
+#Incorrect name
+ERR
+#Non convex polygon
+ERR
+#Same coordinates used several times

@@ -1,11 +1,9 @@
-C: PC Poly1 10 10 10 20 15 25 30 20 30 10
-R: OK
-C: R Poly2 -10 -10 0 0
-R: OK
-C: R Poly1 -1 -1 20 10
-R: ERR Incorrect name
-C: R Poly3 -1 -1 20 10 25 68
-R: ERR Incorrect number of coordinates
-C: R Poly4 20 20 11 11
-R: ERR Incorrect point placement
-C: EXIT
+OK
+OK
+ERR
+#Incorrect name
+ERR
+#Incorrect number of coordinates
+ERR
+#Incorrect point placement
+

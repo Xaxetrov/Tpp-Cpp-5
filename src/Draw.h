@@ -119,7 +119,7 @@ private:
     list<string> reverseHistoric;
     // The historic of opposite actions to the historic
 
-    int historicPosition;
+    unsigned int historicPosition;
     // The current position in the historic
 
 };

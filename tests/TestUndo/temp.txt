@@ -1,44 +1,20 @@
-C: S s1 -5 5 -15 -10
-R: OK
-C: R r1 0 0 10 10
-R: OK
-C: LIST
+OK
+OK
 Rectangle named r1
 Segment named s1
-R: OK
-C: UNDO
-R: OK
-C: LIST
+OK
 Segment named s1
-R: OK
-C: PC pc1 0 0 0 10 10 10
-R: ERR Non convex polygon
-C: PC pc2 1 1 1 11 11 11
-R: ERR Non convex polygon
-C: LIST
+OK
+OK
+Polygon named pc1
+Polygon named pc2
 Segment named s1
-R: OK
-C: UNDO
-R: OK
-C: UNDO
-R: OK
-C: UNDO
-R: ERR No action to undo
-C: LIST
-R: OK
-C: PC pc1 0 0 0 10 10 10 10 0
-R: OK
-C: HIT pc1 5 5
-Ok
-R: OK
-C: MOVE pc1 20 0
-R: OK
-C: HIT pc1 5 5
-Ok
-R: OK
-C: UNDO
-R: OK
-C: HIT pc1 5 5
-Ok
-R: OK
-C: EXIT
+OK
+OK
+OK
+OK
+YES
+OK
+NO
+OK
+YES

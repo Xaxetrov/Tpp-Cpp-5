@@ -19,7 +19,9 @@
 
         vector<int> myCoords;
 
-        istringstream myStream(points);
+        stringstream myStream;
+        myStream << points;
+
         while(!myStream.eof())
         {
             int tempI;
@@ -89,6 +91,7 @@
 
                 if(size >= 6)
                 {
+                    //A polygon is convex only if angles are always of the same side.
                     Point A(myCoords[size-6],myCoords[size-5]);
                     Point B(myCoords[size-4],myCoords[size-3]);
                     Point C(myCoords[size-2],myCoords[size-1]);
@@ -97,7 +100,8 @@
                     Segment BC("BC",B,C);
 
                     int angle=AB.Angle(BC);
-                    cerr << angle << endl;
+                    //cerr << angle << endl;
+
                     if(direction == -1 && angle != 0 && angle != 180)
                     {
                         //Detect the direction of all vectors in the polygon
@@ -140,8 +144,8 @@
         int angleOne = AB.Angle(BC);
         int angleTwo = BC.Angle(CD);
 
-        cerr << angleOne << endl;
-        cerr << angleTwo << endl;
+        //cerr << angleOne << endl;
+        //cerr << angleTwo << endl;
 
         if(direction == -1 && angleOne != 0 && angleOne != 180)
         {
@@ -370,7 +374,7 @@
 
     int Draw::Save(string filename)
     {
-        string adress = "../saves/" + filename;
+        string adress = "saves/" + filename;
         ofstream myFile(adress.c_str());
         if(!myFile.is_open())
         {
@@ -392,12 +396,11 @@
 
     int Draw::Load(string filename)
     {
-        string adress = "../saves/" + filename;
+        string adress = "saves/" + filename;
         ifstream saveFile(adress.c_str(), ios::in);
         if(!saveFile)
         {
             cerr << "error when opening the file : " << filename << endl;
-            //cout << "ERR failed to open the file" << endl;
             return 1;
         }
         else
@@ -419,18 +422,25 @@
                 return 3;
             }
 
-            while(getline(saveFile,line))/*TO OPTI*********************************************************************/
+            // Save of the vector of object here before load
+            vector<string> anteriorObjects;
+            map<string,Object *>::iterator i;
+            for(i=allObjects.begin();i != allObjects.end(); i++)
             {
-                stringstream mySS(line);/*TO OPTI**********************************************************************/
-                try
-                {
-                    succeededLines += (ExecuteCommand(mySS,true)==0);
-                    totalLines++;
+                anteriorObjects.push_back(i->first);
+            }
+
+            stringstream commands;
+            commands << saveFile.rdbuf();
+
+            while(!commands.eof())
+            {
+                try {
+                        succeededLines += (ExecuteCommand(commands, true) == 0);
+                        totalLines++;
                 }
-                catch (exception e)
-                {
+                catch (exception e) {
                     cerr << e.what() << " when reading the saved file" << endl;
-                    //cout << "ERR failed to read the file" << endl;
                     return 2;
                 }
             }
@@ -440,8 +450,25 @@
                 //cout << "ERR not all lines have been correctly read" << endl;
                 return 3;
             }
+
+            historic.push_front("LOAD "+filename);
+
+            // Reverse command : delete all objects which were not in the anterior list.
+            string reverseCommand = "DELETE";
+            for(i = allObjects.begin();i != allObjects.end(); i++)
+            {
+                if(anteriorObjects.end() == find(anteriorObjects.begin(),anteriorObjects.end(),i->first))
+                {
+                    // This is a new object !
+                    reverseCommand += " ";
+                    reverseCommand += i->first;
+                }
+            }
+            reverseHistoric.push_front(reverseCommand);
+            return 0;
         }
-        return 0;
+
+
     }
 
     int Draw::Delete(string names, bool notInHistoric)
@@ -465,12 +492,11 @@
             else
             {
                 // This is not a correct name.
-                return 2;
+                return 1;
             }
         }
 
         string reverseCommand("MULT"), command("DELETE"), temp;
-        // temp = to_string(toDelete.size()); TODO : Put this back
 
         stringstream tmp;
         tmp << toDelete.size();
@@ -486,9 +512,14 @@
 
             temp="";
             allObjects.find(toDelete.at(i))->second->GetCommand(ss2);
-            ss2 << "\n";
-            getline(ss2,temp);
-            cerr << ":"<<temp<<endl;
+            while(ss2)
+            {
+                string line;
+                getline(ss2,line);
+                temp += line;
+                temp += '\n';
+            }
+            //cerr << ":"<<temp<<endl;
             reverseCommand += "\n" + temp;
 
             delete allObjects.find(toDelete.at(i))->second;
@@ -505,7 +536,7 @@
 
     int Draw::Clear()
     {
-        int result = Save("../tmpClearSave");
+        int result = Save("tmpClearSave");
         if(result == 0)
         {
             map<string,Object*>::iterator i;
@@ -513,8 +544,9 @@
 
             for(i=allObjects.begin();i != allObjects.end();i++)
             {
-                names += (i->first);
+                names += (i->first)+" ";
             }
+            names.pop_back();
 
             if(names != "")
             {
@@ -522,7 +554,7 @@
             }
 
             historic.push_front("CLEAR");
-            reverseHistoric.push_front("LOAD ../tmpClearSave");
+            reverseHistoric.push_front("LOAD tmpClearSave");
 
             return 0;
         }
@@ -550,8 +582,9 @@
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
 
-        cerr << "The UNDO method try to do this : "+*i << endl;
-        stringstream mySS(*i);/*TO OPTI********************************************************************************/
+        //cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
+
+        stringstream mySS(*i);
         ExecuteCommand(mySS,true);
         historicPosition++;
 
@@ -576,8 +609,9 @@
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition);
 
-        cerr << "The REDO method try to do this : "+*i << endl;
-        stringstream mySS(*i);/*TO OPTI********************************************************************************/
+        //cerr << "The REDO method try to do this : "+*i << endl;
+
+        stringstream mySS(*i);
         ExecuteCommand(mySS,true);
 
         return 0;
@@ -590,7 +624,7 @@
         if(myObj == allObjects.end())
         {
             // This object doesnt exists !
-            return 2;
+            return 1;
         }
 
         bool returnedBool = myObj->second->Hits(Point(x,y));
@@ -607,16 +641,14 @@
         return returnedBool;
     }
 
-int Draw::Mult(stringstream &ss, int cmdNum)
-{
-    for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
+    int Draw::Mult(stringstream &ss, int cmdNum)
     {
-        cout <<currentCmdNum<<endl;
-        ExecuteCommand(ss, true);
+        for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
+        {
+            ExecuteCommand(ss, true);
+        }
+        return 0;
     }
-    cout << "End of MULT"<<cmdNum << endl;
-    return 0;
-}
 
 int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
@@ -628,11 +660,11 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
     if(!notInHistoric && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
     {
         list<string>::iterator i = historic.begin();
-        advance(i,historicPosition-1);
+        advance(i,historicPosition);
         historic.erase(historic.begin(),i);
 
         i=reverseHistoric.begin();
-        advance(i,historicPosition-1);
+        advance(i,historicPosition);
         reverseHistoric.erase(reverseHistoric.begin(),i);
 
         historicPosition = 0;
@@ -657,7 +689,6 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
         ss >> name;
         getline(ss,points);
-        cout << ":" << name << points << endl;
         returnCode = AddRectangle(name,points, notInHistoric);
     }
     else if(cmdType=="PC")
@@ -697,11 +728,11 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
         if(!(ss >> Name))
         {
-            returnCode = 2;
+            returnCode = 1;
         }
         else if(!(ss >> x >> y))
         {
-            returnCode = 3;
+            returnCode = 2;
         }
         else
         {
@@ -742,26 +773,23 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
     }
     else if(cmdType=="UNDO")
     {
-        //Call Undo method here
         returnCode=Undo();
     }
     else if(cmdType == "REDO")
     {
-        //Call Redo method here
         returnCode=Redo();
     }
     else if(cmdType=="LOAD")
     {
         string filename;
         ss >> filename;
-        //Call Load method here
-        Load(filename);
+        returnCode=Load(filename);
     }
     else if(cmdType=="SAVE")
     {
         string filename;
-        cin >> filename;
-        //Call Save method here
+        ss >> filename;
+        returnCode=Save(filename);
     }
     else if(cmdType=="CLEAR")
     {
@@ -782,39 +810,46 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
         {
             delete i->second;
         }
-        exit(0);
+        allObjects.clear();
+        return 1;
     }
 
     if(!notInHistoric)
     {
-        cout << "C: " << cmdType << endl;
         printResult(cmdType, returnCode);
     }
 
-    //TODO:Delete the oldest command in historic if there is more than 20 commands.
-
+    //Delete the oldest command in historic if there is more than 20 commands.
+    if(historic.size() == 21)
+    {
+        historic.pop_back();
+        reverseHistoric.pop_back();
+    }
 
     return 0;
 }
 
 void Draw::printResult(string cmdType, int returnCode)
 {
-    cout << "R: ";
-    if(returnCode==0)
+    if((cmdType=="LIST" || cmdType=="HIT") && returnCode==0)
+    {
+        //nothing
+    }
+    else if(returnCode==0)
     {
         cout << "OK" << endl;
     }
     else
     {
-        cout << "ERR";
+        cout << "ERR" << endl;
         if (cmdType == "S") {
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Invalid format or number of coordinates";
+                    cout << "#Invalid format or number of coordinates" << endl;
                     break;
                 default:break;
             }
@@ -823,13 +858,13 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect number of coordinates";
+                    cout << "#Incorrect number of coordinates" << endl;
                     break;
                 case 3 :
-                    cout << " Incorrect point placement";
+                    cout << "#Incorrect point placement" << endl;
                     break;
                 default:break;
             }
@@ -838,16 +873,16 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect number of coordinates";
+                    cout << "#Incorrect number of coordinates" << endl;
                     break;
                 case 3 :
-                    cout << " Non convex polygon";
+                    cout << "#Non convex polygon" << endl;
                     break;
                 case 4 :
-                    cout << " Same coordinates used several times";
+                    cout << "#Same coordinates used several times" << endl;
                     break;
                 default:break;
             }
@@ -856,16 +891,16 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect number of objects";
+                    cout << "#Incorrect number of objects" << endl;
                     break;
                 case 3 :
-                    cout << " Several uses of the same object";
+                    cout << "#Several uses of the same object" << endl;
                     break;
                 case 4 :
-                    cout << " Inclusion of a non-existant object";
+                    cout << "#Inclusion of a non-existant object" << endl;
                     break;
                 default:break;
             }
@@ -874,16 +909,16 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect number of objects";
+                    cout << "#Incorrect number of objects" << endl;
                     break;
                 case 3 :
-                    cout << " Several uses of the same object";
+                    cout << "#Several uses of the same object" << endl;
                     break;
                 case 4 :
-                    cout << " Intersection with a non-existant object";
+                    cout << "#Intersection with a non-existant object" << endl;
                     break;
                 default:break;
             }
@@ -892,13 +927,10 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " The point doesn't hit the object"; //TODO: This is not really an error ...
+                    cout << "#Incorrect name" << endl;;
                     break;
                 case 2 :
-                    cout << " Incorrect name";
-                    break;
-                case 3 :
-                    cout << " Incorrect format or number of coordinates";
+                    cout << "#Incorrect format or number of coordinates" << endl;;
                     break;
                 default:break;
             }
@@ -907,7 +939,7 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 default:break;
             }
@@ -916,10 +948,10 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " Incorrect name";
+                    cout << "#Incorrect name" << endl;
                     break;
                 case 2 :
-                    cout << " Incorrect format or number of coordinates";
+                    cout << "#Incorrect format or number of coordinates" << endl;
                     break;
                 default:break;
             }
@@ -928,7 +960,7 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " No action to undo";
+                    cout << "#No action to undo" << endl;
                     break;
                 default:break;
             }
@@ -937,7 +969,7 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " No action to redo";
+                    cout << "#No action to redo" << endl;
                     break;
                 default:break;
             }
@@ -946,13 +978,13 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " The file is not accessible for reading";
+                    cout << "#The file is not accessible for reading" << endl;
                     break;
                 case 2 :
-                    cout << " The file reading generated an exception";
+                    cout << "#The file reading generated an exception" << endl;
                     break;
                 case 3 :
-                    cout << " The program does not understand the file";
+                    cout << "#The program does not understand the file" << endl;
                     break;
                 default:break;
             }
@@ -961,15 +993,14 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << " The file is not accessible for writing";
+                    cout << "#The file is not accessible for writing" << endl;
                     break;
                 case 2 :
-                    cout << " Invalid filename";
+                    cout << "#Invalid filename" << endl;
                     break;
                 default:break;
             }
         }
-        cout << endl;
     }
 }
 

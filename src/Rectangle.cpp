@@ -27,9 +27,14 @@ using namespace std;
         return "Rectangle named "+name;
     }
 
-    int Rectangle::GetCommand(ostream &os)
+    int Rectangle::GetCommand(ostream &os,string newName)
     {
-        os << "R " << name << " " << points[0].GetX() << " " << points[0].GetY() << " " << points[1].GetX() << " " << points[1].GetY();
+        if(newName=="")
+        {
+            newName = name;
+        }
+
+        os << "R " << newName << " " << points[0].GetX() << " " << points[0].GetY() << " " << points[1].GetX() << " " << points[1].GetY();
         return 0;
     }
 

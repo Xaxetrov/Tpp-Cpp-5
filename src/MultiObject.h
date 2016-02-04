@@ -34,8 +34,8 @@ public:
     virtual string toString();
     // This method give a representation of the multiobject in a string
 
-    virtual int GetCommand(ostream &os)=0;
-    // This method give the command that permits to make the multiobject
+    virtual int GetCommand(ostream &os,string newName="")=0;
+    // This method give the command that permits to make the multiobject with potentially a new name
 
     virtual Object * Clone();
     // This method returns a pointer on a copy of the multiobject

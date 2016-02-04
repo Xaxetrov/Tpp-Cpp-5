@@ -1,0 +1,10 @@
+Test ID;Return code validation;Out result;StdErr result;File creation result;Global result
+TestClear;1;1;2;2;1
+TestExit;1;1;2;2;1
+TestMultiobjets;1;1;2;2;1
+TestPolygon;1;1;2;2;1
+TestRectangle;1;1;2;2;1
+TestRedo;1;1;2;2;1
+TestSaveLoad;1;1;2;2;1
+TestSegment;1;1;2;2;1
+TestUndo;1;1;2;2;1

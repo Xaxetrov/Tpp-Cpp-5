@@ -1,0 +1,183 @@
+R r1 0 0 1 1
+R r2 0 0 1 1
+R r3 0 0 1 1
+R r4 0 0 1 1
+R r5 0 0 1 1
+R r6 0 0 1 1
+R r7 0 0 1 1
+R r8 0 0 1 1
+R r9 0 0 1 1
+R r10 0 0 1 1
+R r11 0 0 1 1
+R r12 0 0 1 1
+R r13 0 0 1 1
+R r14 0 0 1 1
+R r15 0 0 1 1
+R r16 0 0 1 1
+R r17 0 0 1 1
+R r18 0 0 1 1
+R r19 0 0 1 1
+R r20 0 0 1 1
+R r21 0 0 1 1
+R r22 0 0 1 1
+R r23 0 0 1 1
+R r24 0 0 1 1
+R r25 0 0 1 1
+R r26 0 0 1 1
+R r27 0 0 1 1
+R r28 0 0 1 1
+R r29 0 0 1 1
+R r30 0 0 1 1
+R r31 0 0 1 1
+R r32 0 0 1 1
+R r33 0 0 1 1
+R r34 0 0 1 1
+R r35 0 0 1 1
+R r36 0 0 1 1
+R r37 0 0 1 1
+R r38 0 0 1 1
+R r39 0 0 1 1
+R r40 0 0 1 1
+R r41 0 0 1 1
+R r42 0 0 1 1
+R r43 0 0 1 1
+R r44 0 0 1 1
+R r45 0 0 1 1
+R r46 0 0 1 1
+R r47 0 0 1 1
+R r48 0 0 1 1
+R r49 0 0 1 1
+R r50 0 0 1 1
+R s1 0 0 1 1
+R s2 0 0 1 1
+R s3 0 0 1 1
+R s4 0 0 1 1
+R s5 0 0 1 1
+R s6 0 0 1 1
+R s7 0 0 1 1
+R s8 0 0 1 1
+R s9 0 0 1 1
+R s10 0 0 1 1
+R s11 0 0 1 1
+R s12 0 0 1 1
+R s13 0 0 1 1
+R s14 0 0 1 1
+R s15 0 0 1 1
+R s16 0 0 1 1
+R s17 0 0 1 1
+R s18 0 0 1 1
+R s19 0 0 1 1
+R s20 0 0 1 1
+R s21 0 0 1 1
+R s22 0 0 1 1
+R s23 0 0 1 1
+R s24 0 0 1 1
+R s25 0 0 1 1
+R s26 0 0 1 1
+R s27 0 0 1 1
+R s28 0 0 1 1
+R s29 0 0 1 1
+R s30 0 0 1 1
+R s31 0 0 1 1
+R s32 0 0 1 1
+R s33 0 0 1 1
+R s34 0 0 1 1
+R s35 0 0 1 1
+R s36 0 0 1 1
+R s37 0 0 1 1
+R s38 0 0 1 1
+R s39 0 0 1 1
+R s40 0 0 1 1
+R s41 0 0 1 1
+R s42 0 0 1 1
+R s43 0 0 1 1
+R s44 0 0 1 1
+R s45 0 0 1 1
+R s46 0 0 1 1
+R s47 0 0 1 1
+R s48 0 0 1 1
+R s49 0 0 1 1
+R s50 0 0 1 1
+PC pc1 0 0 1 1 2 0
+PC pc2 0 0 1 1 2 0
+PC pc3 0 0 1 1 2 0
+PC pc4 0 0 1 1 2 0
+PC pc5 0 0 1 1 2 0
+PC pc6 0 0 1 1 2 0
+PC pc7 0 0 1 1 2 0
+PC pc8 0 0 1 1 2 0
+PC pc9 0 0 1 1 2 0
+PC pc10 0 0 1 1 2 0
+PC pc11 0 0 1 1 2 0
+PC pc12 0 0 1 1 2 0
+PC pc13 0 0 1 1 2 0
+PC pc14 0 0 1 1 2 0
+PC pc15 0 0 1 1 2 0
+PC pc16 0 0 1 1 2 0
+PC pc17 0 0 1 1 2 0
+PC pc18 0 0 1 1 2 0
+PC pc19 0 0 1 1 2 0
+PC pc20 0 0 1 1 2 0
+PC pc21 0 0 1 1 2 0
+PC pc22 0 0 1 1 2 0
+PC pc23 0 0 1 1 2 0
+PC pc24 0 0 1 1 2 0
+PC pc25 0 0 1 1 2 0
+PC pc26 0 0 1 1 2 0
+PC pc27 0 0 1 1 2 0
+PC pc28 0 0 1 1 2 0
+PC pc29 0 0 1 1 2 0
+PC pc30 0 0 1 1 2 0
+PC pc31 0 0 1 1 2 0
+PC pc32 0 0 1 1 2 0
+PC pc33 0 0 1 1 2 0
+PC pc34 0 0 1 1 2 0
+PC pc35 0 0 1 1 2 0
+PC pc36 0 0 1 1 2 0
+PC pc37 0 0 1 1 2 0
+PC pc38 0 0 1 1 2 0
+PC pc39 0 0 1 1 2 0
+PC pc40 0 0 1 1 2 0
+PC pc41 0 0 1 1 2 0
+PC pc42 0 0 1 1 2 0
+PC pc43 0 0 1 1 2 0
+PC pc44 0 0 1 1 2 0
+PC pc45 0 0 1 1 2 0
+PC pc46 0 0 1 1 2 0
+PC pc47 0 0 1 1 2 0
+PC pc48 0 0 1 1 2 0
+PC pc49 0 0 1 1 2 0
+PC pc50 0 0 1 1 2 0
+OR or1 r1 pc1
+OR or2 r2 pc2
+OR or3 r3 pc3
+OR or4 r4 pc4
+OR or4 r5 pc5
+OI oi1 r1 s1
+OI oi2 r2 s2
+OI oi3 r3 s3
+OI oi4 r4 s4
+OI oi5 r5 s5
+OR or6 or1 oi1
+OR or7 or2 oi2
+OR or8 or3 oi3
+OR or9 or4 oi4
+OR or10 or5 oi5
+OI oi6 oi1 or1
+OI oi7 oi2 or2
+OI oi8 oi3 or3
+OI oi9 oi4 or4
+OI oi10 oi5 or5
+OR or11 or6 oi6
+OR or12 or7 oi7
+OR or13 or8 oi8
+OR or14 or9 oi9
+OR or15 or10 oi10
+OI oi11 oi6 or6
+OI oi12 oi7 or7
+OI oi13 oi8 or8
+OI oi14 oi9 or9
+OI oi15 oi10 or10
+SAVE benchsave
+EXIT
+

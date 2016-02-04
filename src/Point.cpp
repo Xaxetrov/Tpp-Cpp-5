@@ -19,3 +19,7 @@ Point::Point(int myX, int myY) : x(myX), y(myY)
 {
 
 }
+
+Point::~Point() {
+
+}

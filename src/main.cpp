@@ -8,10 +8,12 @@ int main() {
 
     Draw d;
     string s;
-    while(1)
+    int needExit = 0;
+
+    while(!needExit)
     {
         getline(cin, s);
         stringstream ss(s);
-        d.ExecuteCommand(ss);
+        needExit=d.ExecuteCommand(ss);
     }
 }

@@ -55,26 +55,37 @@ string Intersection::toString()
     toReturn << name;
     toReturn << " from ";
     toReturn << composingObjects.size();
-    toReturn << " objects.";
+    toReturn << " objects";
 
     string result;
     getline(toReturn,result);
     return result;
 }
 
-int Intersection::GetCommand(ostream &os)
+int Intersection::GetCommand(ostream &os,string newName)
 {
+    if(newName=="")
+    {
+        newName = name;
+    }
+
     string nameLine ="";
     os << "MULT" << composingObjects.size()+2;
     list<Object *>::iterator i;
     for (i=composingObjects.begin();i != composingObjects.end();i++)
     {
+        //Temporary name to avoid double with original object
+        string tmpName = "tmpObjectForMultiConstruction";
+        tmpName += name;
+        tmpName += "From";
+        tmpName += (*i)->GetName();;
+
         os << "\n";
-        (*i)->GetCommand(os);
-        string currentName = (*i)->GetName();
-        nameLine+= " " + currentName;
+        (*i)->GetCommand(os,tmpName);
+        //string currentName = (*i)->GetName();
+        nameLine+= " " + tmpName;
     }
-    os << "\n" << "OI" << nameLine;
+    os << "\n" << "OI " << newName << nameLine;
     os << "\n" << "DELETE" << nameLine;
     return 0;
 }

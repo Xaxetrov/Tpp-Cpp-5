@@ -30,15 +30,27 @@ Polygon::Polygon(Polygon &toCopy) : Object(toCopy.name)
 }
 
 Polygon::~Polygon()
-{}
+{
+}
 
 const bool Polygon::Hits(Point aPoint)
 {
     vector<Point>::iterator i;
     int side = -1;
 
+    for(int j = 0;j < points.size();j++)
+    {
+        if((points[j].GetX() == aPoint.GetX()) && (points[j].GetY() == aPoint.GetY()))
+        {
+            return true;
+        }
+    }
     for(i = points.begin();i != points.end()-1;i++)
     {
+        if((i->GetX() == aPoint.GetX()) && (i->GetY() == aPoint.GetY()))
+        {
+            return true;
+        }
         // A Point is into a polygon is it's at the same side of all his segment
 
         Segment inPoly("AB",*i,*(i+1));
@@ -109,7 +121,7 @@ int Polygon::Move(int dX, int dY)
     return 0;
 }
 
-int Polygon::Add(Point aPoint)
+int Polygon::Add(Point &aPoint)
 {
     points.push_back(aPoint);
     return 0;
@@ -120,9 +132,14 @@ string Polygon::toString()
     return "Polygon named "+name;
 }
 
-int Polygon::GetCommand(std::ostream &os)
+int Polygon::GetCommand(ostream &os,string newName)
 {
-    os << "PC " << name;
+    if(newName == "")
+    {
+        newName = name;
+    }
+
+    os << "PC " << newName;
     vector<Point>::iterator i;
 
     for(i = points.begin();i != points.end(); i++)

@@ -8,6 +8,7 @@
 
 #include "Object.h"
 #include <iostream>
+using namespace std;
 
 const bool Object::Hits(Point aPoint) {
     std::cerr << "Object virtual method called";
@@ -25,7 +26,7 @@ std::string Object::toString()
     return "";
 }
 
-int Object::GetCommand(std::ostream &os)
+int Object::GetCommand(std::ostream &os,std::string newName)
 {
     os << "ERROR Object virtual";
     return 1;
@@ -39,5 +40,7 @@ Object * Object::Clone()
 
 Object::Object(std::string aName) : name(aName)
 {
+}
 
+Object::~Object() {
 }
