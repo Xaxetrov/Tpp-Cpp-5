@@ -421,41 +421,18 @@
                 return 3;
             }
 
-            while(getline(saveFile,line))
+            stringstream commands;
+            commands << saveFile.rdbuf();
+
+            while(!commands.eof())
             {
-                stringstream mySS(line);
-                if(line.substr(0,4)=="MULT")
-                {
-                    int numOfCmd = atoi(line.substr(4,line.size()-4).c_str());
-                    for(int i=0;i<numOfCmd; i++)
-                    {
-                        string lineOfMult;
-                        getline(saveFile,lineOfMult);
-                        stringstream mySS2(lineOfMult);
-                        try
-                        {
-                            succeededLines += (ExecuteCommand(mySS2,true)==0);
-                            totalLines++;
-                        }
-                        catch (exception e)
-                        {
-                            cerr << e.what() << " when reading the saved file" << endl;
-                            //cout << "ERR failed to read the file" << endl;
-                            return 2;
-                        }
-                    }
-                }
-                else
-                {
-                    try {
-                        succeededLines += (ExecuteCommand(mySS, true) == 0);
+                try {
+                        succeededLines += (ExecuteCommand(commands, true) == 0);
                         totalLines++;
-                    }
-                    catch (exception e) {
-                        cerr << e.what() << " when reading the saved file" << endl;
-                        //cout << "ERR failed to read the file" << endl;
-                        return 2;
-                    }
+                }
+                catch (exception e) {
+                    cerr << e.what() << " when reading the saved file" << endl;
+                    return 2;
                 }
             }
             if(succeededLines!=totalLines)
