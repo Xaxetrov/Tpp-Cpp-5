@@ -79,7 +79,7 @@
 
             if(myCoords.size() % 2 == 0)
             {
-                unsigned long size = myCoords.size();
+                int size = myCoords.size();
                 for(int i=0; i< size-3; i+=2)
                 {
                     if(myCoords[i] == myCoords[size-2] && myCoords[i+1] == myCoords[size-1])
@@ -99,6 +99,7 @@
                     Segment BC("BC",B,C);
 
                     int angle=AB.Angle(BC);
+                    //cerr << angle << endl;
 
                     if(direction == -1 && angle != 0 && angle != 180)
                     {
@@ -122,7 +123,7 @@
             }
         }
 
-        unsigned long finalSize = myCoords.size();
+        int finalSize = myCoords.size();
         if(finalSize < 6 || finalSize%2 != 0)
         {
             // A Polygon is defined by at least three points.
@@ -141,6 +142,9 @@
 
         int angleOne = AB.Angle(BC);
         int angleTwo = BC.Angle(CD);
+
+        //cerr << angleOne << endl;
+        //cerr << angleTwo << endl;
 
         if(direction == -1 && angleOne != 0 && angleOne != 180)
         {
@@ -442,6 +446,7 @@
             if(succeededLines!=totalLines)
             {
                 cerr << "Warning, only " << succeededLines << " lines correctly read out of " << totalLines << " !" << endl;
+                //cout << "ERR not all lines have been correctly read" << endl;
                 return 3;
             }
 
@@ -515,6 +520,7 @@
                 temp += line;
                 temp += '\n';
             }
+            //cerr << ":"<<temp<<endl;
             reverseCommand += "\n" + temp;
 
             delete allObjects.find(toDelete.at(i))->second;
@@ -579,7 +585,7 @@
 
         cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
 
-        stringstream mySS(*i);
+        stringstream mySS(*i);/*TO OPTI********************************************************************************/
         ExecuteCommand(mySS,true);
         historicPosition++;
 
@@ -604,7 +610,7 @@
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition);
 
-        cerr << "The REDO method try to do this : "+*i << endl;
+        //cerr << "The REDO method try to do this : "+*i << endl;
 
         stringstream mySS(*i);/*TO OPTI********************************************************************************/
         ExecuteCommand(mySS,true);
@@ -642,6 +648,7 @@
         {
             ExecuteCommand(ss, true);
         }
+        //cout << "End of MULT"<<cmdNum << endl;
         return 0;
     }
 
@@ -807,7 +814,8 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
         {
             delete i->second;
         }
-        exit(0);
+        allObjects.clear();
+        return 1;//exit(0);
     }
 
     if(!notInHistoric)
@@ -816,6 +824,7 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
     }
 
     //TODO:Delete the oldest command in historic if there is more than 20 commands.
+
 
     return 0;
 }

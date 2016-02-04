@@ -5,26 +5,44 @@
     copyright : (C) 2016 by Edern Haumont & Théo Thibault
 ***********************************************************************************************************************/
 
-//-------------------------------------------------------------------------------------------------------------- INCLUDE
-//----------------------------------------------------------------------------------------------------- Personal include
 #include "Polygon.h"
 #include "Segment.h"
+#include <string>
+#include <vector>
 using namespace std;
 
-//--------------------------------------------------------------------------------------------------------------- PUBLIC
-//------------------------------------------------------------------------------------------------------- Public methods
+
+Polygon::Polygon(const std::string aName, vector<int> &myCoords) : Object(aName)
+{
+    for(unsigned int i = 0;i<myCoords.size();i+=2)
+    {
+        Point tmpPoint(myCoords[i],myCoords[i+1]);
+        Add(tmpPoint);
+    }
+    cout << "Polygon created" << endl;
+}
+
+Polygon::Polygon(Polygon &toCopy) : Object(toCopy.name)
+{
+    for(unsigned int i = 0;i<toCopy.points.size();i++)
+    {
+        Add(toCopy.points[i]);
+    }
+}
+
+Polygon::~Polygon()
+{
+    cout << "Polygon destroyed"<<endl;
+}
 
 const bool Polygon::Hits(Point aPoint)
-// Algorithm :
-// 1 - A Point is into a polygon if it it's size equals the sum of those of all its segments
-// 2 - Check on the closing segment
 {
     vector<Point>::iterator i;
     int side = -1;
 
     for(i = points.begin();i != points.end()-1;i++)
     {
-        // 1st test
+        // A Point is into a polygon is it's at the same side of all his segment
 
         Segment inPoly("AB",*i,*(i+1));
         Segment toPoint("AP",*i,aPoint);
@@ -56,7 +74,7 @@ const bool Polygon::Hits(Point aPoint)
         }
     }
 
-    // 2nd test
+    // Check on the closing segment
     Segment inPoly("ZA",points.back(),points.front());
     Segment toPoint("ZP",points.back(),aPoint);
 
@@ -75,23 +93,26 @@ const bool Polygon::Hits(Point aPoint)
         tmpSide=2;
     }
 
-    return !(side != tmpSide && tmpSide != 0);
+    if(side != tmpSide && tmpSide != 0)
+    {
+        return false;
+    }
 
+    return true;
 }
 
 int Polygon::Move(int dX, int dY)
-// Algorithm :
-// Point by Point move.
 {
     vector<Point>::iterator i;
     for(i=points.begin();i != points.end(); i++)
     {
         i->Move(dX,dY);
     }
+    //std::cerr << "Polygon move method called";
     return 0;
 }
 
-int Polygon::Add(Point aPoint)
+int Polygon::Add(Point &aPoint)
 {
     points.push_back(aPoint);
     return 0;
@@ -125,27 +146,3 @@ Object * Polygon::Clone()
     Object *ptr = new Polygon(*this);
     return ptr;
 }
-
-//------------------------------------------------------------------------------------------- Constructors - Destructors
-// Constructor
-Polygon::Polygon(const std::string aName, vector<int> &myCoords) : Object(aName)
-{
-    for(unsigned int i = 0;i<myCoords.size();i+=2)
-    {
-        Point tmpPoint(myCoords[i],myCoords[i+1]);
-        Add(tmpPoint);
-    }
-}
-
-// Copy constructor
-Polygon::Polygon(Polygon &toCopy) : Object(toCopy.name)
-{
-    for(unsigned int i = 0;i<toCopy.points.size();i++)
-    {
-        Add(toCopy.points[i]);
-    }
-}
-
-// Destructor
-Polygon::~Polygon()
-{}

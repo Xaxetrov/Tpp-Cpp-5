@@ -13,6 +13,7 @@
 #include "Point.h"
 // System includes
 #include <vector>
+using namespace std;
 
 //----------------------------------------------------------------------------------------------------------------------
 // The Polygon class represents a convex polygon defined by its points
@@ -32,11 +33,11 @@ public :
     // Manual :
     // Moves the Polygon position by dX and dY
 
-    std::string toString();
+    string toString();
     // Manual :
     // Method used to print Polygon information (name)
 
-    virtual int GetCommand(std::ostream &os,std::string newName="");
+    virtual int GetCommand(ostream &os,string newName="");
     // Manual :
     // Method used to get the command that can create the instantiated Polygon with potentially a new name
 
@@ -45,7 +46,7 @@ public :
     // This method return a pointer on a copy of the Polygon
 
     // Constructor
-    Polygon(const std::string aName,std::vector<int> &myCoords);
+    Polygon(const string aName,vector<int> &myCoords);
     // Manual :
     // Creates a polygon and initialize its list of points with another given in parameter
 
@@ -56,17 +57,16 @@ public :
     // Destructor
     virtual ~Polygon();
 
-    friend int main();
 
 //------------------------------------------------------------------------------------------------------------ Protected
 protected :
     // Protected Methods
-    int Add(Point aPoint);
+    int Add(Point &aPoint);
     // Manual :
     // Adds a point to the polygon
 
     //Protected Attribute
-    std::vector<Point> points;
+    vector<Point> points;
     // The list of the points that define the polygon
 };
 

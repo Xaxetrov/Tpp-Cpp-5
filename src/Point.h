@@ -24,7 +24,7 @@ public :
 
     //Constructor
     Point(int myX, int myY);
-
+    virtual ~Point();
     //Other methods
     void Move(int dX, int dY);
     // Manual :

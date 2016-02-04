@@ -5,16 +5,31 @@
     copyright : (C) 2016 by Edern Haumont & Théo Thibault
 ***********************************************************************************************************************/
 
-//-------------------------------------------------------------------------------------------------------------- INCLUDE
-//----------------------------------------------------------------------------------------------------- Personal include
+
 #include "Object.h"
+#include <iostream>
 using namespace std;
-//--------------------------------------------------------------------------------------------------------------- PUBLIC
-//------------------------------------------------------------------------------------------------------- Public methods
+
+const bool Object::Hits(Point aPoint) {
+    std::cerr << "Object virtual method called";
+    return false;
+}
+
+int Object::Move(int dX, int dY) {
+    std::cerr << "Object virtual move method called";
+    return 0;
+}
+
 std::string Object::toString()
 {
     std::cerr << "Object virtual method called";
     return "";
+}
+
+int Object::GetCommand(std::ostream &os,std::string newName)
+{
+    os << "ERROR Object virtual";
+    return 1;
 }
 
 Object * Object::Clone()
@@ -23,9 +38,11 @@ Object * Object::Clone()
     return this;
 }
 
-//------------------------------------------------------------------------------------------- Constructors - Destructors
-// Constructor
 Object::Object(std::string aName) : name(aName)
 {
+    cout << "Object created" << endl;
+}
 
+Object::~Object() {
+    cout << "Object destroyed" << endl;
 }

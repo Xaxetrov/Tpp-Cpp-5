@@ -11,6 +11,7 @@
 //------------------------------------------------------------------------------------------------------------- Includes
 // Personal includes
 #include "Polygon.h"
+using namespace std;
 
 //----------------------------------------------------------------------------------------------------------------------
 // The Rectangle class represents a convex rectangle defined by its top-left and bottom-right points
@@ -26,11 +27,11 @@ public :
     // Manual :
     // Checks if a point given in parameter is in the Rectangle
 
-    std::string toString();
+    string toString();
     // Manual :
     // Method used to print Rectangle  information (name)
 
-    int GetCommand(std::ostream &os,std::string newName="");
+    int GetCommand(ostream &os,string newName="");
     // Manual :
     // Method used to get the command that can create the instantiated Rectangle with potentially a new name
 
@@ -39,7 +40,7 @@ public :
     // Returns a pointer on a copy of the Rectangle
 
     // Constructor
-    Rectangle(const std::string aName, std::vector<int> &myCoords); //TODO : What if there is less than 3 points ?
+    Rectangle(const string aName, vector<int> &myCoords); //TODO : What if there is less than 3 points ?
     Rectangle(Rectangle &toCopy);
 
     // Destructor
