@@ -52,7 +52,6 @@ public :
 
     //Public constructor
     Object(std::string aName);
-
     virtual ~Object();
 
 //Protected attribute

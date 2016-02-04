@@ -91,6 +91,7 @@
 
                 if(size >= 6)
                 {
+                    //A polygon is convex only if angles are always of the same side.
                     Point A(myCoords[size-6],myCoords[size-5]);
                     Point B(myCoords[size-4],myCoords[size-3]);
                     Point C(myCoords[size-2],myCoords[size-1]);
@@ -497,7 +498,6 @@
         }
 
         string reverseCommand("MULT"), command("DELETE"), temp;
-        // temp = to_string(toDelete.size()); TODO : Put this back
 
         stringstream tmp;
         tmp << toDelete.size();
@@ -583,9 +583,9 @@
         list<string>::iterator i = reverseHistoric.begin();
         advance(i,historicPosition);
 
-        cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
+        //cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
 
-        stringstream mySS(*i);/*TO OPTI********************************************************************************/
+        stringstream mySS(*i);
         ExecuteCommand(mySS,true);
         historicPosition++;
 
@@ -612,7 +612,7 @@
 
         //cerr << "The REDO method try to do this : "+*i << endl;
 
-        stringstream mySS(*i);/*TO OPTI********************************************************************************/
+        stringstream mySS(*i);
         ExecuteCommand(mySS,true);
 
         return 0;
@@ -625,7 +625,7 @@
         if(myObj == allObjects.end())
         {
             // This object doesnt exists !
-            return 2;
+            return 1;
         }
 
         bool returnedBool = myObj->second->Hits(Point(x,y));
@@ -648,7 +648,6 @@
         {
             ExecuteCommand(ss, true);
         }
-        //cout << "End of MULT"<<cmdNum << endl;
         return 0;
     }
 
@@ -668,8 +667,6 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
         i=reverseHistoric.begin();
         advance(i,historicPosition);
         reverseHistoric.erase(reverseHistoric.begin(),i);
-
-        cerr << "Historic cleaned" << endl;
 
         historicPosition = 0;
     }
@@ -732,11 +729,11 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
         if(!(ss >> Name))
         {
-            returnCode = 2;
+            returnCode = 1;
         }
         else if(!(ss >> x >> y))
         {
-            returnCode = 3;
+            returnCode = 2;
         }
         else
         {
@@ -815,7 +812,7 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
             delete i->second;
         }
         allObjects.clear();
-        return 1;//exit(0);
+        return 1;
     }
 
     if(!notInHistoric)
@@ -823,8 +820,12 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
         printResult(cmdType, returnCode);
     }
 
-    //TODO:Delete the oldest command in historic if there is more than 20 commands.
-
+    //Delete the oldest command in historic if there is more than 20 commands.
+    if(historic.size() == 21)
+    {
+        historic.pop_back();
+        reverseHistoric.pop_back();
+    }
 
     return 0;
 }
@@ -927,12 +928,9 @@ void Draw::printResult(string cmdType, int returnCode)
             switch (returnCode)
             {
                 case 1 :
-                    cout << "#The point doesn't hit the object" << endl; //TODO: Not used because it have been replaced by YES/NO
-                    break;
-                case 2 :
                     cout << "#Incorrect name" << endl;;
                     break;
-                case 3 :
+                case 2 :
                     cout << "#Incorrect format or number of coordinates" << endl;;
                     break;
                 default:break;
