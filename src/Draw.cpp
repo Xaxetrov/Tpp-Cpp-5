@@ -450,7 +450,6 @@
                 return 3;
             }
 
-            //TODO write reverseHistoric command...
             historic.push_front("LOAD "+filename);
 
             // Reverse command : delete all objects which were not in the anterior list.
@@ -497,7 +496,6 @@
         }
 
         string reverseCommand("MULT"), command("DELETE"), temp;
-        // temp = to_string(toDelete.size()); TODO : Put this back
 
         stringstream tmp;
         tmp << toDelete.size();
@@ -926,9 +924,6 @@ void Draw::printResult(string cmdType, int returnCode)
         else if (cmdType == "HIT") {
             switch (returnCode)
             {
-                case 1 :
-                    cout << "#The point doesn't hit the object" << endl; //TODO: Not used because it have been replaced by YES/NO
-                    break;
                 case 2 :
                     cout << "#Incorrect name" << endl;;
                     break;
