@@ -75,12 +75,8 @@ const bool Polygon::Hits(Point aPoint)
         tmpSide=2;
     }
 
-    if(side != tmpSide && tmpSide != 0)
-    {
-        return false;
-    }
+    return !(side != tmpSide && tmpSide != 0);
 
-    return true;
 }
 
 int Polygon::Move(int dX, int dY)

@@ -47,8 +47,8 @@ int Segment::Angle(Segment othSeg)
     int bY=othSeg.pointB.GetY()-othSeg.pointA.GetY();
 
     //Calculate the angle with scalar product
-    float sizeA = sqrt(aX*aX+aY*aY);
-    float sizeB = sqrt(bX*bX+bY*bY);
+    double sizeA = sqrt(aX*aX+aY*aY);
+    double sizeB = sqrt(bX*bX+bY*bY);
     int angle = (int)(acos((aX*bX+aY*bY)/(sizeA*sizeB))*(180/3.14159265358979323846));
 
     //Calculate the sign with the vectorial product
@@ -87,10 +87,8 @@ Object * Segment::Clone()
 // Constructor
 Segment::Segment(std::string aName, Point point1, Point point2) : Object(aName), pointA(point1), pointB(point2)
 {
-
 }
 // Copy constructor
 Segment::Segment(Segment &toCopy) : Object(toCopy.name), pointA(toCopy.GetPointA()), pointB(toCopy.GetPointB())
 {
-
 }

@@ -79,7 +79,7 @@
 
             if(myCoords.size() % 2 == 0)
             {
-                int size = myCoords.size();
+                unsigned long size = myCoords.size();
                 for(int i=0; i< size-3; i+=2)
                 {
                     if(myCoords[i] == myCoords[size-2] && myCoords[i+1] == myCoords[size-1])
@@ -123,7 +123,7 @@
             }
         }
 
-        int finalSize = myCoords.size();
+        unsigned long finalSize = myCoords.size();
         if(finalSize < 6 || finalSize%2 != 0)
         {
             // A Polygon is defined by at least three points.
