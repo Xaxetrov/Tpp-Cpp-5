@@ -5,55 +5,56 @@
     copyright : (C) 2016 by Edern Haumont & Théo Thibault
 ***********************************************************************************************************************/
 
-
+//-------------------------------------------------------------------------------------------------------------- INCLUDE
+//----------------------------------------------------------------------------------------------------- Personal include
 #include "Rectangle.h"
-#include <vector>
-#include <string>
 using namespace std;
 
-//Public methods
+//--------------------------------------------------------------------------------------------------------------- PUBLIC
+//------------------------------------------------------------------------------------------------------- Public methods
+const bool Rectangle::Hits(Point aPoint)
+{
+    return(aPoint.GetX()>=points[0].GetX()
+           && aPoint.GetX()<=points[1].GetX()
+           && aPoint.GetY()>=points[0].GetY()
+           && aPoint.GetY()<=points[1].GetY());
+}
 
-    //Public methods
-    const bool Rectangle::Hits(Point aPoint)
+string Rectangle::toString()
+{
+    return "Rectangle named "+name;
+}
+
+int Rectangle::GetCommand(ostream &os,string newName)
+{
+    if(newName=="")
     {
-        return(aPoint.GetX()>=points[0].GetX()
-        && aPoint.GetX()<=points[1].GetX()
-        && aPoint.GetY()>=points[0].GetY()
-        && aPoint.GetY()<=points[1].GetY());
+        newName = name;
     }
 
-    string Rectangle::toString()
-    {
-        return "Rectangle named "+name;
-    }
+    os << "R " << newName << " " << points[0].GetX() << " " << points[0].GetY() << " " << points[1].GetX() << " " << points[1].GetY();
+    return 0;
+}
 
-    int Rectangle::GetCommand(ostream &os,string newName)
-    {
-        if(newName=="")
-        {
-            newName = name;
-        }
+Object * Rectangle::Clone()
+{
+    Object *ptr =  new Rectangle(*this);
+    return ptr;
+}
 
-        os << "R " << newName << " " << points[0].GetX() << " " << points[0].GetY() << " " << points[1].GetX() << " " << points[1].GetY();
-        return 0;
-    }
+//------------------------------------------------------------------------------------------- Constructors - Destructors
+// Constructor
+Rectangle::Rectangle(const std::string aName, vector<int> &myCoords) : Polygon(aName,myCoords)
+{
+}
 
-    Object * Rectangle::Clone()
-    {
-        Object *ptr =  new Rectangle(*this);
-        return ptr;
-    }
+// Copy constructor
+Rectangle::Rectangle(Rectangle &toCopy) : Polygon(toCopy)
+{
 
-    //Constructors
-    Rectangle::Rectangle(const std::string aName, vector<int> &myCoords) : Polygon(aName,myCoords)
-    {
-    }
+}
 
-    Rectangle::Rectangle(Rectangle &toCopy) : Polygon(toCopy)
-    {
-
-    }
-
-    Rectangle::~Rectangle()
-    {
-    }
+// Destructor
+Rectangle::~Rectangle()
+{
+}

@@ -99,7 +99,6 @@
                     Segment BC("BC",B,C);
 
                     int angle=AB.Angle(BC);
-                    //cerr << angle << endl;
 
                     if(direction == -1 && angle != 0 && angle != 180)
                     {
@@ -142,9 +141,6 @@
 
         int angleOne = AB.Angle(BC);
         int angleTwo = BC.Angle(CD);
-
-        //cerr << angleOne << endl;
-        //cerr << angleTwo << endl;
 
         if(direction == -1 && angleOne != 0 && angleOne != 180)
         {
@@ -446,7 +442,6 @@
             if(succeededLines!=totalLines)
             {
                 cerr << "Warning, only " << succeededLines << " lines correctly read out of " << totalLines << " !" << endl;
-                //cout << "ERR not all lines have been correctly read" << endl;
                 return 3;
             }
 
@@ -520,7 +515,6 @@
                 temp += line;
                 temp += '\n';
             }
-            //cerr << ":"<<temp<<endl;
             reverseCommand += "\n" + temp;
 
             delete allObjects.find(toDelete.at(i))->second;
@@ -585,7 +579,7 @@
 
         cerr << "The UNDO method try to do this : "+*i << endl << "End of show" << endl;
 
-        stringstream mySS(*i);/*TO OPTI********************************************************************************/
+        stringstream mySS(*i);
         ExecuteCommand(mySS,true);
         historicPosition++;
 
@@ -610,7 +604,7 @@
         list<string>::iterator i = historic.begin();
         advance(i,historicPosition);
 
-        //cerr << "The REDO method try to do this : "+*i << endl;
+        cerr << "The REDO method try to do this : "+*i << endl;
 
         stringstream mySS(*i);/*TO OPTI********************************************************************************/
         ExecuteCommand(mySS,true);
@@ -648,7 +642,6 @@
         {
             ExecuteCommand(ss, true);
         }
-        //cout << "End of MULT"<<cmdNum << endl;
         return 0;
     }
 
