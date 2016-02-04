@@ -51,6 +51,7 @@ public:
     // Destructor of a MultiObject
 
     // ------------------------------------------------------------------------------------------------------- PROTECTED
+protected:
     // Attributes
     list<Object *> composingObjects;
 

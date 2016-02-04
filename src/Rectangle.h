@@ -40,7 +40,7 @@ public :
     // Returns a pointer on a copy of the Rectangle
 
     // Constructor
-    Rectangle(const string aName, vector<int> &myCoords); //TODO : What if there is less than 3 points ?
+    Rectangle(const string aName, vector<int> &myCoords);
     Rectangle(Rectangle &toCopy);
 
     // Destructor
