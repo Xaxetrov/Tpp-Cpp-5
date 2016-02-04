@@ -606,15 +606,7 @@
         }
         return returnedBool;
     }
-/*
-R r 0 0 1 1
-R r2 0 0 1 1
-OI o r r2
-DELETE o
-UNDO
-LIST
-EXIT
-*/
+
 int Draw::Mult(stringstream &ss, int cmdNum)
 {
     for(int currentCmdNum=0; currentCmdNum<cmdNum; currentCmdNum++)
