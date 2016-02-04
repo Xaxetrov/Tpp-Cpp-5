@@ -19,7 +19,6 @@ Polygon::Polygon(const std::string aName, vector<int> &myCoords) : Object(aName)
         Point tmpPoint(myCoords[i],myCoords[i+1]);
         Add(tmpPoint);
     }
-    cout << "Polygon created" << endl;
 }
 
 Polygon::Polygon(Polygon &toCopy) : Object(toCopy.name)
@@ -32,7 +31,6 @@ Polygon::Polygon(Polygon &toCopy) : Object(toCopy.name)
 
 Polygon::~Polygon()
 {
-    cout << "Polygon destroyed"<<endl;
 }
 
 const bool Polygon::Hits(Point aPoint)
@@ -40,8 +38,19 @@ const bool Polygon::Hits(Point aPoint)
     vector<Point>::iterator i;
     int side = -1;
 
+    for(int j = 0;j < points.size();j++)
+    {
+        if((points[j].GetX() == aPoint.GetX()) && (points[j].GetY() == aPoint.GetY()))
+        {
+            return true;
+        }
+    }
     for(i = points.begin();i != points.end()-1;i++)
     {
+        if((i->GetX() == aPoint.GetX()) && (i->GetY() == aPoint.GetY()))
+        {
+            return true;
+        }
         // A Point is into a polygon is it's at the same side of all his segment
 
         Segment inPoly("AB",*i,*(i+1));

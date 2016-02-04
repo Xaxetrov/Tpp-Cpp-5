@@ -47,7 +47,6 @@ using namespace std;
     //Constructors
     Rectangle::Rectangle(const std::string aName, vector<int> &myCoords) : Polygon(aName,myCoords)
     {
-        cout << "Rectangle created" << endl;
     }
 
     Rectangle::Rectangle(Rectangle &toCopy) : Polygon(toCopy)
@@ -57,5 +56,4 @@ using namespace std;
 
     Rectangle::~Rectangle()
     {
-        cout << "Rectangle destroyed" << endl;
     }

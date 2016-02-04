@@ -451,7 +451,6 @@
                 return 3;
             }
 
-            //TODO write reverseHistoric command...
             historic.push_front("LOAD "+filename);
 
             // Reverse command : delete all objects which were not in the anterior list.
