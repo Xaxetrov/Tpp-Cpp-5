@@ -662,12 +662,14 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
     if(!notInHistoric && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
     {
         list<string>::iterator i = historic.begin();
-        advance(i,historicPosition-1);
+        advance(i,historicPosition);
         historic.erase(historic.begin(),i);
 
         i=reverseHistoric.begin();
-        advance(i,historicPosition-1);
+        advance(i,historicPosition);
         reverseHistoric.erase(reverseHistoric.begin(),i);
+
+        cerr << "Historic cleaned" << endl;
 
         historicPosition = 0;
     }
