@@ -12,7 +12,6 @@ Segment named s1
 OK
 OK
 OK
-Segment named s1
 OK
 YES
 OK

@@ -11,28 +11,10 @@
 using namespace std;
 //--------------------------------------------------------------------------------------------------------------- PUBLIC
 //------------------------------------------------------------------------------------------------------- Public methods
-const bool Object::Hits(Point aPoint)
-{
-    std::cerr << "Object virtual method called";
-    return false;
-}
-
-int Object::Move(int dX, int dY)
-{
-    std::cerr << "Object virtual move method called";
-    return 0;
-}
-
 std::string Object::toString()
 {
     std::cerr << "Object virtual method called";
     return "";
-}
-
-int Object::GetCommand(std::ostream &os,string newName)
-{
-    os << "ERROR Object virtual";
-    return 1;
 }
 
 Object * Object::Clone()
