@@ -182,9 +182,12 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
     }
     else
     {
-        //This is an unknown command !
-        cout << "ERR" << endl << "#Unknown command" << endl;
-        notInHistoric = true;
+        if(!notInHistoric)
+        {
+            //This is an unknown command !
+            cout << "ERR" << endl << "#Unknown command" << endl;
+            notInHistoric = true;
+        }
     }
 
     if(!notInHistoric)

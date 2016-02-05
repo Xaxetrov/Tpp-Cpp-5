@@ -81,7 +81,7 @@
 	When Undo and Redo are called, we execute the corresponding command of the historic. Then we update iterators so that we can Undo or Redo the next action of the list. Undo make us execute older and older actions, and Redo the opposite. If a new action is performed as we are not on the top of the historic, we erase all memory of actions from the top to where we are in the historic and we add again new actions at this point.
 
    \subsection{Implementation of "Actions"}
-	We chosed not to use Command Design patterns as we wanted to deal ourselves with every aspects of the command call. Therefore, we just stored commands in strings.	
+	We chosed not to use Command Design patterns as we wanted to deal ourselves with every aspects of the command call. Moreover, it seemed simpler for us to parse strings. Therefore, we just stored commands in strings.
 
 \section{Persistance}
     \subsection{Load}

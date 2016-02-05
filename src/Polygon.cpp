@@ -42,7 +42,7 @@ const bool Polygon::Hits(Point aPoint)
     vector<Point>::iterator i;
     int side = -1;
 
-    for(int j = 0;j < points.size();j++)
+    for(unsigned int j = 0;j < points.size();j++)
     {
         if((points[j].GetX() == aPoint.GetX()) && (points[j].GetY() == aPoint.GetY()))
         {

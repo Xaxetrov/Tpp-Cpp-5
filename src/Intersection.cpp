@@ -36,15 +36,15 @@ Intersection::~Intersection()
 // ------------------------------------------------------------------------------------------------------------- METHODS
 const bool Intersection::Hits(Point aPoint)
 {
-    bool result=true;
+    bool result=false;
     list<Object *>::iterator i;
 
     for(i=composingObjects.begin(); i != composingObjects.end(); i++)
     {
         // If one of the object of the intesection isn't hit, the intersection is not hitten !
-        if(!((*i)->Hits(aPoint)))
+        if(((*i)->Hits(aPoint)))
         {
-            result=false;
+            result=true;
         }
     }
 

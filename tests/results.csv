@@ -1,6 +1,7 @@
 Test ID;Return code validation;Out result;StdErr result;File creation result;Global result
 TestClear;1;1;2;2;1
 TestExit;1;1;2;2;1
+TestHit;1;1;2;2;1
 TestMultiobjets;1;1;2;2;1
 TestPolygon;1;1;2;2;1
 TestRectangle;1;1;2;2;1

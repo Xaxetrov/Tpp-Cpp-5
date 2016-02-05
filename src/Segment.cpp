@@ -28,12 +28,16 @@ Segment::Segment(Segment &toCopy) : Object(toCopy.name), pointA(toCopy.GetPointA
 
 // ------------------------------------------------------------------------------------------------------ PUBLIC METHODS
 const bool Segment::Hits(Point aPoint) {
+    if(aPoint.GetX() == pointA.GetX() && aPoint.GetY() == pointA.GetY())
+    {
+        return true;
+    }
     int x1 = pointA.GetX(), y1 = pointA.GetY(), x2 = pointB.GetX(), y2 = pointB.GetY();
     int x = aPoint.GetX(), y = aPoint.GetY();
-    if((x<=max(x1,x2)) && (x>=min(x1,x2)) && (y<=max(x1,x2)) && (y>=min(y1,y2)))
+    if((x<=max(x1,x2)) && (x>=min(x1,x2)) && (y<=max(y1,y2)) && (y>=min(y1,y2)))
     {
-        double dYdXSeg = (y2-y1)/(double)(x2-x1);
-        double dYdXTest = (y-y1)/(double)(x-x1);
+        double dYdXSeg = (y2-y1)/(double)(x2-x1); cerr << dYdXSeg << endl;
+        double dYdXTest = (y-y1)/(double)(x-x1); cerr << dYdXTest << endl;
         if(abs(dYdXSeg-dYdXTest) < EPSILON)
         {
             return true;
