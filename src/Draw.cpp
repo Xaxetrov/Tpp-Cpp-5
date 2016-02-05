@@ -650,359 +650,359 @@
         return 0;
     }
 
-int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
+    int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
 
-    string cmdType;
-    ss >> cmdType;
-    ss.ignore();
+        string cmdType;
+        ss >> cmdType;
+        ss.ignore();
 
-    //If a command is done after few UNDO we need to delete these from the historic
-    if(!notInHistoric && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
-    {
-        list<string>::iterator i = historic.begin();
-        advance(i,historicPosition);
-        historic.erase(historic.begin(),i);
-
-        i=reverseHistoric.begin();
-        advance(i,historicPosition);
-        reverseHistoric.erase(reverseHistoric.begin(),i);
-
-        historicPosition = 0;
-    }
-
-    int returnCode(0);
-
-    if(cmdType=="S")
-    {
-        string name;
-        string points;
-
-        ss >> name;
-        getline(ss,points);
-
-        returnCode = AddSegment(name,points, notInHistoric);
-    }
-    else if(cmdType=="R")
-    {
-        string name;
-        string points;
-
-        ss >> name;
-        getline(ss,points);
-        returnCode = AddRectangle(name,points, notInHistoric);
-    }
-    else if(cmdType=="PC")
-    {
-        string name;
-        string points;
-
-        ss >> name;
-        getline(ss,points);
-
-        returnCode = AddPolygon(name,points, notInHistoric);
-    }
-    else if(cmdType=="OR")
-    {
-        string name;
-        string others;
-
-        ss >> name;
-        getline(ss, others);
-
-        returnCode = AddReunion(name, others, notInHistoric);
-    }
-    else if(cmdType=="OI")
-    {
-        string name;
-        string others;
-
-        ss >> name;
-        getline(ss, others);
-
-        returnCode = AddIntersection(name, others, notInHistoric);
-    }
-    else if(cmdType=="HIT")
-    {
-        string Name;
-        int x, y;
-
-        if(!(ss >> Name))
+        //If a command is done after few UNDO we need to delete these from the historic
+        if(!notInHistoric && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
         {
-            returnCode = 1;
-        }
-        else if(!(ss >> x >> y))
-        {
-            returnCode = 2;
-        }
-        else
-        {
-            returnCode = Hit(Name,x,y);
-        }
-    }
-    else if(cmdType=="DELETE")
-    {
-        string names;
-        getline(ss,names);
+            list<string>::iterator i = historic.begin();
+            advance(i,historicPosition);
+            historic.erase(historic.begin(),i);
 
-        returnCode = Delete(names,notInHistoric);
+            i=reverseHistoric.begin();
+            advance(i,historicPosition);
+            reverseHistoric.erase(reverseHistoric.begin(),i);
 
-    }
-    else if(cmdType=="MOVE")
-    {
+            historicPosition = 0;
+        }
+
+        int returnCode(0);
+
+        if(cmdType=="S")
+        {
+            string name;
+            string points;
+
+            ss >> name;
+            getline(ss,points);
+
+            returnCode = AddSegment(name,points, notInHistoric);
+        }
+        else if(cmdType=="R")
+        {
+            string name;
+            string points;
+
+            ss >> name;
+            getline(ss,points);
+            returnCode = AddRectangle(name,points, notInHistoric);
+        }
+        else if(cmdType=="PC")
+        {
+            string name;
+            string points;
+
+            ss >> name;
+            getline(ss,points);
+
+            returnCode = AddPolygon(name,points, notInHistoric);
+        }
+        else if(cmdType=="OR")
+        {
+            string name;
+            string others;
+
+            ss >> name;
+            getline(ss, others);
+
+            returnCode = AddReunion(name, others, notInHistoric);
+        }
+        else if(cmdType=="OI")
+        {
+            string name;
+            string others;
+
+            ss >> name;
+            getline(ss, others);
+
+            returnCode = AddIntersection(name, others, notInHistoric);
+        }
+        else if(cmdType=="HIT")
         {
             string Name;
-            int dX, dY;
+            int x, y;
 
             if(!(ss >> Name))
             {
                 returnCode = 1;
             }
-            else if(!(ss >> dX >> dY))
+            else if(!(ss >> x >> y))
             {
-                    returnCode = 2;
+                returnCode = 2;
             }
             else
             {
-                returnCode = Move(Name,dX,dY,notInHistoric);
+                returnCode = Hit(Name,x,y);
             }
         }
-    }
-    else if(cmdType=="LIST")
-    {
-        List();
-    }
-    else if(cmdType=="UNDO")
-    {
-        returnCode=Undo();
-    }
-    else if(cmdType == "REDO")
-    {
-        returnCode=Redo();
-    }
-    else if(cmdType=="LOAD")
-    {
-        string filename;
-        ss >> filename;
-        returnCode=Load(filename);
-    }
-    else if(cmdType=="SAVE")
-    {
-        string filename;
-        ss >> filename;
-        returnCode=Save(filename);
-    }
-    else if(cmdType=="CLEAR")
-    {
-        returnCode = Clear();
-    }
-    else if(cmdType.substr(0,4)=="MULT")
-    {
-        string cmdNumStr=cmdType.substr(4,cmdType.size()-4);
-        stringstream cmdNumSS(cmdNumStr);
-        int cmdNum;
-        cmdNumSS >> cmdNum;
-        returnCode = Mult(ss, cmdNum);
-    }
-    else if(cmdType=="EXIT")
-    {
-        map<string,Object *>::iterator i;
-        for(i = allObjects.begin();i!=allObjects.end();i++)
+        else if(cmdType=="DELETE")
         {
-            delete i->second;
+            string names;
+            getline(ss,names);
+
+            returnCode = Delete(names,notInHistoric);
+
         }
-        allObjects.clear();
-        return 1;
+        else if(cmdType=="MOVE")
+        {
+            {
+                string Name;
+                int dX, dY;
+
+                if(!(ss >> Name))
+                {
+                    returnCode = 1;
+                }
+                else if(!(ss >> dX >> dY))
+                {
+                        returnCode = 2;
+                }
+                else
+                {
+                    returnCode = Move(Name,dX,dY,notInHistoric);
+                }
+            }
+        }
+        else if(cmdType=="LIST")
+        {
+            List();
+        }
+        else if(cmdType=="UNDO")
+        {
+            returnCode=Undo();
+        }
+        else if(cmdType == "REDO")
+        {
+            returnCode=Redo();
+        }
+        else if(cmdType=="LOAD")
+        {
+            string filename;
+            ss >> filename;
+            returnCode=Load(filename);
+        }
+        else if(cmdType=="SAVE")
+        {
+            string filename;
+            ss >> filename;
+            returnCode=Save(filename);
+        }
+        else if(cmdType=="CLEAR")
+        {
+            returnCode = Clear();
+        }
+        else if(cmdType.substr(0,4)=="MULT")
+        {
+            string cmdNumStr=cmdType.substr(4,cmdType.size()-4);
+            stringstream cmdNumSS(cmdNumStr);
+            int cmdNum;
+            cmdNumSS >> cmdNum;
+            returnCode = Mult(ss, cmdNum);
+        }
+        else if(cmdType=="EXIT")
+        {
+            map<string,Object *>::iterator i;
+            for(i = allObjects.begin();i!=allObjects.end();i++)
+            {
+                delete i->second;
+            }
+            allObjects.clear();
+            return 1;
+        }
+
+        if(!notInHistoric)
+        {
+            printResult(cmdType, returnCode);
+        }
+
+        //Delete the oldest command in historic if there is more than 20 commands.
+        if(historic.size() == 21)
+        {
+            historic.pop_back();
+            reverseHistoric.pop_back();
+        }
+
+        return 0;
     }
 
-    if(!notInHistoric)
+    void Draw::printResult(string cmdType, int returnCode)
     {
-        printResult(cmdType, returnCode);
-    }
-
-    //Delete the oldest command in historic if there is more than 20 commands.
-    if(historic.size() == 21)
-    {
-        historic.pop_back();
-        reverseHistoric.pop_back();
-    }
-
-    return 0;
-}
-
-void Draw::printResult(string cmdType, int returnCode)
-{
-    if((cmdType=="LIST" || cmdType=="HIT") && returnCode==0)
-    {
-        //nothing
-    }
-    else if(returnCode==0)
-    {
-        cout << "OK" << endl;
-    }
-    else
-    {
-        cout << "ERR" << endl;
-        if (cmdType == "S") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#Incorrect name" << endl;
-                    break;
-                case 2 :
-                    cout << "#Invalid format or number of coordinates" << endl;
-                    break;
-                default:break;
-            }
+        if((cmdType=="LIST" || cmdType=="HIT") && returnCode==0)
+        {
+            //nothing
         }
-        else if (cmdType == "R") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#Incorrect name" << endl;
-                    break;
-                case 2 :
-                    cout << "#Incorrect number of coordinates" << endl;
-                    break;
-                case 3 :
-                    cout << "#Incorrect point placement" << endl;
-                    break;
-                default:break;
-            }
+        else if(returnCode==0)
+        {
+            cout << "OK" << endl;
         }
-        else if (cmdType == "PC") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#Incorrect name" << endl;
-                    break;
-                case 2 :
-                    cout << "#Incorrect number of coordinates" << endl;
-                    break;
-                case 3 :
-                    cout << "#Non convex polygon" << endl;
-                    break;
-                case 4 :
-                    cout << "#Same coordinates used several times" << endl;
-                    break;
-                default:break;
+        else
+        {
+            cout << "ERR" << endl;
+            if (cmdType == "S") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#Incorrect name" << endl;
+                        break;
+                    case 2 :
+                        cout << "#Invalid format or number of coordinates" << endl;
+                        break;
+                    default:break;
+                }
             }
-        }
-        else if (cmdType == "OR") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#Incorrect name" << endl;
-                    break;
-                case 2 :
-                    cout << "#Incorrect number of objects" << endl;
-                    break;
-                case 3 :
-                    cout << "#Several uses of the same object" << endl;
-                    break;
-                case 4 :
-                    cout << "#Inclusion of a non-existant object" << endl;
-                    break;
-                default:break;
+            else if (cmdType == "R") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#Incorrect name" << endl;
+                        break;
+                    case 2 :
+                        cout << "#Incorrect number of coordinates" << endl;
+                        break;
+                    case 3 :
+                        cout << "#Incorrect point placement" << endl;
+                        break;
+                    default:break;
+                }
             }
-        }
-        else if (cmdType == "OI") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#Incorrect name" << endl;
-                    break;
-                case 2 :
-                    cout << "#Incorrect number of objects" << endl;
-                    break;
-                case 3 :
-                    cout << "#Several uses of the same object" << endl;
-                    break;
-                case 4 :
-                    cout << "#Intersection with a non-existant object" << endl;
-                    break;
-                default:break;
+            else if (cmdType == "PC") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#Incorrect name" << endl;
+                        break;
+                    case 2 :
+                        cout << "#Incorrect number of coordinates" << endl;
+                        break;
+                    case 3 :
+                        cout << "#Non convex polygon" << endl;
+                        break;
+                    case 4 :
+                        cout << "#Same coordinates used several times" << endl;
+                        break;
+                    default:break;
+                }
             }
-        }
-        else if (cmdType == "HIT") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#Incorrect name" << endl;;
-                    break;
-                case 2 :
-                    cout << "#Incorrect format or number of coordinates" << endl;;
-                    break;
-                default:break;
+            else if (cmdType == "OR") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#Incorrect name" << endl;
+                        break;
+                    case 2 :
+                        cout << "#Incorrect number of objects" << endl;
+                        break;
+                    case 3 :
+                        cout << "#Several uses of the same object" << endl;
+                        break;
+                    case 4 :
+                        cout << "#Inclusion of a non-existant object" << endl;
+                        break;
+                    default:break;
+                }
             }
-        }
-        else if (cmdType == "DELETE") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#Incorrect name" << endl;
-                    break;
-                default:break;
+            else if (cmdType == "OI") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#Incorrect name" << endl;
+                        break;
+                    case 2 :
+                        cout << "#Incorrect number of objects" << endl;
+                        break;
+                    case 3 :
+                        cout << "#Several uses of the same object" << endl;
+                        break;
+                    case 4 :
+                        cout << "#Intersection with a non-existant object" << endl;
+                        break;
+                    default:break;
+                }
             }
-        }
-        else if (cmdType == "MOVE") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#Incorrect name" << endl;
-                    break;
-                case 2 :
-                    cout << "#Incorrect format or number of coordinates" << endl;
-                    break;
-                default:break;
+            else if (cmdType == "HIT") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#Incorrect name" << endl;;
+                        break;
+                    case 2 :
+                        cout << "#Incorrect format or number of coordinates" << endl;;
+                        break;
+                    default:break;
+                }
             }
-        }
-        else if (cmdType == "UNDO") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#No action to undo" << endl;
-                    break;
-                default:break;
+            else if (cmdType == "DELETE") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#Incorrect name" << endl;
+                        break;
+                    default:break;
+                }
             }
-        }
-        else if (cmdType == "REDO") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#No action to redo" << endl;
-                    break;
-                default:break;
+            else if (cmdType == "MOVE") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#Incorrect name" << endl;
+                        break;
+                    case 2 :
+                        cout << "#Incorrect format or number of coordinates" << endl;
+                        break;
+                    default:break;
+                }
             }
-        }
-        else if (cmdType == "LOAD") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#The file is not accessible for reading" << endl;
-                    break;
-                case 2 :
-                    cout << "#The file reading generated an exception" << endl;
-                    break;
-                case 3 :
-                    cout << "#The program does not understand the file" << endl;
-                    break;
-                default:break;
+            else if (cmdType == "UNDO") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#No action to undo" << endl;
+                        break;
+                    default:break;
+                }
             }
-        }
-        else if (cmdType == "SAVE") {
-            switch (returnCode)
-            {
-                case 1 :
-                    cout << "#The file is not accessible for writing" << endl;
-                    break;
-                case 2 :
-                    cout << "#Invalid filename" << endl;
-                    break;
-                default:break;
+            else if (cmdType == "REDO") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#No action to redo" << endl;
+                        break;
+                    default:break;
+                }
+            }
+            else if (cmdType == "LOAD") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#The file is not accessible for reading" << endl;
+                        break;
+                    case 2 :
+                        cout << "#The file reading generated an exception" << endl;
+                        break;
+                    case 3 :
+                        cout << "#The program does not understand the file" << endl;
+                        break;
+                    default:break;
+                }
+            }
+            else if (cmdType == "SAVE") {
+                switch (returnCode)
+                {
+                    case 1 :
+                        cout << "#The file is not accessible for writing" << endl;
+                        break;
+                    case 2 :
+                        cout << "#Invalid filename" << endl;
+                        break;
+                    default:break;
+                }
             }
         }
     }
-}
 
 //Constructors
 Draw::Draw() : historicPosition(0)

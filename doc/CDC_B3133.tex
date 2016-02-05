@@ -37,9 +37,11 @@
 %----------------------------------------------Title end
 
 \section{Introduction}
-	The developped software is a simple geometrical forms editor. It manages segments, convex polygones, rectangles. It also can create new objects by intersections and unions between other objects.
-	Objects can be deleted and moved.\\
-	The software will also have a "save and load" feature to add persistance to the applcation.
+	The developped software is a simple geometrical forms editor. It manages segments, convex polygones, rectangles.
+	It also can create new objects by intersections and unions between other objects.
+	Objects can be deleted, moved and the program allows you to check if a point is included in it.\\
+	The software will also have a "save and load" feature to add persistance to the applcation.\\
+	This application have been made for Linux.
 
 \section{Fonctionalities}
 	\subsection{Objects}
@@ -47,13 +49,14 @@
 		An object has a name which is its unique identifier. It is only composed of letters and numbers\\
 		Here is a a list of the objects that the application manages :
 		\subsubsection{Segments}
-			A segment is defined by its two extremty points.
+			A segment is defined by its two extremity points.
 		\subsubsection{Rectangle}
 			A rectangle is defined by two points : the top left point and the bottom right point.
 			All 4 segments which compose a rectangle are horizontal or vertical. Consequently, a rectangle cannot be oblic.
 		\subsubsection{Polygone}
 			A polygon is defined by a sorted list of points that are linked in order to form a closed figure.
-			Our application only manages convec polygons,  that is that no diagonal is outside of the figure.
+			Our application only manages convex polygons, that is that no diagonal is outside of the figure.
+			The result of the program can not be assured if crossed-polygon (few segment of it are crossing each other).
 			A polygon is at least formed with 3 points.
 	\subsection{Actions}
 		\subsubsection{Add a segment}
@@ -110,6 +113,7 @@
 			\uline{Output} : OK and confirmation or ERR and explanation\\
 			\uline{Note} : 
 			Non entire coordinates will be truncated.
+			Crossed-polygon are not allowed, results of some treatments are not guaranteed.
 
 		\subsubsection{Create an object by reunion of several other objects}
 			\uline{Command syntax} :
@@ -148,7 +152,7 @@
 			\uline{Note} : 
 			Non entire coordinates will be truncated.\\
 			You can use objects already created by reunion or intersection.\\
-			You can intersect two unjoined objects.
+			You can intersect two unjoined objects so create an empty object.
 
 		\subsubsection{Check a point-inclusion}
 			\uline{Command syntax} :
@@ -159,8 +163,8 @@
 			\end{itemize}
 			\uline{Error cases}
 			\begin{itemize}
-				\item Error n°2 : Incorrect or inexistant name.
-				\item Error n°3 : Invalid format or number of coordinates.
+				\item Error n°1 : Incorrect or inexistant name.
+				\item Error n°2 : Invalid format or number of coordinates.
 			\end{itemize}
 			\uline{Output} : YES or NO or ERR and explanation\\
 			\uline{Note} : 
@@ -200,7 +204,8 @@
 			\uline{Command syntax} :
 			LIST\\
 			\uline{Error cases} : No error case.\\
-			\uline{Output} : Give a list of the objects (Identifier and type). One object by line.\\
+			\uline{Output} : Give a list of the objects (Identifier and type). One object by line. If it's a multiobject,
+			it also returned the number of object which composed it.\\
 			\uline{Note} : 
 			If there is no object, nothing is returned.\\
 			The different types of objects are : Segment, Rectangle, Polygon, Intersection and Reunion.
@@ -212,7 +217,7 @@
 			\begin{itemize}
 				\item Error n°1 : No action to undo.
 			\end{itemize}
-			\uline{Output} : OK and description of the undid command or ERR and explanation\\
+			\uline{Output} : OK or ERR and explanation\\
 			\uline{Note} : 
 			The action-hictoric has a size of 20 actions.
 
@@ -223,7 +228,7 @@
 			\begin{itemize}
 				\item Error n°1 : No undo to redo.
 			\end{itemize}
-			\uline{Output} : OK and description of the redid command or ERR and explanation\\
+			\uline{Output} : OK or ERR and explanation\\
 			\uline{Note} : 
 			You cannot redo an action if you did something beetween the undo and your redo tentative.
 
@@ -265,7 +270,7 @@
 			You can undo a clear command.
 
 		\subsubsection{Exit the application}
-			CLEAR\\
+			EXIT\\
 			\uline{Error cases} : No error case.\\
 			\uline{Output} : No output.\\
 			\uline{Note} : 
@@ -273,18 +278,8 @@
 
 		
 	\subsection{Save-file format}
-		Our saved file begins with : "<B3133drawingFile>".\\
-		Next lines describe objects the program needs to recreate to restore the draw.\\
-		Action-hictoric is not restored. Objects are memorised as follows :
-
-		\begin{itemize}
-			\item \uline{Rectangle} : R Name X1 Y1 X2 Y2
-			\item \uline{Segment} : S Name X1 Y1 X2 Y2
-			\item \uline{Convex Polygon} : PC Name X1 Y1 X2 Y2 .. Xn Yn
-			\item \uline{Reunion Object} : OR Name Name1 .. NameN
-			\item \uline{Intersection Object} : OI Name Name1 .. NameN
-		\end{itemize}
-
-
+		Our saved file begins with : "=drawingFileB3133".\\
+		Next lines describe all actions the program needs to do to restore the draw.\\
+		Action-hictoric is not restored.
 
 \end{document}
