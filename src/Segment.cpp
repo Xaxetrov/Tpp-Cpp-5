@@ -5,13 +5,17 @@
     copyright : (C) 2016 by Edern Haumont & Théo Thibault
 ***********************************************************************************************************************/
 
+// ------------------------------------------------------------------------------------------------------------ INCLUDES
+// Personal includes
 #include "Segment.h"
+
+// System includes
 #include <string>
 #include <cmath>
 #include <iostream>
-
 using namespace std;
 
+// ------------------------------------------------------------------------------------------------------ CONSTRUCTOR(S)
 Segment::Segment(std::string aName, Point point1, Point point2) : Object(aName), pointA(point1), pointB(point2)
 {
 
@@ -22,6 +26,7 @@ Segment::Segment(Segment &toCopy) : Object(toCopy.name), pointA(toCopy.GetPointA
 
 }
 
+// ------------------------------------------------------------------------------------------------------ PUBLIC METHODS
 const bool Segment::Hits(Point aPoint) {
     int x1 = pointA.GetX(), y1 = pointA.GetY(), x2 = pointB.GetX(), y2 = pointB.GetY();
     int x = aPoint.GetX(), y = aPoint.GetY();
