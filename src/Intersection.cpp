@@ -1,6 +1,9 @@
-//
-// Created by Théo on 29/01/2016.
-//
+/***********************************************************************************************************************
+    Intersection  -  realisation
+    -----------------------
+    begin : 10/01/2015
+    copyright : (C) 2016 by Edern Haumont & Théo Thibault
+***********************************************************************************************************************/
 
 // ------------------------------------------------------------------------------------------------------------ INCLUDES
 // Personal includes
@@ -82,7 +85,6 @@ int Intersection::GetCommand(ostream &os,string newName)
 
         os << "\n";
         (*i)->GetCommand(os,tmpName);
-        //string currentName = (*i)->GetName();
         nameLine+= " " + tmpName;
     }
     os << "\n" << "OI " << newName << nameLine;
