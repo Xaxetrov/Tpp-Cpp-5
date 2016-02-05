@@ -5,16 +5,11 @@
     copyright : (C) 2016 by Edern Haumont & Théo Thibault
 ***********************************************************************************************************************/
 
+// ------------------------------------------------------------------------------------------------------------ INCLUDES
+// Personal includes
 #include "Point.h"
 
-// Public Methods
-void Point::Move(int dX, int dY)
-{
-    x+=dX;
-    y+=dY;
-}
-
-// Constructors
+// ------------------------------------------------------------------------------------------------------ CONSTRUCTOR(S)
 Point::Point(int myX, int myY) : x(myX), y(myY)
 {
 
@@ -22,4 +17,11 @@ Point::Point(int myX, int myY) : x(myX), y(myY)
 
 Point::~Point() {
 
+}
+
+// ------------------------------------------------------------------------------------------------------ PUBLIC METHODS
+void Point::Move(int dX, int dY)
+{
+    x+=dX;
+    y+=dY;
 }

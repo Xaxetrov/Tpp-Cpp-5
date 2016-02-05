@@ -13,7 +13,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 class Point {
 
-//--------------------------------------------------------------------------------------------------------------- Public
+//--------------------------------------------------------------------------------------------------------------- PUBLIC
 public :
 
     //Inline getters and setters
@@ -22,16 +22,18 @@ public :
     void SetX(int myX) {x = myX;}
     void SetY(int myY) {y = myY;}
 
-    //Constructor
+    //Constructor(s)
     Point(int myX, int myY);
     virtual ~Point();
-    //Other methods
+
+    //Other public methods
     void Move(int dX, int dY);
     // Manual :
     // Moves the segment position by dX and dY
 
-//private attributes
+// ------------------------------------------------------------------------------------------------------------- PRIVATE
 private :
+    // Attributes
     int x, y;
 };
 
