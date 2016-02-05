@@ -5,13 +5,16 @@
     copyright : (C) 2016 by Edern Haumont & Théo Thibault
 ***********************************************************************************************************************/
 
+// ------------------------------------------------------------------------------------------------------------ INCLUDES
+// Personal includes
 #include "Polygon.h"
 #include "Segment.h"
+// System includes
 #include <string>
 #include <vector>
 using namespace std;
 
-
+// ------------------------------------------------------------------------------------------------------ CONSTRUCTOR(S)
 Polygon::Polygon(const std::string aName, vector<int> &myCoords) : Object(aName)
 {
     for(unsigned int i = 0;i<myCoords.size();i+=2)
@@ -33,6 +36,7 @@ Polygon::~Polygon()
 {
 }
 
+// ------------------------------------------------------------------------------------------------------ PUBLIC METHODS
 const bool Polygon::Hits(Point aPoint)
 {
     vector<Point>::iterator i;
@@ -42,6 +46,7 @@ const bool Polygon::Hits(Point aPoint)
     {
         if((points[j].GetX() == aPoint.GetX()) && (points[j].GetY() == aPoint.GetY()))
         {
+            // Check if the point is not a point used to make the polygon
             return true;
         }
     }
@@ -121,12 +126,6 @@ int Polygon::Move(int dX, int dY)
     return 0;
 }
 
-int Polygon::Add(Point &aPoint)
-{
-    points.push_back(aPoint);
-    return 0;
-}
-
 string Polygon::toString()
 {
     return "Polygon named "+name;
@@ -154,4 +153,11 @@ Object * Polygon::Clone()
 {
     Object *ptr = new Polygon(*this);
     return ptr;
+}
+
+// --------------------------------------------------------------------------------------------------- PROTECTED METHODS
+int Polygon::Add(Point &aPoint)
+{
+    points.push_back(aPoint);
+    return 0;
 }

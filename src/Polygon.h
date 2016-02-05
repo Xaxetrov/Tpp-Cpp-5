@@ -7,7 +7,7 @@
 #ifndef TP_CPP_5_POLYGON_H
 #define TP_CPP_5_POLYGON_H
 
-//------------------------------------------------------------------------------------------------------------- Includes
+//------------------------------------------------------------------------------------------------------------- INCLUDES
 // Personal includes
 #include "Object.h"
 #include "Point.h"
@@ -21,7 +21,7 @@ using namespace std;
 //----------------------------------------------------------------------------------------------------------------------
 class Polygon : public Object{
 
-//--------------------------------------------------------------------------------------------------------------- Public
+//--------------------------------------------------------------------------------------------------------------- PUBLIC
 public :
 
     // Public methods
@@ -45,7 +45,7 @@ public :
     // Manual :
     // This method return a pointer on a copy of the Polygon
 
-    // Constructor
+    // Constructor(s)
     Polygon(const string aName,vector<int> &myCoords);
     // Manual :
     // Creates a polygon and initialize its list of points with another given in parameter
@@ -58,7 +58,7 @@ public :
     virtual ~Polygon();
 
 
-//------------------------------------------------------------------------------------------------------------ Protected
+//------------------------------------------------------------------------------------------------------------ PROTECTED
 protected :
     // Protected Methods
     int Add(Point &aPoint);
