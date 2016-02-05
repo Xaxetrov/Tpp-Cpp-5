@@ -8,7 +8,7 @@
 #ifndef TP_CPP_5_RECTANGLE_H
 #define TP_CPP_5_RECTANGLE_H
 
-//------------------------------------------------------------------------------------------------------------- Includes
+//------------------------------------------------------------------------------------------------------------- INCLUDES
 // Personal includes
 #include "Polygon.h"
 using namespace std;
@@ -17,9 +17,9 @@ using namespace std;
 // The Rectangle class represents a convex rectangle defined by its top-left and bottom-right points
 // A Rectangle is a Polygon
 //----------------------------------------------------------------------------------------------------------------------
-class Rectangle : public Polygon{
 
-//--------------------------------------------------------------------------------------------------------------- Public
+class Rectangle : public Polygon{
+//--------------------------------------------------------------------------------------------------------------- PUBLIC
 public :
 
     // Public methods

@@ -5,14 +5,29 @@
     copyright : (C) 2016 by Edern Haumont & Théo Thibault
 ***********************************************************************************************************************/
 
-
+// ------------------------------------------------------------------------------------------------------------ INCLUDES
+// Personal includes
 #include "Rectangle.h"
+// System includes
 #include <vector>
 #include <string>
 using namespace std;
 
-//Public methods
+// ------------------------------------------------------------------------------------------------------ CONSTRUCTOR(S)
+Rectangle::Rectangle(const std::string aName, vector<int> &myCoords) : Polygon(aName,myCoords)
+{
+}
 
+Rectangle::Rectangle(Rectangle &toCopy) : Polygon(toCopy)
+{
+
+}
+
+Rectangle::~Rectangle()
+{
+}
+
+// ------------------------------------------------------------------------------------------------------ PUBLIC METHODS
     //Public methods
     const bool Rectangle::Hits(Point aPoint)
     {
@@ -42,18 +57,4 @@ using namespace std;
     {
         Object *ptr =  new Rectangle(*this);
         return ptr;
-    }
-
-    //Constructors
-    Rectangle::Rectangle(const std::string aName, vector<int> &myCoords) : Polygon(aName,myCoords)
-    {
-    }
-
-    Rectangle::Rectangle(Rectangle &toCopy) : Polygon(toCopy)
-    {
-
-    }
-
-    Rectangle::~Rectangle()
-    {
     }
