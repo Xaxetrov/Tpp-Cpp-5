@@ -8,7 +8,7 @@
 #ifndef TP_CPP_5_DRAW_H
 #define TP_CPP_5_DRAW_H
 
-//------------------------------------------------------------------------------------------------------------- Includes
+//------------------------------------------------------------------------------------------------------------- INCLUDES
 // Personal includes
 #include "Rectangle.h"
 #include "Segment.h"
@@ -28,7 +28,7 @@ using namespace std;
 //----------------------------------------------------------------------------------------------------------------------
 class Draw
 {
-//--------------------------------------------------------------------------------------------------------------- Public
+//--------------------------------------------------------------------------------------------------------------- PUBLIC
 // Public methods
 public :
     int ExecuteCommand(stringstream &ss, bool notInHistoric = false);
@@ -38,7 +38,8 @@ public :
 
     //Constructor
     Draw();
-//-------------------------------------------------------------------------------------------------------------- Private
+
+//-------------------------------------------------------------------------------------------------------------- PRIVATE
 // Private methods
 private :
     void printResult(string cmdType, int returncode);
@@ -50,26 +51,43 @@ private :
     int AddSegment(string name, string points, bool notInHistoric = false);
     // Manual :
     // Adds a segment to the draw
+    // * name is the name of the object
+    // * points is the list of coordinates of points to make the object
+    // * notInHistoric is true if this action will be not add to the historic (it will be not possible to undid it)
 
     int AddPolygon(string name, string points, bool notInHistoric = false);
     // Manual :
     // Adds a polygon to the draw
+    // * name is the name of the object
+    // * points is the list of coordinates of points to make the object
+    // * notInHistoric is true if this action will be not add to the historic (it will be not possible to undid it)
 
     int AddRectangle(string name, string points, bool notInHistoric = false);
     // Manual :
     // Adds a rectangle to the draw
+    // * name is the name of the object
+    // * points is the list of coordinates of points to make the object
+    // * notInHistoric is true if this action will be not add to the historic (it will be not possible to undid it)
 
     int AddIntersection(string name, string others, bool notInHistoric = false);
     // Manual :
     // Adds an object by intersection of others
+    // * name is the name of the object
+    // * others is the list of name of objects to use to create the multiobject
+    // * notInHistoric is true if this action will be not add to the historic (it will be not possible to undid it)
 
     int AddReunion(string name, string others, bool notInHistoric = false);
     // Manual :
     // Adds an object by reunion of others
+    // * name is the name of the object
+    // * others is the list of name of objects to use to create the multiobject
+    // * notInHistoric is true if this action will be not add to the historic (it will be not possible to undid it)
 
     int Delete(string names, bool notInHistoric = false);
     // Manual :
     // Deletes one or several objects of the draw
+    // * names is names of all objects you want to delete
+    // * notInHistoric is true if this action will be not add to the historic (it will be not possible to undid it)
 
     void List();
     // Manual :
@@ -78,6 +96,9 @@ private :
     int Move(string object, int dX, int dY, bool notInHistoric = false);
     // Manual :
     // Moves one object of dX and dY
+    // * object is the name of the object to move
+    // * dX, dY are coordinates of the moving vector
+    // * notInHistoric is true if this action will be not add to the historic (it will be not possible to undid it)
 
     int Clear();
     // Manual :
@@ -102,11 +123,15 @@ private :
     int Hit(string name, int x, int y);
     // Manual :
     // Prints whether the point given by x and y is in an object identified by its name
+    // * name is the name of the object you want to test
+    // * x,y are coordinates of the point you want to test
 
     int Mult(stringstream &ss, int cmdNum);
+    // Mult permits to execute few lines of command in one time
+    // * ss contains commands
+    // * cmdNum is the number of commands you have
 
 // Private attributes
-private:
     map<string,Object*> allObjects;
     // All of our objects currently in the draw
     // Stored in a map for performance

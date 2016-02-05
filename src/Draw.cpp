@@ -5,10 +5,204 @@
     copyright : (C) 2016 by Edern Haumont & Théo Thibault
 ***********************************************************************************************************************/
 
+// ------------------------------------------------------------------------------------------------------------ INCLUDES
+// Personal includes
 #include "Draw.h"
+// System includes
 #include <fstream>
 
-//Public methods
+// ------------------------------------------------------------------------------------------------------ CONSTRUCTOR(S)
+Draw::Draw() : historicPosition(0)
+{}
+
+// ------------------------------------------------------------------------------------------------------ PUBLIC METHODS
+
+int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
+
+    string cmdType;
+    ss >> cmdType;
+    ss.ignore();
+
+    //If a command is done after few UNDO we need to delete these from the historic
+    if(!notInHistoric && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
+    {
+        list<string>::iterator i = historic.begin();
+        advance(i,historicPosition);
+        historic.erase(historic.begin(),i);
+
+        i=reverseHistoric.begin();
+        advance(i,historicPosition);
+        reverseHistoric.erase(reverseHistoric.begin(),i);
+
+        historicPosition = 0;
+    }
+
+    int returnCode(0);
+
+    if(cmdType=="S")
+    {
+        string name;
+        string points;
+
+        ss >> name;
+        getline(ss,points);
+
+        returnCode = AddSegment(name,points, notInHistoric);
+    }
+    else if(cmdType=="R")
+    {
+        string name;
+        string points;
+
+        ss >> name;
+        getline(ss,points);
+        returnCode = AddRectangle(name,points, notInHistoric);
+    }
+    else if(cmdType=="PC")
+    {
+        string name;
+        string points;
+
+        ss >> name;
+        getline(ss,points);
+
+        returnCode = AddPolygon(name,points, notInHistoric);
+    }
+    else if(cmdType=="OR")
+    {
+        string name;
+        string others;
+
+        ss >> name;
+        getline(ss, others);
+
+        returnCode = AddReunion(name, others, notInHistoric);
+    }
+    else if(cmdType=="OI")
+    {
+        string name;
+        string others;
+
+        ss >> name;
+        getline(ss, others);
+
+        returnCode = AddIntersection(name, others, notInHistoric);
+    }
+    else if(cmdType=="HIT")
+    {
+        string Name;
+        int x, y;
+
+        if(!(ss >> Name))
+        {
+            returnCode = 1;
+        }
+        else if(!(ss >> x >> y))
+        {
+            returnCode = 2;
+        }
+        else
+        {
+            returnCode = Hit(Name,x,y);
+        }
+    }
+    else if(cmdType=="DELETE")
+    {
+        string names;
+        getline(ss,names);
+
+        returnCode = Delete(names,notInHistoric);
+
+    }
+    else if(cmdType=="MOVE")
+    {
+        {
+            string Name;
+            int dX, dY;
+
+            if(!(ss >> Name))
+            {
+                returnCode = 1;
+            }
+            else if(!(ss >> dX >> dY))
+            {
+                returnCode = 2;
+            }
+            else
+            {
+                returnCode = Move(Name,dX,dY,notInHistoric);
+            }
+        }
+    }
+    else if(cmdType=="LIST")
+    {
+        List();
+    }
+    else if(cmdType=="UNDO")
+    {
+        returnCode=Undo();
+    }
+    else if(cmdType == "REDO")
+    {
+        returnCode=Redo();
+    }
+    else if(cmdType=="LOAD")
+    {
+        string filename;
+        ss >> filename;
+        returnCode=Load(filename);
+    }
+    else if(cmdType=="SAVE")
+    {
+        string filename;
+        ss >> filename;
+        returnCode=Save(filename);
+    }
+    else if(cmdType=="CLEAR")
+    {
+        returnCode = Clear();
+    }
+    else if(cmdType.substr(0,4)=="MULT")
+    {
+        string cmdNumStr=cmdType.substr(4,cmdType.size()-4);
+        stringstream cmdNumSS(cmdNumStr);
+        int cmdNum;
+        cmdNumSS >> cmdNum;
+        returnCode = Mult(ss, cmdNum);
+    }
+    else if(cmdType=="EXIT")
+    {
+        map<string,Object *>::iterator i;
+        for(i = allObjects.begin();i!=allObjects.end();i++)
+        {
+            delete i->second;
+        }
+        allObjects.clear();
+        return 1;
+    }
+    else
+    {
+        //This is an unknown command !
+        cout << "ERR" << endl << "#Unknown command" << endl;
+        notInHistoric = true;
+    }
+
+    if(!notInHistoric)
+    {
+        printResult(cmdType, returnCode);
+    }
+
+    //Delete the oldest command in historic if there is more than 20 commands.
+    if(historic.size() == 21)
+    {
+        historic.pop_back();
+        reverseHistoric.pop_back();
+    }
+
+    return 0;
+}
+
+// ----------------------------------------------------------------------------------------------------- PRIVATE METHODS
     int Draw::AddSegment(string name, string points, bool notInHistoric)
     {
         if(allObjects.find(name) != allObjects.end())
@@ -650,191 +844,6 @@
         return 0;
     }
 
-    int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
-
-        string cmdType;
-        ss >> cmdType;
-        ss.ignore();
-
-        //If a command is done after few UNDO we need to delete these from the historic
-        if(!notInHistoric && historicPosition != 0 && cmdType!="LIST" && cmdType != "HIT" && cmdType != "SAVE" && cmdType!="UNDO" && cmdType!="REDO")
-        {
-            list<string>::iterator i = historic.begin();
-            advance(i,historicPosition);
-            historic.erase(historic.begin(),i);
-
-            i=reverseHistoric.begin();
-            advance(i,historicPosition);
-            reverseHistoric.erase(reverseHistoric.begin(),i);
-
-            historicPosition = 0;
-        }
-
-        int returnCode(0);
-
-        if(cmdType=="S")
-        {
-            string name;
-            string points;
-
-            ss >> name;
-            getline(ss,points);
-
-            returnCode = AddSegment(name,points, notInHistoric);
-        }
-        else if(cmdType=="R")
-        {
-            string name;
-            string points;
-
-            ss >> name;
-            getline(ss,points);
-            returnCode = AddRectangle(name,points, notInHistoric);
-        }
-        else if(cmdType=="PC")
-        {
-            string name;
-            string points;
-
-            ss >> name;
-            getline(ss,points);
-
-            returnCode = AddPolygon(name,points, notInHistoric);
-        }
-        else if(cmdType=="OR")
-        {
-            string name;
-            string others;
-
-            ss >> name;
-            getline(ss, others);
-
-            returnCode = AddReunion(name, others, notInHistoric);
-        }
-        else if(cmdType=="OI")
-        {
-            string name;
-            string others;
-
-            ss >> name;
-            getline(ss, others);
-
-            returnCode = AddIntersection(name, others, notInHistoric);
-        }
-        else if(cmdType=="HIT")
-        {
-            string Name;
-            int x, y;
-
-            if(!(ss >> Name))
-            {
-                returnCode = 1;
-            }
-            else if(!(ss >> x >> y))
-            {
-                returnCode = 2;
-            }
-            else
-            {
-                returnCode = Hit(Name,x,y);
-            }
-        }
-        else if(cmdType=="DELETE")
-        {
-            string names;
-            getline(ss,names);
-
-            returnCode = Delete(names,notInHistoric);
-
-        }
-        else if(cmdType=="MOVE")
-        {
-            {
-                string Name;
-                int dX, dY;
-
-                if(!(ss >> Name))
-                {
-                    returnCode = 1;
-                }
-                else if(!(ss >> dX >> dY))
-                {
-                        returnCode = 2;
-                }
-                else
-                {
-                    returnCode = Move(Name,dX,dY,notInHistoric);
-                }
-            }
-        }
-        else if(cmdType=="LIST")
-        {
-            List();
-        }
-        else if(cmdType=="UNDO")
-        {
-            returnCode=Undo();
-        }
-        else if(cmdType == "REDO")
-        {
-            returnCode=Redo();
-        }
-        else if(cmdType=="LOAD")
-        {
-            string filename;
-            ss >> filename;
-            returnCode=Load(filename);
-        }
-        else if(cmdType=="SAVE")
-        {
-            string filename;
-            ss >> filename;
-            returnCode=Save(filename);
-        }
-        else if(cmdType=="CLEAR")
-        {
-            returnCode = Clear();
-        }
-        else if(cmdType.substr(0,4)=="MULT")
-        {
-            string cmdNumStr=cmdType.substr(4,cmdType.size()-4);
-            stringstream cmdNumSS(cmdNumStr);
-            int cmdNum;
-            cmdNumSS >> cmdNum;
-            returnCode = Mult(ss, cmdNum);
-        }
-        else if(cmdType=="EXIT")
-        {
-            map<string,Object *>::iterator i;
-            for(i = allObjects.begin();i!=allObjects.end();i++)
-            {
-                delete i->second;
-            }
-            allObjects.clear();
-            return 1;
-        }
-        else
-        {
-            //This is an unknown command !
-            cout << "ERR" << endl << "#Unknown command" << endl;
-            notInHistoric = true;
-        }
-
-        if(!notInHistoric)
-        {
-            printResult(cmdType, returnCode);
-        }
-
-        //Delete the oldest command in historic if there is more than 20 commands.
-        if(historic.size() == 21)
-        {
-            historic.pop_back();
-            reverseHistoric.pop_back();
-        }
-
-        return 0;
-    }
-
     void Draw::printResult(string cmdType, int returnCode)
     {
         if((cmdType=="LIST" || cmdType=="HIT") && returnCode==0)
@@ -1009,7 +1018,3 @@
             }
         }
     }
-
-//Constructors
-Draw::Draw() : historicPosition(0)
-{}
