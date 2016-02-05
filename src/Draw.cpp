@@ -813,6 +813,12 @@
             allObjects.clear();
             return 1;
         }
+        else
+        {
+            //This is an unknown command !
+            cout << "ERR" << endl << "#Unknown command" << endl;
+            notInHistoric = true;
+        }
 
         if(!notInHistoric)
         {
