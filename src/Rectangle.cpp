@@ -9,8 +9,6 @@
 // Personal includes
 #include "Rectangle.h"
 // System includes
-#include <vector>
-#include <string>
 using namespace std;
 
 // ------------------------------------------------------------------------------------------------------ CONSTRUCTOR(S)

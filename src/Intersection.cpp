@@ -9,9 +9,6 @@
 // Personal includes
 #include "Intersection.h"
 // System includes
-#include <string>
-#include <list>
-#include <iostream>
 #include <sstream>
 using namespace std;
 

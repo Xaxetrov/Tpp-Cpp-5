@@ -7,7 +7,6 @@
 
 
 #include "Object.h"
-#include <iostream>
 using namespace std;
 
 const bool Object::Hits(Point aPoint) {

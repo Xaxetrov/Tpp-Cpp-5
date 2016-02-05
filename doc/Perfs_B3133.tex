@@ -35,24 +35,24 @@
 
 %----------------------------------------------Title end
 
-\section{Performances en chargement et sauvegarde}
+\section{Performances in file loading and saving}
 
-    \subsection{sauvegarde}
-    Runs on the creation of 10 000 sergments, 10 000 Rectangle, 10 000 polygons and 500 multiple objects.
+    \subsection{Saving - writing in a file}
+    Runs on the creation of 10 000 sergments, 10 000 Rectangle, 10 000 polygons and 500 multiple objects. Then saves the draw in a file.
         \begin{itemize}
             \item User time : 0.20 seconds
-            \item System time : 0.02 seconds
+            \item System time : 0.05 seconds
             \item Maximum resident set size : 6 876 kbits
-            \item 345 879 allocs - 345 879 frees --> 15 767 945 bytes allocated
+            \item 345 879 allocs - 345 879 frees --> 15 767 945 bytes allocated in the whole process
         \end{itemize}
 
-\subsection{sauvegarde}
-    Runs on the creation of 10 000 sergments, 10 000 Rectangle, 10 000 polygons and 500 multiple objects.
+\subsection{Loading - reading in a file}
+    Runs on the creation of 10 000 sergments, 10 000 Rectangle, 10 000 polygons and 500 multiple objects by loading previously created file.
         \begin{itemize}
             \item User time : 0.13 seconds
             \item System time : 0.00 seconds
             \item Maximum resident set size : 7908 kbits
-            \item 263 556 allocs - 263 556 frees --> 19 191 746 bytes allocated
+            \item 263 556 allocs - 263 556 frees --> 19 191 746 bytes allocated in the whole process
         \end{itemize}
 
 \end{document}

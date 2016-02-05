@@ -10,9 +10,6 @@
 #include "Segment.h"
 
 // System includes
-#include <string>
-#include <cmath>
-#include <iostream>
 using namespace std;
 
 // ------------------------------------------------------------------------------------------------------ CONSTRUCTOR(S)

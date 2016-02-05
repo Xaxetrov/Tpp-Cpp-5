@@ -19,8 +19,6 @@ public :
     //Inline getters and setters
     int GetX() {return x;}
     int GetY() {return y;}
-    void SetX(int myX) {x = myX;}
-    void SetY(int myY) {y = myY;}
 
     //Constructor(s)
     Point(int myX, int myY);
