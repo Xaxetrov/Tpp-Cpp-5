@@ -403,11 +403,11 @@ int Draw::ExecuteCommand(stringstream &ss, bool notInHistoric) {
             return 2;
         }
 
-        if(myCoords[0] > myCoords[2] || myCoords[1] > myCoords[3])
+        /*if(myCoords[0] > myCoords[2] || myCoords[1] > myCoords[3])
         {
             // Your points arent corrects. I mean its not top-left and bottom-right points.
             return 3;
-        }
+        }*/
 
         allObjects.insert(make_pair(name,new Rectangle(name, myCoords)));
 

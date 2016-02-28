@@ -29,10 +29,11 @@ Rectangle::~Rectangle()
     //Public methods
     const bool Rectangle::Hits(Point aPoint)
     {
-        return(aPoint.GetX()>=points[0].GetX()
-        && aPoint.GetX()<=points[1].GetX()
-        && aPoint.GetY()>=points[0].GetY()
-        && aPoint.GetY()<=points[1].GetY());
+        return(
+                ((aPoint.GetX()>=points[0].GetX() && aPoint.GetX()<=points[1].GetX()) || (aPoint.GetX()<=points[0].GetX() && aPoint.GetX()>=points[1].GetX()))
+        &&
+                ((aPoint.GetY()>=points[0].GetY() && aPoint.GetY()<=points[1].GetY()) || (aPoint.GetY()<=points[0].GetY() && aPoint.GetY()>=points[1].GetY()))
+        );
     }
 
     string Rectangle::toString()
